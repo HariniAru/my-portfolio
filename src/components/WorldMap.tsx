@@ -324,9 +324,18 @@ const WorldMap: React.FC<WorldMapProps> = ({
             key={stop.id}
             coordinates={[stop.lon, stop.lat]}
             onClick={(e) => handlePinClick(stop, e as any)}
-            style={{ cursor: "pointer" }}
+            role="button"
+            aria-label={`Open ${stop.name}`}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") handlePinClick(stop, e as any);
+            }}
           >
-            <g transform="translate(-12,-30)">
+            {/* invisible hit area */}
+            <circle r={18} fill="transparent" className="cursor-pointer" />
+
+            {/* pin */}
+            <g transform="translate(-12,-30)" className="cursor-pointer">
               <MapPin
                 className={`w-8 h-8 transition-transform ${
                   currentStop === stop.id
@@ -335,11 +344,18 @@ const WorldMap: React.FC<WorldMapProps> = ({
                 }`}
                 fill="currentColor"
               />
-              <text x="12" y="16" textAnchor="middle" style={{ fontSize: 10, fontWeight: 700, fill: "#fff" }}>
+              <text
+                x="12"
+                y="16"
+                textAnchor="middle"
+                className="pointer-events-none"
+                style={{ fontSize: 10, fontWeight: 700, fill: "#fff" }}
+              >
                 {stop.id}
               </text>
             </g>
           </Marker>
+
         ))}
 
         {/* Plane */}
