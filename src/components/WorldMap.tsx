@@ -428,30 +428,100 @@ const WorldMap: React.FC<WorldMapProps> = ({
     return p ? { x: p[0], y: p[1] } : { x: 0, y: 0 };
   };
 
+
+
+  const [headingDeg, setHeadingDeg] = useState(0);
+
+  // point plane toward cursor when mouse moves over the map
+  const handleMouseMove: React.MouseEventHandler<SVGSVGElement> = (e) => {
+    if (!isActive) return;
+    const svg = e.currentTarget;
+    const rect = svg.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    const p = project(planePosition.lon, planePosition.lat);
+    const angle = Math.atan2(mouseY - p.y, mouseX - p.x); // radians
+    setHeadingDeg((angle * 180) / Math.PI);
+  };
+
+
   const goToStop = (stop: Stop) => {
     if (isPlaneFlying) return;
     setIsPlaneFlying(true);
     onStopSelect(stop);
 
-    const start = [planePosition.lon, planePosition.lat] as [number, number];
-    const end = [stop.lon, stop.lat] as [number, number];
-    const interp = geoInterpolate(start, end);
+    // project current & target to pixel space
+    const start = project(planePosition.lon, planePosition.lat);
+    const end = project(stop.lon, stop.lat);
 
     const DURATION = 2000;
     const t0 = performance.now();
+    let prev = start;
 
     const tick = (now: number) => {
       const t = Math.min(1, (now - t0) / DURATION);
-      const [lon, lat] = interp(t);
-      onPlaneMove(lon, lat);
+      const x = start.x + (end.x - start.x) * t;
+      const y = start.y + (end.y - start.y) * t;
+
+      // rotate to face movement
+      const angle = Math.atan2(y - prev.y, x - prev.x);
+      setHeadingDeg((angle * 180) / Math.PI);
+      prev = { x, y };
+
+      // invert back to lon/lat for the Marker
+      const inv = (projection as any).invert?.([x, y]);
+      if (inv) {
+        const [lon, lat] = inv;
+        onPlaneMove(lon, lat);
+      }
+
       if (t < 1) requestAnimationFrame(tick);
       else {
         setSelectedStop(stop);
         setIsPlaneFlying(false);
       }
     };
+
     requestAnimationFrame(tick);
   };
+
+
+  // const goToStop = (stop: Stop) => {
+  //   if (isPlaneFlying) return;
+  //   setIsPlaneFlying(true);
+  //   onStopSelect(stop);
+
+  //   // Project current and target into screen coordinates
+  //   const startXY = project(planePosition.lon, planePosition.lat);
+  //   const endXY = project(stop.lon, stop.lat);
+
+  //   const DURATION = 2000;
+  //   const t0 = performance.now();
+
+  //   const tick = (now: number) => {
+  //     const t = Math.min(1, (now - t0) / DURATION);
+  //     const x = startXY.x + (endXY.x - startXY.x) * t;
+  //     const y = startXY.y + (endXY.y - startXY.y) * t;
+
+  //     // Convert back to lon/lat for the Marker
+  //     const inv = (projection as any).invert?.([x, y]);
+  //     if (inv) {
+  //       const [lon, lat] = inv;
+  //       onPlaneMove(lon, lat);
+  //     }
+
+  //     if (t < 1) {
+  //       requestAnimationFrame(tick);
+  //     } else {
+  //       setSelectedStop(stop);
+  //       setIsPlaneFlying(false);
+  //     }
+  //   };
+
+  //   requestAnimationFrame(tick);
+  // };
+
 
   // ✅ Auto-fly to Stop #1 when the hero hides and the map activates
   useEffect(() => {
@@ -489,6 +559,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
         width={980}
         height={520}
         className="w-full h-full"
+        onMouseMove={handleMouseMove}
       >
         <defs>
           {/* inner shadow for “paper cutout” look */}
@@ -555,15 +626,17 @@ const WorldMap: React.FC<WorldMapProps> = ({
 
         {/* Plane */}
         {isActive && (
-          <Marker coordinates={[planePosition.lon, planePosition.lat]}>
-            <g transform="translate(-12,-12)">
-              <Plane
-                className={`w-6 h-6 text-foreground drop-shadow-plane ${isPlaneFlying ? "" : "animate-plane-float"}`}
-                fill="currentColor"
-              />
-            </g>
-          </Marker>
-        )}
+        <Marker coordinates={[planePosition.lon, planePosition.lat]}>
+          <g transform={`translate(-12,-12) rotate(${headingDeg},12,12)`}>
+            <Plane
+              className={`w-6 h-6 text-foreground drop-shadow-plane ${
+                isPlaneFlying ? "" : "animate-plane-float"
+              }`}
+              fill="currentColor"
+            />
+          </g>
+        </Marker>
+      )}
 
         {/* Card */}
         {selectedStop && selectedXY && (
