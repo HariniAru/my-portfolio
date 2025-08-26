@@ -124,7 +124,7 @@
 
 
 import React, { useState } from 'react';
-import { ArrowLeft, MapPin, Target, Image as ImageIcon, X } from 'lucide-react';
+import { ArrowLeft, MapPin, Target, Image as ImageIcon, X, Brain, Speech } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
@@ -202,15 +202,14 @@ const Start = () => {
         <Card className="bg-card/80 backdrop-blur-sm border-2 border-primary/20 shadow-card-travel mb-10">
           <CardHeader>
             <CardTitle className="flex items-center gap-3 text-2xl">
-              <Target className="h-7 w-7 text-primary" />
-              Objective
+              <Speech className="h-7 w-7 text-primary" />
+              My Engineering Philosophy
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <p className="text-foreground text-lg leading-relaxed">
-              Software engineer with strong full‑stack and testing experience, passionate about integrating AI/ML to
-              build secure, scalable web applications. Motivated to deliver efficient solutions and contribute to
-              collaborative engineering teams.
+              I believe that the best solutions come from understanding both the human element and the technical possibilities, creating bridges between complex technology and real-world applications.
+              My goal is to create solutions that not only work efficiently but also make a meaningful difference in people's lives.
             </p>
             <div className="grid md:grid-cols-3 gap-4 pt-2 border-t border-primary/10">
               <div className="bg-accent/50 p-4 rounded-lg border border-primary/10">
@@ -281,7 +280,7 @@ const Start = () => {
             size="lg"
             className="px-8 py-6 text-lg bg-primary hover:bg-primary/90 transition-all duration-300 hover:scale-105"
           >
-            Continue Journey to California (Home)
+            Continue Journey to California
           </Button>
         </div>
       </div>
