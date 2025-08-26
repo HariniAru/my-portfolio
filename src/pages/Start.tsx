@@ -233,7 +233,7 @@ const Start = () => {
         <div className="space-y-4 mb-12">
           <div className="flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
             <ImageIcon className="h-4 w-4" />
-            Moments from India
+            Snaps from India
           </div>
 
           <div className="relative overflow-x-auto no-scrollbar">

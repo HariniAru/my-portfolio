@@ -240,7 +240,7 @@ const Home = () => {
           <div className="text-center space-y-4">
             <h1 className="text-5xl md:text-6xl font-bold text-foreground tracking-tight">Home</h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              This is my base — California — where dreams meet innovation and technology shapes the future.
+              My base — California — where dreams meet innovation and technology shapes the future.
             </p>
           </div>
 
@@ -341,7 +341,7 @@ const Home = () => {
           {/* Photos */}
           <div className="space-y-4 mb-2">
             <div className="flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
-              <ImageIcon className="h-4 w-4" /> California Moments
+              <ImageIcon className="h-4 w-4" /> Snaps from California
             </div>
 
             <div className="relative overflow-x-auto no-scrollbar">
