@@ -216,9 +216,9 @@ const Start = () => {
               <div className="bg-accent/50 p-4 rounded-lg border border-primary/10">
                 <h4 className="font-semibold text-foreground mb-2">Roots → Mindset</h4>
                 <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li className="flex items-center gap-2"><span className="w-2 h-2 bg-primary rounded-full" /> Multilingual → empathic, accessible UX</li>
-                  <li className="flex items-center gap-2"><span className="w-2 h-2 bg-primary rounded-full" /> Festivals/logistics → systems thinking</li>
-                  <li className="flex items-center gap-2"><span className="w-2 h-2 bg-primary rounded-full" /> Travel constraints → pragmatic problem‑solving</li>
+                  <li className="flex items-center gap-2"><span className="w-4 h-2 bg-primary rounded-full" /> Multilingual → Communicating across diverse technical and cultural teams </li>
+                  <li className="flex items-center gap-2"><span className="w-4 h-2 bg-primary rounded-full" /> Community-first outlook → Collaborative with empathy and shared purpose </li>
+                  <li className="flex items-center gap-2"><span className="w-3 h-2 bg-primary rounded-full" /> Colorful, vibrant environment → Creative perspective </li>
                 </ul>
               </div>
               <div className="md:col-span-2 text-muted-foreground leading-relaxed">
@@ -228,6 +228,7 @@ const Start = () => {
             </div>
           </CardContent>
         </Card>
+
 
         {/* India Filmstrip Gallery */}
         <div className="space-y-4 mb-12">
@@ -280,7 +281,7 @@ const Start = () => {
             size="lg"
             className="px-8 py-6 text-lg bg-primary hover:bg-primary/90 transition-all duration-300 hover:scale-105"
           >
-            Continue Journey to California
+            Continue Journey to California (Home)
           </Button>
         </div>
       </div>
