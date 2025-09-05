@@ -524,30 +524,52 @@ const GEO_URL =
 const MAP_W = 980;
 const MAP_H = 520;
 
-// Card metrics
-const CARD_W = 320;
-const CARD_H = 220;
-const CARD_MARGIN = 12; // padding from edges
-const PIN_GAP = 16;     // gap from pin
+// Card metrics - smaller for better UX
+const CARD_W = 280;
+const CARD_H = 180;
+const CARD_MARGIN = 16; // padding from edges
+const PIN_GAP = 12;     // gap from pin
 
 // Compute a safe card top-left (x,y) given the pin’s pixel (px,py)
-function placeCard(px: number, py: number) {
-  // try above first
+function placeCard(px: number, py: number, stopId?: number) {
+  // Default: try above first
   let x = px - CARD_W / 2;
   let y = py - CARD_H - PIN_GAP;
 
-  // if clipped at top, move below
-  if (y < CARD_MARGIN) y = py + PIN_GAP;
+  // If clipped at top, move below
+  if (y < CARD_MARGIN) {
+    y = py + PIN_GAP;
+  }
 
-  // clamp horizontally
+  // If still clipped at bottom, try sides
+  if (y + CARD_H > MAP_H - CARD_MARGIN) {
+    if (px < MAP_W / 2) {
+      // Place to the right
+      x = px + PIN_GAP + 20;
+      y = py - CARD_H / 2;
+    } else {
+      // Place to the left
+      x = px - CARD_W - PIN_GAP - 20;
+      y = py - CARD_H / 2;
+    }
+  }
+
+  // Special cases for better placement
+  if (stopId === 1) {
+    // India: prefer left side to avoid center clustering
+    x = px - CARD_W - PIN_GAP - 10;
+    y = py - CARD_H / 2;
+  } else if (stopId === 4) {
+    // New York: prefer right side to avoid edge clipping
+    x = px + PIN_GAP + 10;
+    y = py - CARD_H / 2;
+  }
+
+  // Final clamping to ensure it stays in bounds
   x = Math.max(CARD_MARGIN, Math.min(x, MAP_W - CARD_W - CARD_MARGIN));
-  // clamp vertically
   y = Math.max(CARD_MARGIN, Math.min(y, MAP_H - CARD_H - CARD_MARGIN));
 
-  // SPECIAL CASE: stop #1 (India) — prefer left of the pin to avoid center bias
-  // You can tweak which ids use this rule.
-  //return { x, y };
-  return { px, py};
+  return { x, y };
 }
 
 /** --------------------------
@@ -835,27 +857,9 @@ const WorldMap: React.FC<WorldMapProps> = ({
           </Marker>
         )}
 
-        {/* Card with smart placement */}
+        {/* Compact popup card with smart placement */}
         {selectedStop && selectedXY && (() => {
-          // Default above/below clamped
-          let { x, y } = placeCard(selectedXY.x, selectedXY.y);
-
-          // Special rule for stop #1: prefer left of the pin
-          if (selectedStop.id === 1) {
-            let leftX = selectedXY.x - CARD_W - PIN_GAP;
-            let leftY = selectedXY.y - CARD_H / 2;
-            // clamp
-            leftX = Math.max(CARD_MARGIN, Math.min(leftX, MAP_W - CARD_W - CARD_MARGIN));
-            leftY = Math.max(CARD_MARGIN, Math.min(leftY, MAP_H - CARD_H - CARD_MARGIN));
-            // only use left if it doesn't clip; else keep the default placement
-            if (
-              leftX >= CARD_MARGIN &&
-              leftX + CARD_W <= MAP_W - CARD_MARGIN
-            ) {
-              x = leftX;
-              y = leftY;
-            }
-          }
+          const { x, y } = placeCard(selectedXY.x, selectedXY.y, selectedStop.id);
 
           return (
             <foreignObject
@@ -865,38 +869,43 @@ const WorldMap: React.FC<WorldMapProps> = ({
               height={CARD_H}
               className="pointer-events-auto"
             >
-              <div>
-                <Card className="w-80 bg-card/95 backdrop-blur-sm border-2 border-primary/20 shadow-card-travel animate-card-pop">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="flex items-center justify-between text-lg">
-                      <span>{selectedStop.name}</span>
+              <div className="transform transition-all duration-300 ease-out">
+                <Card className="w-full bg-card/95 backdrop-blur-md border border-primary/30 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-card-pop">
+                  <CardHeader className="pb-2 px-4 pt-3">
+                    <CardTitle className="flex items-center justify-between text-base">
+                      <span className="font-semibold">{selectedStop.name}</span>
                       <button
                         onClick={() => setSelectedStop(null)}
-                        className="text-muted-foreground hover:text-foreground transition-colors"
+                        className="text-muted-foreground hover:text-foreground transition-colors w-6 h-6 flex items-center justify-center rounded-full hover:bg-accent"
+                        aria-label="Close"
                       >
                         ×
                       </button>
                     </CardTitle>
-                    <p className="text-sm text-muted-foreground">{selectedStop.location}</p>
+                    <p className="text-xs text-muted-foreground">{selectedStop.location}</p>
                   </CardHeader>
-                  <CardContent className="space-y-4">
+                  <CardContent className="px-4 pb-3 space-y-3">
                     <div>
-                      <h3 className="font-semibold text-base mb-2">{selectedStop.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
+                      <h3 className="font-medium text-sm mb-1">{selectedStop.title}</h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
                         {selectedStop.description}
                       </p>
                     </div>
-                    <div className="flex gap-2">
-                      <Button onClick={handleEnter} size="sm" className="flex-1 bg-primary hover:bg-primary/90">
+                    <div className="flex gap-1.5">
+                      <Button 
+                        onClick={handleEnter} 
+                        size="sm" 
+                        className="flex-1 bg-primary hover:bg-primary/90 text-xs h-8 transition-colors duration-200"
+                      >
                         Enter
                       </Button>
                       <Button
                         onClick={handleContinueJourney}
                         variant="outline"
                         size="sm"
-                        className="flex-1 border-primary/30 hover:bg-primary/5"
+                        className="flex-1 border-primary/30 hover:bg-primary/5 text-xs h-8 transition-colors duration-200"
                       >
-                        Continue Journey
+                        Continue
                       </Button>
                     </div>
                   </CardContent>
