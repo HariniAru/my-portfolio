@@ -261,7 +261,7 @@ const Experience: React.FC = () => {
   };
 
   const handleContinueJourney = () => {
-    window.location.href = '/projects';
+    window.location.href = '/projects&research';
   };
 
   // ——— WORK EXPERIENCE (from resume) ——————————————————————————————————————————
@@ -554,7 +554,7 @@ const Experience: React.FC = () => {
               size="lg"
               className="px-8 py-6 text-lg bg-primary hover:bg-primary/90 transition-all duration-300 hover:scale-105"
             >
-              Continue Journey to Projects
+              Continue Journey to Mexico
             </Button>
           </div>
         </div>
