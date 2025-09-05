@@ -203,6 +203,7 @@ const HOME_PHOTOS = [
   { src: '/src/assets/california/golden-gate-bridge.jpg', caption: 'The Golden Gate Bridge, a symbol of San Francisco.' },
   { src: '/src/assets/california/half-moon-bay.jpg', caption: 'Cliffside serenity in the coastal fog at Half Moon Bay.' },
   { src: '/src/assets/california/lake-tahoe.jpg', caption: 'A serene view of Lake Tahoe, surrounded by mountains.' },
+  { src: '/src/assets/california/pastries.jpg', caption: 'Delicious pastries from Arsicault, a famous French bakery in San Francisco.' },
 ];
 
 const Home = () => {
