@@ -312,6 +312,9 @@ import {
   Image as ImageIcon,
   Images,
   X,
+  Building,
+  CameraIcon,
+  Camera,
 //   Timeline as TimelineIcon,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -334,43 +337,46 @@ const Leadership: React.FC = () => {
   // SWE timeline (chronological)
   const sweTimeline = [
     {
-      role: 'Information & Marketing Chair',
-      org: 'Society of Women Engineers (UIUC)',
-      time: '2022 – 2023',
-      icon: BookOpen,
-      points: [
-        'Built a consistent visual system for events; templated promos/recaps',
-        'A/B‑tested copy & timing → higher RSVP conversion',
-        'Stood up a photo/video archive & brand kit for chair handoffs',
-      ],
-      tags: ['Branding', 'Content Ops', 'Analytics'],
-      accent: 'from-fuchsia-500/10 to-transparent',
-    },
-    {
-      role: 'Historian Chair',
-      org: 'Society of Women Engineers (UIUC)',
-      time: '2023 – 2024',
-      icon: BookOpen,
-      points: [
-        'Captured chapter history across events; curated photo walls',
-        'Designed end‑of‑year report highlighting outreach/impact',
-        'Digitized archives and created contributor guidelines',
-      ],
-      tags: ['Archiving', 'Design', 'Storytelling'],
-      accent: 'from-violet-500/10 to-transparent',
-    },
-    {
-      role: 'Outreach Chair',
+      role: 'Empowering Students in Engineering Chair, Outreach',
       org: 'Society of Women Engineers (UIUC)',
       time: '2023 – 2024',
       icon: Megaphone,
       points: [
-        'Led K‑12 STEM outreach (Dads & Daughters, Girl Scout workshops)',
-        'Recruited volunteers & partners; built run‑of‑show playbooks',
-        'Added feedback loops → improved participant NPS',
+        'Designed and ran the Empowering Students in Engineering event for high-school students.',
+        'Led interactive major-panel rotations to showcase engineering disciplines.',
+        'Coordinated guided tours of UIUC facilities for firsthand exposure to campus life.',
+        'Organized a scavenger hunt led by engineering RSOs to make learning hands-on and fun.',
       ],
-      tags: ['STEM Outreach', 'Event Ops', 'Community'],
+      tags: ['STEM', 'Event Ops', 'Community'],
       accent: 'from-amber-500/10 to-transparent',
+    },
+    {
+      role: 'SWENext Chair, Outreach',
+      org: 'Society of Women Engineers (UIUC)',
+      time: '2022 – 2023',
+      icon: Megaphone,
+      points: [
+        'Partnered with local high schools to help establish SWENext/SWE branches.',
+        'Hosted college panels to introduce UIUC’s engineering departments and pathways.',
+        'Guided students through the college application process with practical Q&A and planning tips.',
+      ],
+      tags: ['STEM', 'Event Ops', 'Community'],
+      accent: 'from-amber-500/10 to-transparent',
+    },
+    {
+      role: 'Historian Chair, Information & Marketing',
+      org: 'Society of Women Engineers (UIUC)',
+      time: '2021 – 2022',
+      icon: Camera,
+      points: [
+        'Photographed and filmed SWE events, building a reusable media library.',
+        'Led an officer interview series: questions, scheduling, and shoots.',
+        'Produced a year-in-review video combining interviews and event highlights.',
+        'Set an editorial cadence with co-chairs for planning, editing, and publishing.',
+        'Organized a searchable archive with metadata for future chairs and campaigns.',
+      ],
+      tags: ['Archiving', 'Design', 'Storytelling'],
+      accent: 'from-violet-500/10 to-transparent',
     },
   ] as const;
 
@@ -378,30 +384,29 @@ const Leadership: React.FC = () => {
   const wics = {
     role: 'Infrastructure Chair',
     org: 'Women in Computer Science (UIUC)',
-    time: '2023 – 2024',
+    time: '2021 – 2023',
     icon: ServerCog,
     bullets: [
-      'Maintained web properties and automated email workflows',
-      'Built reusable components for event pages and sign‑up flows',
-      'Set up analytics dashboards to track engagement and retention',
+    'Maintained and streamlined the WiCS site so members could quickly access events, point codes, and resources.',
+    'Integrated PurgoMalum into the point-code generator to keep submissions clean and reduce moderator overhead.',
+    'Designed a sponsor call-to-action page (value props, tiers, contact) to engage company partners.',
+    'Built a committees hub with clear descriptions and join paths, improving discovery and participation.',
     ],
-    tags: ['Web Systems', 'Automation', 'Analytics'],
+    tags: ['Web Infrastructure', 'Content Ops', 'Accessibility', 'Templates & Components'],
   } as const;
 
   // Current industry leadership — surfaced to top
   const ambassador = {
-    title: 'Intern Ambassador — Industry Leadership',
-    orgLine: 'Current Role • Cupertino / Bay Area',
-    points: [
-      'Facilitate onboarding cohorts and host Q&A office hours',
-      'Pair interns with mentors; coordinate peer‑learning circles',
-      'Spin up events that connect interns with product and research teams',
+    role: 'Intern Ambassador ',
+    title: 'D&A Software Solutions, FTI Consulting, Inc.',
+    time: 'Current',
+    icon: Handshake,
+    bullets: [
+      'Connect with interns from day one: cohort kickoffs, 1:1 check-ins, and an open channel for questions.',
+      'Introduce my team\'s ways of working at FTI Consulting and how they align with FTI\’s culture and policies.',
+      'Provide ongoing guidance so interns ramp fast and contribute confidently.',
     ],
-    metrics: [
-      { label: 'Cohort events hosted', value: '10+' },
-      { label: 'Peer circles launched', value: '4' },
-      { label: 'Avg. event NPS', value: '9/10' },
-    ],
+    tags: ['Onboarding', 'Mentorship', 'Engagement'],
   } as const;
 
   // Photo strip gallery (replace with real assets)
@@ -444,13 +449,13 @@ const Leadership: React.FC = () => {
         <div className="text-center space-y-4">
           <h1 className="text-5xl md:text-6xl font-bold text-foreground tracking-tight">Leadership & Involvement</h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Building community, shipping student programs, and creating spaces where peers and young students can thrive.
+            Where curiosity meets action and community fuels innovation.
           </p>
         </div>
 
         <div className="space-y-10 mt-10 animate-fade-in">
           {/* Intern Ambassador — moved to TOP */}
-          <Card className="bg-card/80 backdrop-blur-sm border-2 border-primary/20 shadow-card-travel">
+          {/* <Card className="bg-card/80 backdrop-blur-sm border-2 border-primary/20 shadow-card-travel">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
                 <Building2 className="h-6 w-6 text-primary" /> {ambassador.title}
@@ -467,14 +472,36 @@ const Leadership: React.FC = () => {
                 </div>
                 <div className="space-y-3">
                   <h4 className="font-semibold text-foreground flex items-center gap-2"><Award className="h-5 w-5 text-primary" /> Impact</h4>
-                  <div className="flex flex-wrap gap-3">
-                    {ambassador.metrics.map(({ label, value }) => (
-                      <div key={label} className={stat}><span className="font-medium">{label}</span> · {value}</div>
-                    ))}
-                  </div>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {['Community', 'Mentorship', 'Ops'].map((t) => <span key={t} className={chip}>{t}</span>)}
                   </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card> */}
+
+
+          {/* Intern Ambassador — moved to TOP */}
+          <Card className="bg-card/80 backdrop-blur-sm border-2 border-primary/20 shadow-card-travel">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
+                <Building2 className="h-6 w-6 text-primary" /> {ambassador.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="relative rounded-2xl border border-primary/20 bg-accent/40 p-5">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="rounded-full p-2 border border-primary/20 bg-background/70"><ambassador.icon className="h-5 w-5 text-primary" /></div>
+                  <div>
+                    <div className="font-semibold text-foreground">{ambassador.role}</div>
+                    <p className="text-sm text-muted-foreground">{ambassador.time}</p>
+                  </div>
+                </div>
+                <ul className="text-sm text-muted-foreground space-y-2 list-disc pl-5">
+                  {ambassador.bullets.map((b) => <li key={b}>{b}</li>)}
+                </ul>
+                <div className="flex flex-wrap gap-2 pt-3">
+                  {ambassador.tags.map((t) => <span key={t} className={chip}>{t}</span>)}
                 </div>
               </div>
             </CardContent>
@@ -484,7 +511,7 @@ const Leadership: React.FC = () => {
           <Card className="bg-card/80 backdrop-blur-sm border-2 border-primary/20 shadow-card-travel">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
-                <Users className="h-6 w-6 text-primary" /> SWE @ UIUC — Timeline
+                <Users className="h-6 w-6 text-primary" /> Society of Women Engineers Illinois, UIUC
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -509,7 +536,7 @@ const Leadership: React.FC = () => {
                           <div className="rounded-full p-2 border border-primary/20 bg-background/70"><Icon className="h-5 w-5 text-primary" /></div>
                           <div>
                             <div className="font-semibold text-foreground">{role}</div>
-                            <div className="text-xs text-muted-foreground">{org} • {time}</div>
+                            <div className="text-xs text-muted-foreground">{time}</div>
                           </div>
                         </div>
                         <ul className="text-sm text-muted-foreground space-y-2 list-disc pl-5">
@@ -532,13 +559,15 @@ const Leadership: React.FC = () => {
               <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
                 <Users className="h-6 w-6 text-primary" /> {wics.org}
               </CardTitle>
-              <p className="text-sm text-muted-foreground">{wics.time}</p>
             </CardHeader>
             <CardContent>
               <div className="relative rounded-2xl border border-primary/20 bg-accent/40 p-5">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="rounded-full p-2 border border-primary/20 bg-background/70"><wics.icon className="h-5 w-5 text-primary" /></div>
-                  <div className="font-semibold text-foreground">{wics.role}</div>
+                  <div>
+                    <div className="font-semibold text-foreground">{wics.role}</div>
+                    <p className="text-sm text-muted-foreground">{wics.time}</p>
+                  </div>
                 </div>
                 <ul className="text-sm text-muted-foreground space-y-2 list-disc pl-5">
                   {wics.bullets.map((b) => <li key={b}>{b}</li>)}
@@ -550,7 +579,7 @@ const Leadership: React.FC = () => {
             </CardContent>
           </Card>
 
-          {/* How I Lead */}
+          {/* How I Lead
           <Card className="bg-card/80 backdrop-blur-sm border-2 border-primary/20 shadow-card-travel">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
@@ -564,7 +593,32 @@ const Leadership: React.FC = () => {
                 <div className="space-y-2"><div className="font-medium text-foreground">Measure & Iterate</div><p>Define success upfront (attendance, NPS, retention) and run small experiments.</p></div>
               </div>
             </CardContent>
-          </Card>
+          </Card> */}
+
+        {/* How I Lead */}
+        <Card className="bg-card/80 backdrop-blur-sm border-2 border-primary/20 shadow-card-travel">
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
+                    <Handshake className="h-6 w-6 text-primary" /> How I Lead
+                </CardTitle>
+            </CardHeader>
+            <CardContent>
+                <div className="grid md:grid-cols-3 gap-4 text-sm text-muted-foreground">
+                    <div className="space-y-2">
+                    <div className="font-medium text-foreground">Document → Delegate</div>
+                        <p>Document the work into step-by-step playbooks so anyone can run it.</p>
+                    </div>
+                    <div className="space-y-2">
+                        <div className="font-medium text-foreground">Communicate with Clarity</div>
+                        <p>Clear, shared expectations leads to smoother collaboration.</p>
+                    </div>
+                    <div className="space-y-2">
+                        <div className="font-medium text-foreground">Measure → Iterate</div>
+                        <p>Track feedback, progress, and engagement; make small improvements that last.</p>
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
 
           {/* Photo gallery */}
           <div className="space-y-4">
