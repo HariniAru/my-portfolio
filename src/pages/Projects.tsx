@@ -819,7 +819,7 @@ const Projects: React.FC = () => {
         {/* --- Cancún Photo Strip + Lightbox (styled like Experience page) --- */}
         <div className="mt-14 space-y-4">
           <div className="flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
-            <Images className="h-4 w-4" /> Moments from Cancún
+            <Images className="h-4 w-4" /> Snaps from Cancún
           </div>
 
           <div className="relative overflow-x-auto no-scrollbar">

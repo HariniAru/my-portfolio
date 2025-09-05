@@ -623,7 +623,7 @@ const Leadership: React.FC = () => {
           {/* Photo gallery */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
-              <Images className="h-4 w-4" /> Moments from Singapore
+              <Images className="h-4 w-4" /> Snaps from Singapore
             </div>
             <div className="relative overflow-x-auto no-scrollbar">
               <div className="flex gap-3 py-2">

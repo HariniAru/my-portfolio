@@ -499,7 +499,7 @@ const Experience: React.FC = () => {
           {/* Photos — horizontal strip + lightbox */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
-              <Images className="h-4 w-4" /> Moments from New York
+              <Images className="h-4 w-4" /> Snaps from New York
             </div>
 
             <div className="relative overflow-x-auto no-scrollbar">
