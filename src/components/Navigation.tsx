@@ -17,7 +17,8 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onNavigate }) => {
     { name: 'Home', route: '/home', icon: Home },
     { name: 'Education', route: '/education', icon: GraduationCap },
     { name: 'Experience', route: '/experience', icon: Briefcase },
-    { name: 'Projects', route: '/projects', icon: FolderOpen },
+    { name: 'Projects & Research', route: '/projects&research', icon: FolderOpen },
+    { name: 'Leadership & Involvement', route: '/leadership&involvement', icon: FolderOpen },
   ];
 
   const handleNavigation = (route: string) => {

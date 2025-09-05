@@ -291,7 +291,7 @@
 
 import React, { useState } from 'react';
 // import { ArrowLeft, MapPin, FolderOpen, Github, Globe, Newspaper, Images } from 'lucide-react';
-import { ArrowLeft, MapPin, FolderOpen, Github, Globe, Newspaper, Images, Image as ImageIcon, X } from 'lucide-react';
+import { ArrowLeft, MapPin, FolderOpen, Github, Globe, File, Newspaper, Images, Image as ImageIcon, X, Video, Link, Folder, Hand, Code } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
@@ -314,6 +314,9 @@ const Projects: React.FC = () => {
     window.location.href = '/';
   };
 
+  const handleContinueJourney = () => (window.location.href = '/leadership&involvement');
+
+
   // --- Real projects pulled from Harini's portfolio + resume ---
   const projects = [
     {
@@ -326,10 +329,11 @@ const Projects: React.FC = () => {
         'Classical mudra classification pipeline',
         'Lightweight model for real‑time inference',
       ],
-      impact: 'Achieved ~89% classification accuracy in local testing.',
+      impact: 'Achieved 89% accuracy (F1: 0.88) in real-time mudra recognition, offering learners a practical tool to practice and preserve Bharatanatyam.',
       links: {
-        live: '#',
-        github: '#',
+        video: 'https://drive.google.com/file/d/1x13j0s3KFnbkX-vKbxNR3zUE-gk6vo-2/view?usp=share_link',
+        file: 'https://docs.google.com/document/d/1sTDlDQG-pkDBUVVw8cXcZmhpct04P3zRY4-Glf5PNG4/edit?usp=sharing',
+        github: 'https://github.com/HariniAru/Bharatanatyam-Mudras-Hand-Gesture-Recognizer',
       },
     },
     {
@@ -343,10 +347,9 @@ const Projects: React.FC = () => {
         'Instant feedback on grammar and nuance',
         'Phrase translation + review deck',
       ],
-      impact: 'Prototype used to explore AI‑assisted conversation practice.',
+      impact: 'Built a functional prototype with real-time conversational AI, pronunciation feedback, and adaptive learning to transform language practice.',
       links: {
-        live: '#',
-        github: '#',
+        video: 'https://drive.google.com/file/d/1xub-ELqm_4npmoW4i6NDcefPNNqj0S61/view?usp=sharing',
       },
     },
     {
@@ -354,17 +357,35 @@ const Projects: React.FC = () => {
       description:
         'Mobile app designed to help autistic individuals with social interaction and sensory regulation via interactive games, music, and a customizable breathing bubble.',
       location: 'San Jose, CA',
-      technologies: ['Mobile', 'Java/Kotlin (app builder)', 'UX Research'],
+      technologies: ['Mobile', 'MIT App Inventor', 'UX Research'],
       features: [
         'Interactive games for social skills practice',
         'Customizable breathing/relaxation module',
         'Sensory overload coping tools',
       ],
       impact:
-        'U.S. National Winners & Global Finalists in the Technovation App Challenge; covered by local news.',
+        'Recognized as a Technovation U.S. Winner and Global Finalist, the app demonstrated its value in user testing by helping students with autism feel calmer, more engaged, and better supported in their learning.',
       links: {
-        live: 'https://teamfemstem.weebly.com/',
-        github: undefined,
+        video: 'https://youtu.be/ZYEP7C-qAAU',
+        website: 'https://teamfemstem.weebly.com/',
+      },
+    },
+    {
+      title: 'OnBoard – Unified Local Transit Booking Site',
+      description:
+        'Web application that centralizes ticket booking for local transit and supports small operators.',
+      location: 'Urbana‑Champaign, IL',
+      technologies: ['Flask', 'Python', 'JS/Bootstrap', 'Graph Algorithms'],
+      features: [
+        'Route finding with BFS/DFS/A*',
+        'Simple, responsive booking flow',
+        'Data parsing + graph construction',
+      ],
+      impact: 'Developed a Bootstrap + Flask transit booking platform with ticket browsing, checkout, and business publishing, designed for easy integration with future local transit partners.',
+      links: {
+        video: 'https://www.youtube.com/watch?v=ApUFWFir0BE',
+        file: 'https://docs.google.com/document/d/1UwcUJmGIb2S-3CaZwxbo41IuxZAju7TXgmyVQRwnNPQ/edit?usp=sharing',
+        github: 'https://github.com/HariniAru/OnBoard',
       },
     },
     {
@@ -378,53 +399,58 @@ const Projects: React.FC = () => {
         'Queryable catalog with prerequisite checks',
         'Clean, student‑friendly UI',
       ],
-      impact: 'Built for students to quickly navigate complex curricula.',
+      impact: 'Built a Django-based planner that identifies major/minor overlaps, helping UIUC students streamline requirements, avoid redundant courses, and plan efficient paths to graduation.',
       links: {
-        live: 'https://docs.google.com/document/d/1ZaliE8S3r1OIRlkYyoD-KGhYcjuLGoZR8eggDAFSOiA/edit?usp=sharing',
-        github: '#',
+        file: 'https://docs.google.com/document/d/1ZaliE8S3r1OIRlkYyoD-KGhYcjuLGoZR8eggDAFSOiA/edit?usp=sharing',
       },
     },
     {
-      title: 'OnBoard – Unified Local Transit Booking',
-      description:
-        'Web app that centralizes ticket booking for local transit and supports small operators.',
-      location: 'Urbana‑Champaign, IL',
-      technologies: ['Flask', 'Python', 'JS/Bootstrap', 'Graph Algorithms'],
-      features: [
-        'Route finding with BFS/DFS/A*',
-        'Simple, responsive booking flow',
-        'Data parsing + graph construction',
-      ],
-      impact: 'Course project sharpened full‑stack & algorithms practice.',
-      links: {
-        live: 'https://github.com/HariniAru/OnBoard',
-        github: 'https://github.com/HariniAru/OnBoard',
-      },
-    },
-    {
-      title: 'Maze Game – Prim’s Algorithm',
+      title: 'Maze Game',
       description:
         'Dual‑view maze game (hidden + navigable) with procedural generation via Prim’s algorithm.',
       location: 'Urbana‑Champaign, IL',
-      technologies: ['C++', 'Game Dev'],
+      technologies: ['C++', 'Game Dev', 'Prim’s Algorithm', 'ncurses'],
       features: ['Procedural maze generation', 'Hidden/navigable views', 'Clean separation of game logic'],
-      impact: 'Solidified data structures and algorithmic implementation skills.',
+      impact: 'Developed a C++ console-based maze game with both hidden-graph and randomized maze modes, using Prim’s algorithm and ncurses to deliver replayable gameplay and test-driven reliability.',
       links: {
-        live: 'https://github.com/HariniAru/cs128finalproject',
+        video: 'https://www.youtube.com/watch?v=zvn8YhXtoow',
         github: 'https://github.com/HariniAru/cs128finalproject',
       },
     },
     {
-      title: 'Game Dev Labs – Infinite Matrix & Level Design',
+      title: 'Infinite Matrix – Gameplay Systems',
       description:
-        'Unreal Engine projects implementing enemy packs, health systems, scoring, projectile mechanics, and level design variations.',
-      location: 'Urbana‑Champaign, IL',
+        'Unreal Engine project focused on implementing core gameplay mechanics within the Infinite Matrix layout.',
+      location: 'Urbana-Champaign, IL',
       technologies: ['Unreal Engine', 'C++/Blueprints'],
-      features: ['Enemy AI behaviors', 'Collectibles and health packs', 'HUD/score system & projectiles'],
-      impact: 'Gateway into game design + systems thinking for gameplay.',
+      features: [
+        'Enemy packs',
+        'Health packs and health bar system',
+        'Score system integrated with gameplay',
+        'Projectile shooting mechanics'
+      ],
+      impact: 'Gateway into game design: implemented combat, health, and scoring systems in Unreal Engine.',
       links: {
-        live: 'https://drive.google.com/file/d/1JoBQFka4LS9VEUcaNblwmnFBzrYGAq60/view?usp=sharing',
-        github: '#',
+        video: 'https://www.youtube.com/watch?v=4YzV7JG5rIQ',
+        code: 'https://drive.google.com/file/d/1JoBQFka4LS9VEUcaNblwmnFBzrYGAq60/view?usp=sharing',
+      },
+    },
+    {
+      title: 'Level Design – Gameplay & Collectibles',
+      description:
+        'Unreal Engine project applying level design principles to create engaging environments with gameplay systems integrated.',
+      location: 'Urbana-Champaign, IL',
+      technologies: ['Unreal Engine', 'C++/Blueprints'],
+      features: [
+        'Custom level layouts with health packs and collectibles',
+        'Health bar and score system carried across levels',
+        'Projectile shooting integrated into level flow',
+        'Playtested environments for pacing and balance'
+      ],
+      impact: 'Applied level design principles to create balanced environments with integrated gameplay systems.',
+      links: {
+        video: 'https://youtu.be/iAN9sMtnQfE?si=IOp9S3cYOb5IXnEf',
+        file: 'https://docs.google.com/document/d/1z2QV7iw7KoVEbCi4e8bDYoW_UXNy4Ck0vqC8t4QjVpA/edit?usp=sharing',
       },
     },
     {
@@ -433,7 +459,7 @@ const Projects: React.FC = () => {
         'Contributed frontend components and lesson materials for nonprofit coding education.',
       location: 'Remote',
       technologies: ['Vue.js', 'HTML/CSS'],
-      features: ['Subjects nav UI', 'Java workshop materials'],
+      features: ['Subjects navigation UI', 'Java workshop materials'],
       impact: 'Expanded access to beginner‑friendly coding content.',
       links: {
         live: 'https://github.com/HariniAru/JavaWorkshops',
@@ -442,27 +468,61 @@ const Projects: React.FC = () => {
     },
   ];
 
-  const research = [
+    const research = [
     {
       title: 'Adversarial Bargaining – Online Price Discrimination',
       description:
-        'Studied potential price discrimination across online services (e.g., travel). Collected browsing/ad data (Google Ad Settings) and site audience stats (Quantcast); used Bayesian analysis to evaluate effects.',
-      location: 'UIUC',
-      technologies: ['Bayesian Analysis', 'Data Collection', 'Python/R'],
+        'Researched potential price discrimination in online services (e.g., flight and hotel agencies) under Prof. Hari Sundaram at UIUC. Used Google Ad Settings to track browsing categories and Quantcast for demographic insights, applying Bayesian analysis to examine differences in how users were targeted. Produced both quantitative and qualitative findings on the impact of personalization in online pricing.',
+      location: 'University of Illinois Urbana-Champaign',
+      technologies: ['Bayesian Analysis', 'Data Collection', 'Python'],
       outputs: [
-        { label: 'Paper (Google Drive)', href: 'https://drive.google.com/file/d/1gUxGwXIr338k3Q23RvLXdVAGHvc5k-zI/view?usp=sharing' },
-        { label: 'Qualitative Notes', href: 'https://docs.google.com/document/d/1UZm2THkvlmeMvQL7EtndLECoSaoEVNk1L_Op5a0QpMk/edit?usp=sharing' },
+        {
+          label: 'Research Paper',
+          href: 'https://drive.google.com/file/d/1gUxGwXIr338k3Q23RvLXdVAGHvc5k-zI/view?usp=sharing',
+        },
+        {
+          label: 'Qualitative Notes',
+          href: 'https://docs.google.com/document/d/1UZm2THkvlmeMvQL7EtndLECoSaoEVNk1L_Op5a0QpMk/edit?usp=sharing',
+        },
       ],
     },
     {
-      title: 'Charitable Giving – Comics vs Photos for Engagement',
+      title: 'Charitable Giving – Visual Design & Engagement',
       description:
-        'Observed how visual design and animation (comics) on charity sites influence user engagement and donation behavior compared to real‑time photos; focused on COVID‑19 charities in the U.S. and India.',
-      location: 'UIUC',
+        'Worked with Profs. Hari Sundaram and Ewa Maslowska on a study of how visual design choices in charity websites influence engagement and donations. Conducted an observational study during the COVID-19 crisis in the U.S. and India, comparing user responses to experimental comics versus real-time photos. Created custom comic stimuli using a comics generator to test the persuasive power of animation in charitable appeals.',
+      location: 'University of Illinois Urbana-Champaign',
       technologies: ['Experimental Design', 'UX Research', 'Data Analysis'],
-      outputs: [],
+      outputs: [
+        {
+          label: 'Linguistic Bias in AI Notes',
+          href: 'https://docs.google.com/document/d/1LTURP4b3FFmMDvxZBzDstsKbPBmIV38m8KKTaC-Fe24/edit?usp=sharing',
+        },
+      ],
     },
   ];
+
+
+  // const research = [
+  //   {
+  //     title: 'Adversarial Bargaining',
+  //     description:
+  //       'Studied potential price discrimination across online services (e.g., travel). Collected browsing/ad data (Google Ad Settings) and site audience stats (Quantcast); used Bayesian analysis to evaluate effects.',
+  //     location: 'UIUC',
+  //     technologies: ['Bayesian Analysis', 'Data Collection', 'Python/R'],
+  //     outputs: [
+  //       { label: 'Paper (Google Drive)', href: 'https://drive.google.com/file/d/1gUxGwXIr338k3Q23RvLXdVAGHvc5k-zI/view?usp=sharing' },
+  //       { label: 'Qualitative Notes', href: 'https://docs.google.com/document/d/1UZm2THkvlmeMvQL7EtndLECoSaoEVNk1L_Op5a0QpMk/edit?usp=sharing' },
+  //     ],
+  //   },
+  //   {
+  //     title: 'Charitable Giving',
+  //     description:
+  //       'Observed how visual design and animation (comics) on charity sites influence user engagement and donation behavior compared to real‑time photos; focused on COVID‑19 charities in the U.S. and India.',
+  //     location: 'UIUC',
+  //     technologies: ['Experimental Design', 'UX Research', 'Data Analysis'],
+  //     outputs: [],
+  //   },
+  // ];
 
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
@@ -496,6 +556,10 @@ const Projects: React.FC = () => {
         </div>
 
         {/* Projects Grid */}
+        <div className="flex items-center gap-3">
+          <FolderOpen className="h-6 w-6 text-primary" />
+          <h2 className="text-3xl font-bold">Projects</h2>
+        </div>
         <div className="mt-10 grid lg:grid-cols-2 gap-8">
           {projects.map((project, index) => (
             <Card
@@ -516,14 +580,24 @@ const Projects: React.FC = () => {
                   </div>
 
                   <div className="flex gap-2">
-                    {project.links?.live && (
+                    {project.links?.video && (
                       <Button
                         variant="outline"
                         size="icon"
                         className="h-9 w-9 border-primary/30 hover:bg-primary/10"
-                        onClick={() => window.open(project.links!.live!, '_blank')}
+                        onClick={() => window.open(project.links!.video!, '_blank')}
                       >
-                        <Globe className="h-4 w-4" />
+                        <Video className="h-4 w-4" />
+                      </Button>
+                    )}
+                    {project.links?.file && (
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-9 w-9 border-primary/30 hover:bg-primary/10"
+                        onClick={() => window.open(project.links!.file!, '_blank')}
+                      >
+                        <File className="h-4 w-4" />
                       </Button>
                     )}
                     {project.links?.github && (
@@ -536,12 +610,47 @@ const Projects: React.FC = () => {
                         <Github className="h-4 w-4" />
                       </Button>
                     )}
+                    {project.links?.website && (
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-9 w-9 border-primary/30 hover:bg-primary/10"
+                        onClick={() => window.open(project.links!.website!, '_blank')}
+                      >
+                        <Link className="h-4 w-4" />
+                      </Button>
+                    )}
+                    {project.links?.code && (
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-9 w-9 border-primary/30 hover:bg-primary/10"
+                        onClick={() => window.open(project.links!.code!, '_blank')}
+                      >
+                        <Code className="h-4 w-4" />
+                      </Button>
+                    )}
                   </div>
                 </div>
               </CardHeader>
 
               <CardContent className="space-y-6">
                 <p className="text-muted-foreground leading-relaxed">{project.description}</p>
+
+                {/* Video Demo */}
+                {/* {project.links.video && (
+                  <div className="mt-4">
+                    <h4 className="font-semibold text-foreground mb-3">Project Demo</h4>
+                    <div className="rounded-lg overflow-hidden border border-primary/20 shadow">
+                      <iframe
+                        src={project.links.video.replace('/view?usp=share_link', '/preview')}
+                        title={`${project.title} Demo`}
+                        allow="autoplay; fullscreen"
+                        className="w-full h-[300px]"
+                      ></iframe>
+                    </div>
+                  </div>
+                )} */}
 
                 {/* Technologies */}
                 <div>
@@ -601,10 +710,10 @@ const Projects: React.FC = () => {
               >
                 <CardHeader className="pb-3">
                   <CardTitle className="text-xl">{r.title}</CardTitle>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  {/* <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <MapPin className="h-4 w-4" />
                     <span>{r.location}</span>
-                  </div>
+                  </div> */}
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-muted-foreground leading-relaxed">{r.description}</p>
@@ -642,7 +751,7 @@ const Projects: React.FC = () => {
         </div>
 
         {/* Skills Summary (kept concise) */}
-        <Card className="mt-12 bg-card/80 backdrop-blur-sm border-2 border-primary/20 shadow-card-travel">
+        {/* <Card className="mt-12 bg-card/80 backdrop-blur-sm border-2 border-primary/20 shadow-card-travel">
           <CardHeader>
             <CardTitle className="text-xl">Technical Highlights Used Across Projects</CardTitle>
           </CardHeader>
@@ -670,7 +779,7 @@ const Projects: React.FC = () => {
               </div>
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
 
         {/* Cancún Photo Strip + Lightbox
         <div className="mt-14">
@@ -755,14 +864,10 @@ const Projects: React.FC = () => {
           </div>
         </div>
 
-        {/* Back to Journey */}
+        {/* Nav CTA */}
         <div className="mt-14 flex justify-center">
-          <Button
-            onClick={handleBackToMap}
-            size="lg"
-            className="px-8 py-6 text-lg bg-primary hover:bg-primary/90 transition-all duration-300 hover:scale-105"
-          >
-            Return to Journey Map
+          <Button onClick={handleContinueJourney} size="lg" className="px-8 py-6 text-lg bg-primary hover:bg-primary/90 transition-all duration-300 hover:scale-105">
+            Continue Journey to Leadership & Involvement
           </Button>
         </div>
       </div>

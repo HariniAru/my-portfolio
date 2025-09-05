@@ -621,10 +621,20 @@ export const journeyStops = [
     name: "Projects",
     title: "Featured Projects",
     description: "Showcasing my technical skills and creativity",
+    location: "Cancún, Mexico",
+    lat: 19.1619,
+    lon: -86.8515,
+    route: "/projects&research",
+  },
+  {
+    id: 6,
+    name: "Leadership & Involvement",
+    title: "Leadership & Involvement",
+    description: "Showcasing my leadership skills and community involvement",
     location: "Florida, USA",
     lat: 27.66,
     lon: -81.52,
-    route: "/projects",
+    route: "/leadership&involvement",
   },
 ] as const;
 
