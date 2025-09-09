@@ -153,12 +153,14 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowLeft, MapPin, User, Heart, Code, Image as ImageIcon, X, FileDown, Globe, Wrench, Users, Target, Lightbulb, LightbulbIcon, Globe2, LucideGlobe, Brain, Group, Building, HelpingHandIcon, HelpingHand } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import Navigation from '@/components/Navigation';
+import { addVisitedPage } from '@/lib/journey';
+import { journeyStops } from '@/components/WorldMap';
 
 // === CONTENT ================================================================
 const RESUME_PDF = '/assets/Harini_Arumugam_Resume.pdf';
@@ -209,8 +211,24 @@ const HOME_PHOTOS = [
 const Home = () => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
+  useEffect(() => {
+    // Track that user visited this page
+    addVisitedPage('/home');
+  }, []);
+
   const handleBackToMap = () => (window.location.href = '/');
-  const handleContinueJourney = () => (window.location.href = '/education');
+  
+  const handleContinueJourney = () => {
+    const currentStop = journeyStops.find(stop => stop.route === '/home');
+    const nextStop = journeyStops.find(stop => stop.id === (currentStop?.id || 0) + 1);
+    
+    if (nextStop) {
+      addVisitedPage('/home');
+      window.location.href = `/?next=${nextStop.id}`;
+    } else {
+      window.location.href = '/';
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-hero">

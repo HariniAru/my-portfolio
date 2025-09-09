@@ -289,13 +289,15 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import { ArrowLeft, MapPin, FolderOpen, Github, Globe, Newspaper, Images } from 'lucide-react';
 import { ArrowLeft, MapPin, FolderOpen, Github, Globe, File, Newspaper, Images, Image as ImageIcon, X, Video, Link, Folder, Hand, Code } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import Navigation from '@/components/Navigation';
+import { addVisitedPage } from '@/lib/journey';
+import { journeyStops } from '@/components/WorldMap';
 
 // --- Replace these with your actual image assets ---
 const CANCUN_PHOTOS = [
@@ -310,11 +312,25 @@ const CANCUN_PHOTOS = [
 ];
 
 const Projects: React.FC = () => {
+  useEffect(() => {
+    addVisitedPage('/projects&research');
+  }, []);
+
   const handleBackToMap = () => {
     window.location.href = '/';
   };
 
-  const handleContinueJourney = () => (window.location.href = '/leadership&involvement');
+  const handleContinueJourney = () => {
+    const currentStop = journeyStops.find(stop => stop.route === '/projects&research');
+    const nextStop = journeyStops.find(stop => stop.id === (currentStop?.id || 0) + 1);
+    
+    if (nextStop) {
+      addVisitedPage('/projects&research');
+      window.location.href = `/?next=${nextStop.id}`;
+    } else {
+      window.location.href = '/';
+    }
+  };
 
 
   // --- Real projects pulled from Harini's portfolio + resume ---
@@ -867,7 +883,7 @@ const Projects: React.FC = () => {
         {/* Nav CTA */}
         <div className="mt-14 flex justify-center">
           <Button onClick={handleContinueJourney} size="lg" className="px-8 py-6 text-lg bg-primary hover:bg-primary/90 transition-all duration-300 hover:scale-105">
-            Continue Journey to Singapore
+            Continue Journey to Florida
           </Button>
         </div>
       </div>

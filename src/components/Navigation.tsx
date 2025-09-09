@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, X, Home, GraduationCap, Briefcase, FolderOpen, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { journeyStops } from './WorldMap';
+import { getVisitedPages } from '@/lib/journey';
 
 interface NavigationProps {
   currentPage?: string;
@@ -10,6 +11,11 @@ interface NavigationProps {
 
 const Navigation: React.FC<NavigationProps> = ({ currentPage, onNavigate }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [visitedPages, setVisitedPages] = useState<string[]>([]);
+
+  useEffect(() => {
+    setVisitedPages(getVisitedPages());
+  }, [currentPage]); // Update when currentPage changes
 
   const navItems = [
     { name: 'Map', route: '/', icon: MapPin },
@@ -78,16 +84,26 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onNavigate }) => {
           <div className="mt-8 p-4 rounded-lg bg-accent/50 border border-primary/20">
             <h3 className="text-sm font-semibold text-foreground mb-3">Journey Progress</h3>
             <div className="space-y-2">
-              {journeyStops.map((stop, index) => (
-                <div key={stop.id} className="flex items-center gap-2 text-sm">
-                  <div className={`w-2 h-2 rounded-full ${
-                    index < 2 ? 'bg-primary' : 'bg-muted-foreground/30'
-                  }`} />
-                  <span className={index < 2 ? 'text-foreground' : 'text-muted-foreground'}>
-                    {stop.name}
-                  </span>
-                </div>
-              ))}
+              {journeyStops.map((stop) => {
+                const isVisited = visitedPages.includes(stop.route);
+                const isCurrent = currentPage === stop.route;
+                return (
+                  <div key={stop.id} className="flex items-center gap-2 text-sm">
+                    <div className={`w-2 h-2 rounded-full ${
+                      isCurrent ? 'bg-primary animate-pulse' :
+                      isVisited ? 'bg-primary' : 'bg-muted-foreground/30'
+                    }`} />
+                    <span className={isCurrent ? 'text-foreground font-medium' :
+                      isVisited ? 'text-foreground' : 'text-muted-foreground'}>
+                      {stop.name}
+                    </span>
+                    {isCurrent && <span className="text-xs text-primary">(current)</span>}
+                  </div>
+                );
+              })}
+            </div>
+            <div className="mt-3 text-xs text-muted-foreground">
+              {visitedPages.length} of {journeyStops.length} stops visited
             </div>
           </div>
         </div>

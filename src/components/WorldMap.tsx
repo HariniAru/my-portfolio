@@ -504,9 +504,11 @@
 
 // WorldMap.tsx
 import React, { useMemo, useEffect, useState } from "react";
-import { Plane, MapPin } from "lucide-react";
+import { Plane, MapPin, ChevronLeft, ChevronRight, Images } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { getVisitedPages } from '@/lib/journey';
 
 import {
   ComposableMap,
@@ -524,11 +526,11 @@ const GEO_URL =
 const MAP_W = 980;
 const MAP_H = 520;
 
-// Card metrics - smaller for better UX
-const CARD_W = 280;
-const CARD_H = 180;
-const CARD_MARGIN = 16; // padding from edges
-const PIN_GAP = 12;     // gap from pin
+// Card metrics - optimized for better UX
+const CARD_W = 320;
+const CARD_H = 200;
+const CARD_MARGIN = 20; // padding from edges
+const PIN_GAP = 16;     // gap from pin
 
 // Compute a safe card top-left (x,y) given the pin’s pixel (px,py)
 function placeCard(px: number, py: number, stopId?: number) {
@@ -569,7 +571,7 @@ function placeCard(px: number, py: number, stopId?: number) {
   x = Math.max(CARD_MARGIN, Math.min(x, MAP_W - CARD_W - CARD_MARGIN));
   y = Math.max(CARD_MARGIN, Math.min(y, MAP_H - CARD_H - CARD_MARGIN));
 
-  return { x, y };
+  return { x, y, placement: 'auto' };
 }
 
 /** --------------------------
@@ -581,20 +583,30 @@ export const journeyStops = [
     name: "Start",
     title: "Objective Statement",
     description: "Where it all began - my journey into Computer Science",
-    location: "Pudukkottai, Tamil Nadu, India",
+    location: "Tamil Nadu, India",
     lat: 10.38,
     lon: 78.82,
     route: "/start",
+    photos: [
+      { src: '/src/assets/india/city-scene.jpg', caption: 'A vibrant, bustling street scene just outside the city of Karaikudi in Tamil Nadu.' },
+      { src: '/src/assets/india/karaikudi-home.jpg', caption: 'My grandmother on a walk by our home in Karaikudi.' },
+      { src: '/src/assets/india/theppakulam.jpg', caption: 'A theppakulam (pond of holy water) in front of the Karpaka Vinayakar temple.' },
+    ],
   },
   {
     id: 2,
     name: "Home",
     title: "About Me",
     description: "My foundation and where I call home",
-    location: "California, USA",
+    location: "Bay Area, California",
     lat: 36.78,
     lon: -119.42,
     route: "/home",
+    photos: [
+      { src: '/src/assets/california/civic-center.jpg', caption: 'The Civic Center in San Francisco.' },
+      { src: '/src/assets/california/golden-gate-bridge.jpg', caption: 'The Golden Gate Bridge, a symbol of San Francisco.' },
+      { src: '/src/assets/california/half-moon-bay.jpg', caption: 'Cliffside serenity in the coastal fog at Half Moon Bay.' },
+    ],
   },
   {
     id: 3,
@@ -605,6 +617,11 @@ export const journeyStops = [
     lat: 40.0,
     lon: -89.0,
     route: "/education",
+    photos: [
+      { src: '/src/assets/illinois/busey-hall.jpg', caption: 'My freshman year dorm.' },
+      { src: '/src/assets/illinois/bardeen-quad.jpg', caption: 'A view of the Bardeen Quad from the top floor of the CIF building.' },
+      { src: '/src/assets/illinois/graduation-pose.jpg', caption: 'Sporting my graduation gown by the steps of the Foellinger Auditorium.' },
+    ],
   },
   {
     id: 4,
@@ -615,6 +632,11 @@ export const journeyStops = [
     lat: 40.71,
     lon: -74.01,
     route: "/experience",
+    photos: [
+      { src: '/src/assets/new york/brooklyn-bridge.jpg', caption: 'Stunning view of the Brooklyn Bridge at nighttime.' },
+      { src: '/src/assets/new york/central-park.jpg', caption: 'A peaceful walk down a path in Central Park' },
+      { src: '/src/assets/new york/met.jpg', caption: 'Crowds climbing the steps of the Met, heading into history.' },
+    ],
   },
   {
     id: 5,
@@ -625,6 +647,11 @@ export const journeyStops = [
     lat: 19.1619,
     lon: -86.8515,
     route: "/projects&research",
+    photos: [
+      { src: '/src/assets/cancun/cancun-sunrise.jpg', caption: 'Sunrise over the coastline of the Fiesta Americana Resort in Cancun.' },
+      { src: '/src/assets/cancun/chichen-itza-pyramid.jpg', caption: 'Chichén Itzá pyramid – a testament to Mayan architecture.' },
+      { src: '/src/assets/cancun/isla-mujeres-beach.jpg', caption: 'Relaxing beach vibes on Isla Mujeres.' },
+    ],
   },
   {
     id: 6,
@@ -635,6 +662,10 @@ export const journeyStops = [
     lat: 27.66,
     lon: -81.52,
     route: "/leadership&involvement",
+    photos: [
+      { src: '/src/assets/florida/beach.jpg', caption: 'Florida sunset beach scene.' },
+      { src: '/src/assets/florida/conference.jpg', caption: 'Leadership conference in Orlando.' },
+    ],
   },
 ] as const;
 
@@ -648,11 +679,25 @@ interface WorldMapProps {
   onPlaneMove: (lon: number, lat: number) => void;
 }
 
+interface TooltipState {
+  show: boolean;
+  stop: Stop | null;
+  x: number;
+  y: number;
+}
+
 interface LocationCardProps {
   stop: Stop;
   onEnter: () => void;
   onContinue: () => void;
   onClose: () => void;
+}
+
+// Function to get URL parameter
+function getNextStopId(): number | null {
+  const urlParams = new URLSearchParams(window.location.search);
+  const nextParam = urlParams.get('next');
+  return nextParam ? parseInt(nextParam, 10) : null;
 }
 
 const WorldMap: React.FC<WorldMapProps> = ({
@@ -665,6 +710,10 @@ const WorldMap: React.FC<WorldMapProps> = ({
   const [selectedStop, setSelectedStop] = useState<Stop | null>(null);
   const [isPlaneFlying, setIsPlaneFlying] = useState(false);
   const [headingDeg, setHeadingDeg] = useState(0);
+  const [tooltip, setTooltip] = useState<TooltipState>({ show: false, stop: null, x: 0, y: 0 });
+  const [galleryIndex, setGalleryIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   const projection = useMemo(
     () => geoEqualEarth().fitSize([MAP_W, MAP_H], { type: "Sphere" } as any),
@@ -682,9 +731,9 @@ const WorldMap: React.FC<WorldMapProps> = ({
     return a + diff * t;
   };
 
-  // Cursor → aim nose (but NOT while flying)
+  // Cursor → aim nose (ALWAYS when map is active, but more responsive)
   const handleMouseMove: React.MouseEventHandler<SVGSVGElement> = (e) => {
-    if (!isActive || isPlaneFlying) return;
+    if (!isActive || isPlaneFlying) return; // Don't override during flight
     const svg = e.currentTarget;
     const ctm = svg.getScreenCTM();
     if (!ctm) return;
@@ -696,7 +745,25 @@ const WorldMap: React.FC<WorldMapProps> = ({
     const cursor = pt.matrixTransform(ctm.inverse());
     const plane = project(planePosition.lon, planePosition.lat);
     const angleRad = Math.atan2(cursor.y - plane.y, cursor.x - plane.x);
-    setHeadingDeg((prev) => lerpAngle(prev, (angleRad * 180) / Math.PI, 0.2));
+    const targetAngle = (angleRad * 180) / Math.PI;
+    
+    // More responsive interpolation when not flying
+    setHeadingDeg((prev) => lerpAngle(prev, targetAngle, 0.4));
+  };
+
+  // Handle pin hover for tooltips
+  const handlePinMouseEnter = (stop: Stop, e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setTooltip({
+      show: true,
+      stop,
+      x: rect.left + rect.width / 2,
+      y: rect.top - 10
+    });
+  };
+
+  const handlePinMouseLeave = () => {
+    setTooltip({ show: false, stop: null, x: 0, y: 0 });
   };
 
   const goToStop = (stop: Stop) => {
@@ -708,18 +775,30 @@ const WorldMap: React.FC<WorldMapProps> = ({
     const start = project(planePosition.lon, planePosition.lat);
     const end = project(stop.lon, stop.lat);
 
-    const DURATION = 2000;
+    // Faster animation and smoother easing
+    const DURATION = 1200; // Reduced from 2000ms
     const t0 = performance.now();
     let prev = start;
 
+    // Ease-in-out function for smoother animation
+    const easeInOut = (t: number) => {
+      return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+    };
+
     const tick = (now: number) => {
-      const t = Math.min(1, (now - t0) / DURATION);
+      const rawT = Math.min(1, (now - t0) / DURATION);
+      const t = easeInOut(rawT); // Apply easing
+      
       const x = start.x + (end.x - start.x) * t;
       const y = start.y + (end.y - start.y) * t;
 
-      // rotate toward motion
-      const angle = Math.atan2(y - prev.y, x - prev.x);
-      setHeadingDeg((angle * 180) / Math.PI);
+      // rotate toward motion with smoother interpolation
+      const dx = x - prev.x;
+      const dy = y - prev.y;
+      if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+        const angle = Math.atan2(dy, dx);
+        setHeadingDeg((prev) => lerpAngle(prev, (angle * 180) / Math.PI, 0.3));
+      }
       prev = { x, y };
 
       // convert back to lon/lat for the Marker
@@ -729,8 +808,9 @@ const WorldMap: React.FC<WorldMapProps> = ({
         onPlaneMove(lon, lat);
       }
 
-      if (t < 1) requestAnimationFrame(tick);
-      else {
+      if (rawT < 1) {
+        requestAnimationFrame(tick);
+      } else {
         setSelectedStop(stop);
         setIsPlaneFlying(false);
       }
@@ -739,10 +819,47 @@ const WorldMap: React.FC<WorldMapProps> = ({
     requestAnimationFrame(tick);
   };
 
-  // Auto-fly to first stop when map activates
+  // Handle map activation and journey progression
   useEffect(() => {
-    if (isActive && !selectedStop && !currentStop) {
-      goToStop(journeyStops[0]);
+    if (!isActive) return;
+
+    const nextStopId = getNextStopId();
+    const visitedPages = getVisitedPages();
+    
+    if (nextStopId) {
+      // User clicked "Continue Journey" from a page
+      const targetStop = journeyStops.find(s => s.id === nextStopId);
+      if (targetStop) {
+        // Position plane at the previous stop first
+        const prevStop = journeyStops.find(s => s.id === nextStopId - 1);
+        if (prevStop) {
+          onPlaneMove(prevStop.lon, prevStop.lat);
+        }
+        
+        // Then fly to the target stop
+        setTimeout(() => {
+          goToStop(targetStop);
+        }, 100);
+        
+        // Clean up URL
+        window.history.replaceState({}, '', window.location.pathname);
+        return;
+      }
+    }
+
+    // Default behavior - go to first unvisited stop or first stop
+    if (!selectedStop && !currentStop) {
+      const lastVisitedStop = visitedPages.length > 0 
+        ? journeyStops.find(stop => visitedPages.includes(stop.route))
+        : null;
+      
+      if (lastVisitedStop) {
+        // Position plane at last visited location
+        onPlaneMove(lastVisitedStop.lon, lastVisitedStop.lat);
+      } else {
+        // New user, go to first stop
+        goToStop(journeyStops[0]);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isActive]);
@@ -766,6 +883,8 @@ const WorldMap: React.FC<WorldMapProps> = ({
   };
 
   const selectedXY = selectedStop ? project(selectedStop.lon, selectedStop.lat) : null;
+  const visitedPages = getVisitedPages();
+  const visitedStops = journeyStops.filter(stop => visitedPages.includes(stop.route));
 
   return (
     <div
@@ -816,96 +935,211 @@ const WorldMap: React.FC<WorldMapProps> = ({
           }
         </Geographies>
 
+        {/* Journey Path Lines */}
+        {isActive && visitedStops.length > 1 && (
+          <g>
+            {visitedStops.slice(0, -1).map((stop, index) => {
+              const nextStop = visitedStops[index + 1];
+              const start = project(stop.lon, stop.lat);
+              const end = project(nextStop.lon, nextStop.lat);
+              
+              return (
+                <g key={`path-${stop.id}-${nextStop.id}`}>
+                  {/* Background line for depth */}
+                  <line
+                    x1={start.x}
+                    y1={start.y}
+                    x2={end.x}
+                    y2={end.y}
+                    stroke="#6366f1"
+                    strokeWidth={4}
+                    opacity={0.2}
+                  />
+                  {/* Main animated line */}
+                  <line
+                    x1={start.x}
+                    y1={start.y}
+                    x2={end.x}
+                    y2={end.y}
+                    stroke="#6366f1"
+                    strokeWidth={2.5}
+                    strokeDasharray="8,4"
+                    opacity={0.8}
+                    className="animate-pulse"
+                    style={{
+                      filter: 'drop-shadow(0 2px 4px rgba(99, 102, 241, 0.3))'
+                    }}
+                  />
+                </g>
+              );
+            })}
+          </g>
+        )}
+
         {/* Pins */}
         {isActive &&
-          journeyStops.map((stop) => (
-            <Marker
-              key={stop.id}
-              coordinates={[stop.lon, stop.lat]}
-              onClick={(e) => handlePinClick(stop, e as any)}
-              role="button"
-              aria-label={`Open ${stop.name}`}
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") handlePinClick(stop, e as any);
-              }}
-            >
-              <circle r={18} fill="transparent" className="cursor-pointer" />
-              <g transform="translate(-12,-30)" className="cursor-pointer">
-                <MapPin
-                  className={`w-8 h-8 transition-transform ${
-                    currentStop === stop.id
-                      ? "text-primary scale-125 drop-shadow-lg"
-                      : "text-primary/70 hover:text-primary hover:scale-110"
-                  }`}
-                  fill="currentColor"
+          journeyStops.map((stop) => {
+            const isVisited = visitedPages.includes(stop.route);
+            return (
+              <Marker
+                key={stop.id}
+                coordinates={[stop.lon, stop.lat]}
+                onClick={(e) => handlePinClick(stop, e as any)}
+                role="button"
+                aria-label={`Open ${stop.name}`}
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") handlePinClick(stop, e as any);
+                }}
+              >
+                <circle 
+                  r={18} 
+                  fill="transparent" 
+                  className="cursor-pointer" 
+                  onMouseEnter={(e) => handlePinMouseEnter(stop, e as any)}
+                  onMouseLeave={handlePinMouseLeave}
                 />
-                <text
-                  x="12"
-                  y="16"
-                  textAnchor="middle"
-                  className="pointer-events-none"
-                  style={{ fontSize: 10, fontWeight: 700, fill: "#fff" }}
+                <g 
+                  transform="translate(-12,-30)" 
+                  className="cursor-pointer"
+                  onMouseEnter={(e) => handlePinMouseEnter(stop, e as any)}
+                  onMouseLeave={handlePinMouseLeave}
                 >
-                  {stop.id}
-                </text>
-              </g>
-            </Marker>
-          ))}
+                  <MapPin
+                    className={`w-8 h-8 transition-transform ${
+                      currentStop === stop.id
+                        ? "text-primary scale-125 drop-shadow-lg"
+                        : isVisited
+                        ? "text-primary hover:scale-110"
+                        : "text-primary/70 hover:text-primary hover:scale-110"
+                    }`}
+                    fill="currentColor"
+                  />
+                  <text
+                    x="12"
+                    y="16"
+                    textAnchor="middle"
+                    className="pointer-events-none"
+                    style={{ fontSize: 10, fontWeight: 700, fill: "#fff" }}
+                  >
+                    {stop.id}
+                  </text>
+                </g>
+              </Marker>
+            );
+          })}
 
         {/* Plane */}
         {isActive && (
           <Marker coordinates={[planePosition.lon, planePosition.lat]}>
             <g transform={`translate(-12,-12) rotate(${headingDeg},12,12)`}>
+              {/* Plane shadow for depth */}
               <Plane
-                className={`w-6 h-6 text-foreground drop-shadow-plane ${
-                  isPlaneFlying ? "" : "animate-plane-float"
+                className="w-6 h-6 text-foreground/20"
+                fill="currentColor"
+                transform="translate(1,1)"
+              />
+              {/* Main plane */}
+              <Plane
+                className={`w-6 h-6 text-foreground transition-all duration-300 ${
+                  isPlaneFlying 
+                    ? "drop-shadow-lg" 
+                    : "drop-shadow-plane hover:scale-110"
                 }`}
                 fill="currentColor"
+                style={{
+                  filter: isPlaneFlying 
+                    ? 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))' 
+                    : 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))'
+                }}
               />
             </g>
           </Marker>
         )}
 
-        {/* Compact popup card with smart placement */}
+        {/* Enhanced popup card with photo gallery */}
         {selectedStop && selectedXY && (() => {
-          const { x, y } = placeCard(selectedXY.x, selectedXY.y, selectedStop.id);
+          const { x, y, placement } = placeCard(selectedXY.x, selectedXY.y, selectedStop.id);
+          const photos = selectedStop.photos || [];
+          const currentPhoto = photos[galleryIndex];
 
           return (
             <foreignObject
               x={x}
               y={y}
               width={CARD_W}
-              height={CARD_H}
+              height={CARD_H + 80} // Account for photo gallery
               className="pointer-events-auto"
             >
-              <div className="transform transition-all duration-300 ease-out">
-                <Card className="w-full bg-card/95 backdrop-blur-md border border-primary/30 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-card-pop">
+              <div className="transform transition-all duration-300 ease-out animate-card-pop">
+                <Card className="w-full h-full bg-card/95 backdrop-blur-md border-2 border-primary/30 shadow-xl transition-shadow duration-300">
                   <CardHeader className="pb-2 px-4 pt-3">
                     <CardTitle className="flex items-center justify-between text-base">
-                      <span className="font-semibold">{selectedStop.name}</span>
+                      <span className="font-semibold text-foreground">{selectedStop.name}</span>
                       <button
                         onClick={() => setSelectedStop(null)}
-                        className="text-muted-foreground hover:text-foreground transition-colors w-6 h-6 flex items-center justify-center rounded-full hover:bg-accent"
+                        className="text-muted-foreground hover:text-foreground transition-colors w-7 h-7 flex items-center justify-center rounded-full hover:bg-accent text-lg"
                         aria-label="Close"
                       >
                         ×
                       </button>
                     </CardTitle>
-                    <p className="text-xs text-muted-foreground">{selectedStop.location}</p>
+                    <p className="text-xs text-muted-foreground font-medium">{selectedStop.location}</p>
                   </CardHeader>
-                  <CardContent className="px-4 pb-3 space-y-3">
+                  <CardContent className="px-4 pb-3 space-y-3 flex-1 overflow-hidden">
                     <div>
-                      <h3 className="font-medium text-sm mb-1">{selectedStop.title}</h3>
+                      <h3 className="font-semibold text-sm mb-1 text-foreground">{selectedStop.title}</h3>
                       <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
                         {selectedStop.description}
                       </p>
                     </div>
-                    <div className="flex gap-1.5">
+                    
+                    {/* Photo Gallery */}
+                    {photos.length > 0 && (
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <Images className="h-3 w-3" />
+                          <span className="font-medium">Photos ({galleryIndex + 1}/{photos.length})</span>
+                        </div>
+                        <div className="relative aspect-video bg-muted/30 rounded-lg overflow-hidden border border-primary/10 shadow-sm">
+                          {currentPhoto && (
+                            <>
+                              <img
+                                src={currentPhoto.src}
+                                alt={currentPhoto.caption}
+                                className="w-full h-full object-cover cursor-pointer transition-transform hover:scale-105"
+                                onClick={() => {
+                                  setLightboxIndex(galleryIndex);
+                                  setLightboxOpen(true);
+                                }}
+                              />
+                              {photos.length > 1 && (
+                                <>
+                                  <button
+                                    onClick={() => setGalleryIndex((prev) => prev === 0 ? photos.length - 1 : prev - 1)}
+                                    className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-background/90 border border-primary/20 flex items-center justify-center hover:bg-background transition-all hover:scale-110"
+                                  >
+                                    <ChevronLeft className="h-4 w-4" />
+                                  </button>
+                                  <button
+                                    onClick={() => setGalleryIndex((prev) => prev === photos.length - 1 ? 0 : prev + 1)}
+                                    className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-background/90 border border-primary/20 flex items-center justify-center hover:bg-background transition-all hover:scale-110"
+                                  >
+                                    <ChevronRight className="h-4 w-4" />
+                                  </button>
+                                </>
+                              )}
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    
+                    <div className="flex gap-2 pt-1">
                       <Button 
                         onClick={handleEnter} 
                         size="sm" 
-                        className="flex-1 bg-primary hover:bg-primary/90 text-xs h-8 transition-colors duration-200"
+                        className="flex-1 bg-primary hover:bg-primary/90 text-xs h-9 transition-all duration-200 hover:scale-105 font-medium"
                       >
                         Enter
                       </Button>
@@ -913,7 +1147,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
                         onClick={handleContinueJourney}
                         variant="outline"
                         size="sm"
-                        className="flex-1 border-primary/30 hover:bg-primary/5 text-xs h-8 transition-colors duration-200"
+                        className="flex-1 border-primary/30 hover:bg-primary/5 text-xs h-9 transition-all duration-200 hover:scale-105 font-medium"
                       >
                         Continue
                       </Button>
@@ -925,6 +1159,49 @@ const WorldMap: React.FC<WorldMapProps> = ({
           );
         })()}
       </ComposableMap>
+      
+      {/* Hover Tooltip */}
+      {tooltip.show && tooltip.stop && (
+        <div 
+          className="fixed z-50 px-4 py-3 bg-background/95 border-2 border-primary/30 rounded-xl shadow-xl text-sm backdrop-blur-md pointer-events-none transition-all duration-200 animate-card-pop"
+          style={{
+            left: tooltip.x,
+            top: tooltip.y,
+            transform: 'translate(-50%, -100%)',
+            filter: 'drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15))'
+          }}
+        >
+          <div className="font-semibold text-foreground">{tooltip.stop.location}</div>
+          <div className="text-xs text-muted-foreground font-medium">{tooltip.stop.name}</div>
+        </div>
+      )}
+      
+      {/* Photo Lightbox */}
+      {selectedStop?.photos && (
+        <Dialog open={lightboxOpen} onOpenChange={setLightboxOpen}>
+          <DialogContent className="p-0 bg-background/95 border border-primary/20 max-w-3xl">
+            <button
+              className="absolute right-3 top-3 z-10 rounded-full p-1 bg-background/80 border border-primary/20"
+              onClick={() => setLightboxOpen(false)}
+              aria-label="Close"
+            >
+              ×
+            </button>
+            {selectedStop.photos[lightboxIndex] && (
+              <>
+                <img
+                  src={selectedStop.photos[lightboxIndex].src}
+                  alt={selectedStop.photos[lightboxIndex].caption}
+                  className="w-full h-auto object-contain rounded-t-lg"
+                />
+                <div className="p-4 text-sm text-muted-foreground">
+                  {selectedStop.photos[lightboxIndex].caption}
+                </div>
+              </>
+            )}
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };

@@ -1,32 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import WorldMap, { journeyStops } from '@/components/WorldMap';
 import LandingHero from '@/components/LandingHero';
 import Navigation from '@/components/Navigation';
+import { isFirstVisit, markVisited, getLastStop, getPlanePosition, setPlanePosition, setLastStop } from '@/lib/journey';
 
 const Index = () => {
   const [showHero, setShowHero] = useState(true);
   const [mapActive, setMapActive] = useState(false);
   const [currentStop, setCurrentStop] = useState<number | null>(null);
 
-  // 🚨 IMPORTANT: plane uses geographic coords now
-  const [planePosition, setPlanePosition] = useState({ lon: 78.82, lat: 10.38 }); // near Pudukkottai
+  // Initialize plane position from session storage or default
+  const [planePosition, setPlanePositionState] = useState({ lon: 78.82, lat: 10.38 });
+
+  useEffect(() => {
+    // Check if this is first visit
+    const firstTime = isFirstVisit();
+    
+    if (!firstTime) {
+      // Not first visit - skip hero and go straight to map
+      setShowHero(false);
+      setMapActive(true);
+      
+      // Restore last plane position and stop
+      const savedPosition = getPlanePosition();
+      const lastStop = getLastStop();
+      
+      if (savedPosition) {
+        setPlanePositionState(savedPosition);
+      }
+      
+      if (lastStop) {
+        setCurrentStop(lastStop);
+      }
+    }
+    
+    // Check for auto-navigation to next stop
+    const urlParams = new URLSearchParams(window.location.search);
+    const nextStopId = urlParams.get('next');
+    
+    if (nextStopId && !firstTime) {
+      const nextStop = journeyStops.find(stop => stop.id === parseInt(nextStopId, 10));
+      if (nextStop) {
+        // Auto-fly to next stop after a short delay
+        setTimeout(() => {
+          handleStopSelect(nextStop);
+        }, 1000);
+      }
+      
+      // Clean up URL
+      window.history.replaceState({}, '', '/');
+    }
+  }, []);
 
   const handleBeginJourney = () => {
+    markVisited(); // Mark that user has visited
     setShowHero(false);
     setMapActive(true); // WorldMap will auto-fly to #1 when this turns true
   };
 
   const handleStopSelect = (stop: typeof journeyStops[number]) => {
     setCurrentStop(stop.id);
+    setLastStop(stop.id); // Save to session storage
   };
 
   // signature now (lon, lat)
   const handlePlaneMove = (lon: number, lat: number) => {
-    setPlanePosition({ lon, lat });
+    const newPosition = { lon, lat };
+    setPlanePositionState(newPosition);
+    setPlanePosition(newPosition); // Save to session storage
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero relative overflow-hidden">
+    <div className="min-h-screen bg-white relative overflow-hidden">
       <Navigation currentPage="/" />
 
       <div className="absolute inset-0">

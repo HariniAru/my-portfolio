@@ -123,12 +123,14 @@
 // export default Start;
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowLeft, MapPin, Target, Image as ImageIcon, X, Brain, Speech } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import Navigation from '@/components/Navigation';
+import { addVisitedPage } from '@/lib/journey';
+import { journeyStops } from '@/components/WorldMap';
 // import selfPortrait from '@/assets/self-portrait.jpg';
 
 // 1) Provide your images here
@@ -150,8 +152,23 @@ const indiaPhotos = [
 const Start = () => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
+  useEffect(() => {
+    addVisitedPage('/start');
+  }, []);
+
   const handleBackToMap = () => (window.location.href = '/');
-  const handleContinueJourney = () => (window.location.href = '/home');
+  
+  const handleContinueJourney = () => {
+    const currentStop = journeyStops.find(stop => stop.route === '/start');
+    const nextStop = journeyStops.find(stop => stop.id === (currentStop?.id || 0) + 1);
+    
+    if (nextStop) {
+      addVisitedPage('/start');
+      window.location.href = `/?next=${nextStop.id}`;
+    } else {
+      window.location.href = '/';
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-hero">

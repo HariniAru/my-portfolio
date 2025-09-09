@@ -221,7 +221,7 @@
 
 
 // Experience.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ArrowLeft,
   MapPin,
@@ -241,6 +241,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import Navigation from '@/components/Navigation';
+import { addVisitedPage } from '@/lib/journey';
+import { journeyStops } from '@/components/WorldMap';
 
 type ExperienceItem = {
   title: string;
@@ -260,8 +262,21 @@ const Experience: React.FC = () => {
     window.location.href = '/';
   };
 
+  useEffect(() => {
+    addVisitedPage('/experience');
+  }, []);
+
   const handleContinueJourney = () => {
-    window.location.href = '/projects&research';
+    // Find next stop in journey
+    const currentStop = journeyStops.find(stop => stop.route === '/experience');
+    const nextStop = journeyStops.find(stop => stop.id === (currentStop?.id || 0) + 1);
+    
+    if (nextStop) {
+      // Ensure proper journey progression
+      window.location.href = `/?next=${nextStop.id}`;
+    } else {
+      window.location.href = '/';
+    }
   };
 
   // ——— WORK EXPERIENCE (from resume) ——————————————————————————————————————————
