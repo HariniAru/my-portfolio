@@ -544,7 +544,7 @@ const Projects: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-hero">
-      <Navigation currentPage="/projects" />
+      <Navigation currentPage="/projects&research" />
 
       <div className="container mx-auto px-6 py-20 max-w-6xl">
         {/* Header */}

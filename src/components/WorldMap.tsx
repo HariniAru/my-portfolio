@@ -528,7 +528,8 @@ const MAP_H = 520;
 
 // Card metrics - optimized for better UX
 const CARD_W = 320;
-const CARD_H = 200;
+const CARD_H = 280; // Increased to accommodate photo gallery
+const CARD_MAX_H = Math.min(CARD_H, MAP_H * 0.7); // 70% of viewport height max
 const CARD_MARGIN = 20; // padding from edges
 const PIN_GAP = 16;     // gap from pin
 
@@ -663,8 +664,8 @@ export const journeyStops = [
     lon: -81.52,
     route: "/leadership&involvement",
     photos: [
-      { src: '/src/assets/florida/beach.jpg', caption: 'Florida sunset beach scene.' },
-      { src: '/src/assets/florida/conference.jpg', caption: 'Leadership conference in Orlando.' },
+      { src: '/src/assets/singapore/nature-view.jpg', caption: 'Singapore nature view' },
+      { src: '/src/assets/singapore/garden-rhapsody.jpg', caption: 'Garden Rhapsody light show' },
     ],
   },
 ] as const;
@@ -830,16 +831,21 @@ const WorldMap: React.FC<WorldMapProps> = ({
       // User clicked "Continue Journey" from a page
       const targetStop = journeyStops.find(s => s.id === nextStopId);
       if (targetStop) {
-        // Position plane at the previous stop first
+        // Find the current stop based on the visited page we came from
         const prevStop = journeyStops.find(s => s.id === nextStopId - 1);
-        if (prevStop) {
-          onPlaneMove(prevStop.lon, prevStop.lat);
-        }
         
-        // Then fly to the target stop
-        setTimeout(() => {
+        if (prevStop) {
+          // Position plane at the previous stop (where user was)
+          onPlaneMove(prevStop.lon, prevStop.lat);
+          
+          // Brief delay to ensure plane is positioned, then fly to target
+          setTimeout(() => {
+            goToStop(targetStop);
+          }, 200);
+        } else {
+          // Fallback: just go to target stop
           goToStop(targetStop);
-        }, 100);
+        }
         
         // Clean up URL
         window.history.replaceState({}, '', window.location.pathname);
@@ -847,14 +853,14 @@ const WorldMap: React.FC<WorldMapProps> = ({
       }
     }
 
-    // Default behavior - go to first unvisited stop or first stop
+    // Default behavior - go to first unvisited stop or position at last visited
     if (!selectedStop && !currentStop) {
       const lastVisitedStop = visitedPages.length > 0 
         ? journeyStops.find(stop => visitedPages.includes(stop.route))
         : null;
       
       if (lastVisitedStop) {
-        // Position plane at last visited location
+        // Position plane at last visited location without opening card
         onPlaneMove(lastVisitedStop.lon, lastVisitedStop.lat);
       } else {
         // New user, go to first stop
@@ -874,7 +880,20 @@ const WorldMap: React.FC<WorldMapProps> = ({
     const next = journeyStops.find((s) => s.id === nextId);
     if (next) {
       setSelectedStop(null);
-      goToStop(next);
+      // Start plane at current position and fly to next stop
+      if (selectedStop) {
+        // Ensure plane is at the current stop before flying
+        onPlaneMove(selectedStop.lon, selectedStop.lat);
+        setTimeout(() => {
+          goToStop(next);
+        }, 100);
+      } else {
+        goToStop(next);
+      }
+    } else if (selectedStop?.id === journeyStops.length) {
+      // Last stop - return to start
+      setSelectedStop(null);
+      goToStop(journeyStops[0]);
     }
   };
 
@@ -1057,23 +1076,26 @@ const WorldMap: React.FC<WorldMapProps> = ({
           </Marker>
         )}
 
-        {/* Enhanced popup card with photo gallery */}
+        {/* Enhanced popup card with photo gallery and overflow protection */}
         {selectedStop && selectedXY && (() => {
           const { x, y, placement } = placeCard(selectedXY.x, selectedXY.y, selectedStop.id);
           const photos = selectedStop.photos || [];
           const currentPhoto = photos[galleryIndex];
+          const nextStopId = selectedStop.id + 1;
+          const nextStop = journeyStops.find(s => s.id === nextStopId);
+          const isLastStop = selectedStop.id === journeyStops.length;
 
           return (
             <foreignObject
               x={x}
               y={y}
               width={CARD_W}
-              height={CARD_H + 80} // Account for photo gallery
+              height={CARD_MAX_H}
               className="pointer-events-auto"
             >
-              <div className="transform transition-all duration-300 ease-out animate-card-pop">
-                <Card className="w-full h-full bg-card/95 backdrop-blur-md border-2 border-primary/30 shadow-xl transition-shadow duration-300">
-                  <CardHeader className="pb-2 px-4 pt-3">
+              <div className="transform transition-all duration-300 ease-out animate-card-pop h-full">
+                <Card className="w-full h-full bg-card/95 backdrop-blur-md border-2 border-primary/30 shadow-xl transition-shadow duration-300 flex flex-col">
+                  <CardHeader className="pb-2 px-4 pt-3 flex-shrink-0">
                     <CardTitle className="flex items-center justify-between text-base">
                       <span className="font-semibold text-foreground">{selectedStop.name}</span>
                       <button
@@ -1086,17 +1108,19 @@ const WorldMap: React.FC<WorldMapProps> = ({
                     </CardTitle>
                     <p className="text-xs text-muted-foreground font-medium">{selectedStop.location}</p>
                   </CardHeader>
-                  <CardContent className="px-4 pb-3 space-y-3 flex-1 overflow-hidden">
-                    <div>
+                  
+                  {/* Scrollable content area */}
+                  <CardContent className="px-4 pb-3 flex-1 overflow-y-auto space-y-3 min-h-0">
+                    <div className="flex-shrink-0">
                       <h3 className="font-semibold text-sm mb-1 text-foreground">{selectedStop.title}</h3>
-                      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+                      <p className="text-xs text-muted-foreground leading-relaxed">
                         {selectedStop.description}
                       </p>
                     </div>
                     
                     {/* Photo Gallery */}
                     {photos.length > 0 && (
-                      <div className="space-y-2">
+                      <div className="space-y-2 flex-shrink-0">
                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
                           <Images className="h-3 w-3" />
                           <span className="font-medium">Photos ({galleryIndex + 1}/{photos.length})</span>
@@ -1118,12 +1142,14 @@ const WorldMap: React.FC<WorldMapProps> = ({
                                   <button
                                     onClick={() => setGalleryIndex((prev) => prev === 0 ? photos.length - 1 : prev - 1)}
                                     className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-background/90 border border-primary/20 flex items-center justify-center hover:bg-background transition-all hover:scale-110"
+                                    aria-label="Previous photo"
                                   >
                                     <ChevronLeft className="h-4 w-4" />
                                   </button>
                                   <button
                                     onClick={() => setGalleryIndex((prev) => prev === photos.length - 1 ? 0 : prev + 1)}
                                     className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-background/90 border border-primary/20 flex items-center justify-center hover:bg-background transition-all hover:scale-110"
+                                    aria-label="Next photo"
                                   >
                                     <ChevronRight className="h-4 w-4" />
                                   </button>
@@ -1134,8 +1160,11 @@ const WorldMap: React.FC<WorldMapProps> = ({
                         </div>
                       </div>
                     )}
-                    
-                    <div className="flex gap-2 pt-1">
+                  </CardContent>
+                  
+                  {/* Fixed action buttons at bottom */}
+                  <div className="px-4 pb-3 flex-shrink-0 border-t border-primary/10 pt-3">
+                    <div className="flex gap-2">
                       <Button 
                         onClick={handleEnter} 
                         size="sm" 
@@ -1149,10 +1178,10 @@ const WorldMap: React.FC<WorldMapProps> = ({
                         size="sm"
                         className="flex-1 border-primary/30 hover:bg-primary/5 text-xs h-9 transition-all duration-200 hover:scale-105 font-medium"
                       >
-                        Continue
+                        {isLastStop ? 'Return to Start' : `Continue${nextStop ? ` to ${nextStop.name}` : ''}`}
                       </Button>
                     </div>
-                  </CardContent>
+                  </div>
                 </Card>
               </div>
             </foreignObject>

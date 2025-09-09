@@ -1,4 +1,4 @@
-### Checkpoint 2
+### Fix 2
 Show the **“Join Me on my CS Journey”** landing hero page **only the first time a user enters the website**. On subsequent visits (navigating back to the map, or reloading within the same session), bypass the landing hero and go straight to the map.
 
 Set the **background color of the Map page to white** to match the map.
@@ -19,7 +19,7 @@ On each content page, when the user clicks **“Continue Journey to ___”**, re
 
 
 
-### Checkpoint 3
+### Fix 3
 Smooth the plane’s movement animation on the map.
 
 Increase the animation speed so the plane flies faster between pins.
@@ -43,7 +43,7 @@ Ensure **all pages** redirect back to the map when the “Continue Journey to __
 Fix the progress tracker so that whenever a user visits a page, that stop is marked as “read/visited.” The progress should update the next time the map + hamburger menu are viewed.
 
 
-### Checkpoint 4 - Fixes to Make
+### Fix 4
 
 ## Plane Behavior
 - The plane should remain stationary when idle.  
@@ -63,3 +63,29 @@ Fix the progress tracker so that whenever a user visits a page, that stop is mar
 
 
 Only change the necessary files to fix these issues.
+
+### Fix 5 - Fixes to make
+
+# Fix Location Card Overflow
+
+Journey order: 1 = Start, 2 = Home, 3 = Education, 4 = Experience, 5 = Projects & Research, 6 = Leadership & Involvement.
+
+## Issue
+- The location card on the map is cut off when a pin is near the bottom of the screen.  
+- The bottom part of the card (image gallery + Enter / Continue Journey buttons) is hidden and inaccessible.  
+- Cause: The card is absolutely positioned relative to the map container and extends beyond the viewport.
+
+## Fix
+1. Implement **dynamic positioning** for the card:
+   - If there is not enough space below the pin, render the card **above** the pin instead of below.  
+   - Otherwise, keep it below the pin.  
+
+2. Add a **scrollable fallback**:
+   - Apply a `max-height` (e.g. `70vh`).  
+   - Enable vertical scrolling (`overflow-y-auto`) so all content is always accessible.  
+
+## Acceptance Criteria
+- For pins near the bottom of the map, the card automatically flips above the pin.  
+- A card should never cover any pin on the map. 
+- The content should fit inside the card. You can resize everything (titles, text, image gallery) to achieve this.
+- The Enter and Continue Journey buttons are always visible and clickable.  
