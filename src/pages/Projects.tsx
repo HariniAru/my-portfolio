@@ -883,7 +883,7 @@ const Projects: React.FC = () => {
         {/* Nav CTA */}
         <div className="mt-14 flex justify-center">
           <Button onClick={handleContinueJourney} size="lg" className="px-8 py-6 text-lg bg-primary hover:bg-primary/90 transition-all duration-300 hover:scale-105">
-            Continue Journey to Florida
+Continue Journey to Florida
           </Button>
         </div>
       </div>

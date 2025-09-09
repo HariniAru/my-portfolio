@@ -569,7 +569,7 @@ const Experience: React.FC = () => {
               size="lg"
               className="px-8 py-6 text-lg bg-primary hover:bg-primary/90 transition-all duration-300 hover:scale-105"
             >
-              Continue Journey to Mexico
+Continue Journey to Mexico
             </Button>
           </div>
         </div>

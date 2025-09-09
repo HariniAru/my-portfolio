@@ -445,7 +445,7 @@ const Education: React.FC = () => {
               size="lg"
               className="px-8 py-6 text-lg bg-primary hover:bg-primary/90 transition-all duration-300 hover:scale-105"
             >
-              Continue Journey to New York
+Continue Journey to New York
             </Button>
           </div>
         </div>

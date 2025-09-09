@@ -297,7 +297,7 @@
 // export default Leadership;
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ArrowLeft,
   MapPin,
@@ -321,6 +321,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import Navigation from '@/components/Navigation';
+import { addVisitedPage } from '@/lib/journey';
+import { journeyStops } from '@/components/WorldMap';
 
 // shared chips / stats
 const chip =
@@ -330,8 +332,25 @@ const stat = 'rounded-lg border border-primary/15 bg-accent/40 px-3 py-2 text-sm
 const Leadership: React.FC = () => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
+  useEffect(() => {
+    addVisitedPage('/leadership&involvement');
+  }, []);
+
   const handleBackToMap = () => (window.location.href = '/');
-  const handleContinueJourney = () => (window.location.href = '/projects');
+  
+  const handleContinueJourney = () => {
+    // Find next stop in journey
+    const currentStop = journeyStops.find(stop => stop.route === '/leadership&involvement');
+    const nextStop = journeyStops.find(stop => stop.id === (currentStop?.id || 0) + 1);
+    
+    if (nextStop) {
+      // Ensure proper journey progression
+      window.location.href = `/?next=${nextStop.id}`;
+    } else {
+      // Return to start
+      window.location.href = '/';
+    }
+  };
 
   // ===================== DATA =====================
   // SWE timeline (chronological)
@@ -650,7 +669,7 @@ const Leadership: React.FC = () => {
 
           {/* Back to Map */}
           <div className="mt-14 flex justify-center">
-            <Button onClick={handleBackToMap} size="lg" className="px-8 py-6 text-lg bg-primary hover:bg-primary/90 transition-all duration-300 hover:scale-105">Return to Journey Map</Button>
+            <Button onClick={handleContinueJourney} size="lg" className="px-8 py-6 text-lg bg-primary hover:bg-primary/90 transition-all duration-300 hover:scale-105">Return to Journey Map</Button>
           </div>
         </div>
       </div>
