@@ -903,7 +903,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
 
   const selectedXY = selectedStop ? project(selectedStop.lon, selectedStop.lat) : null;
   const visitedPages = getVisitedPages();
-  const visitedStops = journeyStops.filter(stop => visitedPages.includes(stop.route));
+  // const visitedStops = journeyStops.filter(stop => visitedPages.includes(stop.route));
 
   return (
     <div
@@ -955,7 +955,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
         </Geographies>
 
         {/* Journey Path Lines */}
-        {isActive && visitedStops.length > 1 && (
+        {/* {isActive && visitedStops.length > 1 && (
           <g>
             {visitedStops.slice(0, -1).map((stop, index) => {
               const nextStop = visitedStops[index + 1];
@@ -964,7 +964,6 @@ const WorldMap: React.FC<WorldMapProps> = ({
               
               return (
                 <g key={`path-${stop.id}-${nextStop.id}`}>
-                  {/* Background line for depth */}
                   <line
                     x1={start.x}
                     y1={start.y}
@@ -974,7 +973,6 @@ const WorldMap: React.FC<WorldMapProps> = ({
                     strokeWidth={4}
                     opacity={0.2}
                   />
-                  {/* Main animated line */}
                   <line
                     x1={start.x}
                     y1={start.y}
@@ -993,7 +991,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
               );
             })}
           </g>
-        )}
+        )} */}
 
         {/* Pins */}
         {isActive &&
