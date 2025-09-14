@@ -339,15 +339,17 @@ const Leadership: React.FC = () => {
   const handleBackToMap = () => (window.location.href = '/');
   
   const handleContinueJourney = () => {
-    // Find next stop in journey
+    // Find current stop and loop back to start (stop 1)
     const currentStop = journeyStops.find(stop => stop.route === '/leadership&involvement');
-    const nextStop = journeyStops.find(stop => stop.id === (currentStop?.id || 0) + 1);
+    const startStop = journeyStops.find(stop => stop.id === 1); // Always go to Start
     
-    if (nextStop) {
-      // Ensure proper journey progression
-      window.location.href = `/?next=${nextStop.id}&from=${currentStop?.id}`;
+    if (currentStop && startStop) {
+      // Loop back to Start with proper plane animation
+      addVisitedPage('/leadership&involvement');
+      window.location.href = `/?from=${currentStop.id}&next=${startStop.id}`;
     } else {
-      // Return to start
+      // Fallback: return to map
+      addVisitedPage('/leadership&involvement');
       window.location.href = '/';
     }
   };
@@ -669,7 +671,7 @@ const Leadership: React.FC = () => {
 
           {/* Back to Map */}
           <div className="mt-14 flex justify-center">
-            <Button onClick={handleContinueJourney} size="lg" className="px-8 py-6 text-lg bg-primary hover:bg-primary/90 transition-all duration-300 hover:scale-105">Return to Journey Map</Button>
+            <Button onClick={handleContinueJourney} size="lg" className="px-8 py-6 text-lg bg-primary hover:bg-primary/90 transition-all duration-300 hover:scale-105">Continue Journey to Start</Button>
           </div>
         </div>
       </div>
