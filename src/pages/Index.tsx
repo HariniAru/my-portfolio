@@ -92,6 +92,8 @@ const Index = () => {
     setPlanePosition(newPosition); // Save to session storage
   };
 
+  console.log('Index component render - animateToStop:', animateToStop, 'mapActive:', mapActive);
+
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
       <Navigation currentPage="/" />

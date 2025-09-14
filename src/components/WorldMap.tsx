@@ -710,6 +710,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
   onPlaneMove,
   animateToStop
 }) => {
+  console.log('WorldMap component loaded with animateToStop:', animateToStop);
   const [selectedStop, setSelectedStop] = useState<Stop | null>(null);
   const [isPlaneFlying, setIsPlaneFlying] = useState(false);
   const [headingDeg, setHeadingDeg] = useState(0);
@@ -846,8 +847,10 @@ const WorldMap: React.FC<WorldMapProps> = ({
 
   // Handle external animation requests
   useEffect(() => {
+    console.log('WorldMap useEffect - animateToStop:', animateToStop, 'isActive:', isActive);
     if (animateToStop && isActive) {
       const targetStop = journeyStops.find(s => s.id === animateToStop);
+      console.log('Found targetStop:', targetStop);
       if (targetStop) {
         goToStop(targetStop);
       }
