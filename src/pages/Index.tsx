@@ -34,17 +34,26 @@ const Index = () => {
       }
     }
     
-    // Check for auto-navigation to next stop
+    // Check for auto-navigation to next stop (from "Continue Journey" buttons)
     const urlParams = new URLSearchParams(window.location.search);
     const nextStopId = urlParams.get('next');
+    const currentStopId = urlParams.get('from');
     
     if (nextStopId && !firstTime) {
       const nextStop = journeyStops.find(stop => stop.id === parseInt(nextStopId, 10));
-      if (nextStop) {
-        // Auto-fly to next stop after a short delay
+      const currentStop = currentStopId ? 
+        journeyStops.find(stop => stop.id === parseInt(currentStopId, 10)) : 
+        journeyStops.find(stop => stop.id === parseInt(nextStopId, 10) - 1);
+      
+      if (nextStop && currentStop) {
+        // Place plane at current stop first
+        setPlanePositionState({ lon: currentStop.lon, lat: currentStop.lat });
+        setCurrentStop(currentStop.id);
+        
+        // Then auto-fly to next stop after a short delay
         setTimeout(() => {
           handleStopSelect(nextStop);
-        }, 1000);
+        }, 800);
       }
       
       // Clean up URL

@@ -92,6 +92,19 @@ export function setPlanePosition(position: { lon: number; lat: number }): void {
   }
 }
 
+// Get current stop based on route
+export function getCurrentStopFromRoute(route: string): number | null {
+  const routeToStopMap: Record<string, number> = {
+    '/start': 1,
+    '/home': 2,
+    '/education': 3,
+    '/experience': 4,
+    '/projects': 5,
+    '/leadership': 6
+  };
+  return routeToStopMap[route] || null;
+}
+
 // Clear all journey data (for testing)
 export function clearJourneyData(): void {
   try {

@@ -164,7 +164,7 @@ const Start = () => {
     
     if (nextStop) {
       addVisitedPage('/start');
-      window.location.href = `/?next=${nextStop.id}`;
+      window.location.href = `/?next=${nextStop.id}&from=${currentStop?.id}`;
     } else {
       window.location.href = '/';
     }

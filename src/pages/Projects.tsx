@@ -326,7 +326,7 @@ const Projects: React.FC = () => {
     
     if (nextStop) {
       addVisitedPage('/projects&research');
-      window.location.href = `/?next=${nextStop.id}`;
+      window.location.href = `/?next=${nextStop.id}&from=${currentStop?.id}`;
     } else {
       window.location.href = '/';
     }

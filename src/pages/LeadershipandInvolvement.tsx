@@ -345,7 +345,7 @@ const Leadership: React.FC = () => {
     
     if (nextStop) {
       // Ensure proper journey progression
-      window.location.href = `/?next=${nextStop.id}`;
+      window.location.href = `/?next=${nextStop.id}&from=${currentStop?.id}`;
     } else {
       // Return to start
       window.location.href = '/';

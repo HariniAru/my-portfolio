@@ -49,7 +49,7 @@ const Education: React.FC = () => {
     if (nextStop) {
       // Add visited page tracking and ensure journey progression
       addVisitedPage('/education');
-      window.location.href = `/?next=${nextStop.id}`;
+      window.location.href = `/?next=${nextStop.id}&from=${currentStop?.id}`;
     } else {
       window.location.href = '/';
     }
