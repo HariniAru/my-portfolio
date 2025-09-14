@@ -8,6 +8,7 @@ const Index = () => {
   const [showHero, setShowHero] = useState(true);
   const [mapActive, setMapActive] = useState(false);
   const [currentStop, setCurrentStop] = useState<number | null>(null);
+  const [animateToStop, setAnimateToStop] = useState<number | null>(null);
 
   // Initialize plane position from session storage or default
   const [planePosition, setPlanePositionState] = useState({ lon: 78.82, lat: 10.38 });
@@ -50,9 +51,11 @@ const Index = () => {
         setPlanePositionState({ lon: currentStop.lon, lat: currentStop.lat });
         setCurrentStop(currentStop.id);
         
-        // Then auto-fly to next stop after a short delay
+        // Then trigger animation to next stop after a short delay
         setTimeout(() => {
-          handleStopSelect(nextStop);
+          setAnimateToStop(nextStop.id);
+          setCurrentStop(nextStop.id);
+          setLastStop(nextStop.id); // Save to session storage
         }, 800);
       }
       
@@ -60,6 +63,16 @@ const Index = () => {
       window.history.replaceState({}, '', '/');
     }
   }, []);
+
+  // Reset animation trigger after it's been processed
+  useEffect(() => {
+    if (animateToStop) {
+      const timer = setTimeout(() => {
+        setAnimateToStop(null);
+      }, 2000); // Clear after animation completes
+      return () => clearTimeout(timer);
+    }
+  }, [animateToStop]);
 
   const handleBeginJourney = () => {
     markVisited(); // Mark that user has visited
@@ -90,6 +103,7 @@ const Index = () => {
           currentStop={currentStop}
           planePosition={planePosition}        // { lon, lat }
           onPlaneMove={handlePlaneMove}        // (lon, lat) => void
+          animateToStop={animateToStop}        // trigger animation
         />
       </div>
 

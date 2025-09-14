@@ -678,6 +678,7 @@ interface WorldMapProps {
   currentStop: number | null;
   planePosition: { lon: number; lat: number };
   onPlaneMove: (lon: number, lat: number) => void;
+  animateToStop?: number | null; // Add this prop to trigger animation
 }
 
 interface TooltipState {
@@ -707,6 +708,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
   currentStop,
   planePosition,
   onPlaneMove,
+  animateToStop
 }) => {
   const [selectedStop, setSelectedStop] = useState<Stop | null>(null);
   const [isPlaneFlying, setIsPlaneFlying] = useState(false);
@@ -824,37 +826,9 @@ const WorldMap: React.FC<WorldMapProps> = ({
   useEffect(() => {
     if (!isActive) return;
 
-    const nextStopId = getNextStopId();
-    const visitedPages = getVisitedPages();
-    
-    if (nextStopId) {
-      // User clicked "Continue Journey" from a page
-      const targetStop = journeyStops.find(s => s.id === nextStopId);
-      if (targetStop) {
-        // Find the current stop based on the visited page we came from
-        const prevStop = journeyStops.find(s => s.id === nextStopId - 1);
-        
-        if (prevStop) {
-          // Position plane at the previous stop (where user was)
-          onPlaneMove(prevStop.lon, prevStop.lat);
-          
-          // Brief delay to ensure plane is positioned, then fly to target
-          setTimeout(() => {
-            goToStop(targetStop);
-          }, 200);
-        } else {
-          // Fallback: just go to target stop
-          goToStop(targetStop);
-        }
-        
-        // Clean up URL
-        window.history.replaceState({}, '', window.location.pathname);
-        return;
-      }
-    }
-
     // Default behavior - go to first unvisited stop or position at last visited
     if (!selectedStop && !currentStop) {
+      const visitedPages = getVisitedPages();
       const lastVisitedStop = visitedPages.length > 0 
         ? journeyStops.find(stop => visitedPages.includes(stop.route))
         : null;
@@ -869,6 +843,16 @@ const WorldMap: React.FC<WorldMapProps> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isActive]);
+
+  // Handle external animation requests
+  useEffect(() => {
+    if (animateToStop && isActive) {
+      const targetStop = journeyStops.find(s => s.id === animateToStop);
+      if (targetStop) {
+        goToStop(targetStop);
+      }
+    }
+  }, [animateToStop, isActive]);
 
   const handlePinClick = (stop: Stop, e: React.MouseEvent) => {
     e.stopPropagation();
