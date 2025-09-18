@@ -134,19 +134,19 @@ import { journeyStops } from '@/components/WorldMap';
 // import selfPortrait from '@/assets/self-portrait.jpg';
 
 // 1) Provide your images here
-const portraitSrc = '/public/images/self-portrait.jpg'; // '/images/harini-portrait.jpg';
+const portraitSrc = '/images/self-portrait.jpg'; // '/images/harini-portrait.jpg';
 const indiaPhotos = [
-  { src: '/public/images/india/city-scene.jpg', caption: 'A vibrant, bustling street scene just outside the city of Karaikudi in Tamil Nadu.' },
-  { src: '/public/images/india/karaikudi-home.jpg', caption: 'My grandmother on a walk by our home in Karaikudi.' },
-  { src: '/public/images/india/theppakulam.jpg', caption: 'A theppakulam (pond of holy water) in front of the Karpaka Vinayakar temple.' },
-  { src: '/public/images/india/filter-coffee.jpg', caption: 'Savoring freshly made filter coffee with my family.' },
-  { src: '/public/images/india/deer.jpg', caption: 'A deer quietly greets us, peeking out from the trees and bushes on our morning forest walk.' },
-  { src: '/public/images/india/cows-grazing.jpg', caption: 'A herd of cows grazing peacefully in the fields outside a temple.', },
-  { src: '/public/images/india/jackfruit.jpg', caption: 'A ripe jackfruit hanging from a tree in the backyard of our ancestral home in Athangudi.' },
-  { src: '/public/images/india/calf.jpg', caption: 'A calf waiting for its mother in my grandmother\'s farm in Arasampatti.' },
-  { src: '/public/images/india/tamarind-tree.jpg', caption: 'A tamarind tree by our home in Ararasampatti, bearing fruit.' },
-  { src: '/public/images/india/outdoor-restaurant.jpg', caption: 'Outdoor hut-like seating at the Karaikudi Garden Biriyani restaurant in Karaikudi.' },
-  { src: '/public/images/india/vimana.jpg', caption: 'The vimana of the Karpaka Vinayakar temple, rising gracefully into the monsoon sky.' },
+  { src: '/images/india/city-scene.jpg', caption: 'A vibrant, bustling street scene just outside the city of Karaikudi in Tamil Nadu.' },
+  { src: '/images/india/karaikudi-home.jpg', caption: 'My grandmother on a walk by our home in Karaikudi.' },
+  { src: '/images/india/theppakulam.jpg', caption: 'A theppakulam (pond of holy water) in front of the Karpaka Vinayakar temple.' },
+  { src: '/images/india/filter-coffee.jpg', caption: 'Savoring freshly made filter coffee with my family.' },
+  { src: '/images/india/deer.jpg', caption: 'A deer quietly greets us, peeking out from the trees and bushes on our morning forest walk.' },
+  { src: '/images/india/cows-grazing.jpg', caption: 'A herd of cows grazing peacefully in the fields outside a temple.', },
+  { src: '/images/india/jackfruit.jpg', caption: 'A ripe jackfruit hanging from a tree in the backyard of our ancestral home in Athangudi.' },
+  { src: '/images/india/calf.jpg', caption: 'A calf waiting for its mother in my grandmother\'s farm in Arasampatti.' },
+  { src: '/images/india/tamarind-tree.jpg', caption: 'A tamarind tree by our home in Ararasampatti, bearing fruit.' },
+  { src: '/images/india/outdoor-restaurant.jpg', caption: 'Outdoor hut-like seating at the Karaikudi Garden Biriyani restaurant in Karaikudi.' },
+  { src: '/images/india/vimana.jpg', caption: 'The vimana of the Karpaka Vinayakar temple, rising gracefully into the monsoon sky.' },
 ];
 
 const Start = () => {

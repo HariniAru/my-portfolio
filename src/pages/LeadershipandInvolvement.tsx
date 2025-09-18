@@ -432,16 +432,16 @@ const Leadership: React.FC = () => {
 
   // Photo strip gallery (replace with real assets)
   const photos = [
-    { src: '/public/images/singapore/jewel-rain-vortex.jpg', caption: 'The Jewel Rain Vortex at Changi Airport.' },
-    { src: '/public/images/singapore/garden-rhapsody.jpg', caption: 'The mesmerizing Garden Rhapsody light show in Gardens by the Bay.' },
-    { src: '/public/images/singapore/greenhouse-indoor.jpg', caption: 'A mini safari beneath Singapore’s giant greenhouse canopy.' },
-    { src: '/public/images/singapore/greenhouse-sunset.jpg', caption: 'Golden hour from within the glass conservatory.' },
-    { src: '/public/images/singapore/bugis-junction.jpg', caption: 'Entrance of Bugis Junction mall in Singapore.' },
-    { src: '/public/images/singapore/singapore-apartment-sunset-view.jpg', caption: 'A sunset illuminates Singapore\'s city skyline.' },
-    { src: '/public/images/singapore/helix-bridge.jpg', caption: 'The Helix Bridge at night, a stunning architectural marvel.' },
-    { src: '/public/images/singapore/singapore-city-skyline.jpg', caption: 'The Singapore city skyline at night, a breathtaking view.' },
-    { src: '/public/images/singapore/nature-view.jpg', caption: 'Tropical trail, water on the horizon.' },
-    { src: '/public/images/singapore/singapore-apartment-night-view.jpg', caption: 'The tall buildings of Singapore glow at night.' },
+    { src: '/images/singapore/jewel-rain-vortex.jpg', caption: 'The Jewel Rain Vortex at Changi Airport.' },
+    { src: '/images/singapore/garden-rhapsody.jpg', caption: 'The mesmerizing Garden Rhapsody light show in Gardens by the Bay.' },
+    { src: '/images/singapore/greenhouse-indoor.jpg', caption: 'A mini safari beneath Singapore’s giant greenhouse canopy.' },
+    { src: '/images/singapore/greenhouse-sunset.jpg', caption: 'Golden hour from within the glass conservatory.' },
+    { src: '/images/singapore/bugis-junction.jpg', caption: 'Entrance of Bugis Junction mall in Singapore.' },
+    { src: '/images/singapore/singapore-apartment-sunset-view.jpg', caption: 'A sunset illuminates Singapore\'s city skyline.' },
+    { src: '/images/singapore/helix-bridge.jpg', caption: 'The Helix Bridge at night, a stunning architectural marvel.' },
+    { src: '/images/singapore/singapore-city-skyline.jpg', caption: 'The Singapore city skyline at night, a breathtaking view.' },
+    { src: '/images/singapore/nature-view.jpg', caption: 'Tropical trail, water on the horizon.' },
+    { src: '/images/singapore/singapore-apartment-night-view.jpg', caption: 'The tall buildings of Singapore glow at night.' },
   ];
 
   return (
