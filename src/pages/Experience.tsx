@@ -341,14 +341,14 @@ const Experience: React.FC = () => {
 
   // ——— WORK PHOTOS (replace these with your assets) ————————————————————————
   const workPhotos = [
-    { src: '/public/images/new york/brooklyn-bridge.jpg', caption: 'Stunning view of the Brooklyn Bridge at nighttime.' },
-    { src: '/public/images/new york/aladdin-broadway.jpg', caption: 'Inside a beautiful Broadway theater, moments before Aladdin begins.' },
-    { src: '/public/images/new york/central-park.jpg', caption: 'A peaceful walk down a path in Central Park' },
-    { src: '/public/images/new york/chinatown.jpg', caption: 'Rows of lanterns guide the way through Chinatown.' },
-    { src: '/public/images/new york/met.jpg', caption: 'Crowds climbing the steps of the Met, heading into history.' },
-    { src: '/public/images/new york/met-interior.jpg', caption: 'The Met’s American Wing, glowing with afternoon light.' },
-    { src: '/public/images/new york/new-york-street.jpg', caption: 'Walking past towers and time in lower Manhattan.' },
-    { src: '/public/images/new york/south-street-seaport.jpg', caption: 'Cobblestone streets and city views down by the South Street Seaport in FiDi.' }
+    { src: '/images/new york/brooklyn-bridge.jpg', caption: 'Stunning view of the Brooklyn Bridge at nighttime.' },
+    { src: '/images/new york/aladdin-broadway.jpg', caption: 'Inside a beautiful Broadway theater, moments before Aladdin begins.' },
+    { src: '/images/new york/central-park.jpg', caption: 'A peaceful walk down a path in Central Park' },
+    { src: '/images/new york/chinatown.jpg', caption: 'Rows of lanterns guide the way through Chinatown.' },
+    { src: '/images/new york/met.jpg', caption: 'Crowds climbing the steps of the Met, heading into history.' },
+    { src: '/images/new york/met-interior.jpg', caption: 'The Met’s American Wing, glowing with afternoon light.' },
+    { src: '/images/new york/new-york-street.jpg', caption: 'Walking past towers and time in lower Manhattan.' },
+    { src: '/images/new york/south-street-seaport.jpg', caption: 'Cobblestone streets and city views down by the South Street Seaport in FiDi.' }
   ];
 
   return (
