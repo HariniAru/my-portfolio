@@ -589,9 +589,17 @@ export const journeyStops = [
     lon: 78.82,
     route: "/start",
     photos: [
-      { src: '/src/assets/india/city-scene.jpg', caption: 'A vibrant, bustling street scene just outside the city of Karaikudi in Tamil Nadu.' },
-      { src: '/src/assets/india/karaikudi-home.jpg', caption: 'My grandmother on a walk by our home in Karaikudi.' },
-      { src: '/src/assets/india/theppakulam.jpg', caption: 'A theppakulam (pond of holy water) in front of the Karpaka Vinayakar temple.' },
+      { src: '/images/india/city-scene.jpg', caption: 'A vibrant, bustling street scene just outside the city of Karaikudi in Tamil Nadu.' },
+      { src: '/images/india/karaikudi-home.jpg', caption: 'My grandmother on a walk by our home in Karaikudi.' },
+      { src: '/images/india/theppakulam.jpg', caption: 'A theppakulam (pond of holy water) in front of the Karpaka Vinayakar temple.' },
+      { src: '/images/india/filter-coffee.jpg', caption: 'Savoring freshly made filter coffee with my family.' },
+      { src: '/images/india/deer.jpg', caption: 'A deer quietly greets us, peeking out from the trees and bushes on our morning forest walk.' },
+      { src: '/images/india/cows-grazing.jpg', caption: 'A herd of cows grazing peacefully in the fields outside a temple.', },
+      { src: '/images/india/jackfruit.jpg', caption: 'A ripe jackfruit hanging from a tree in the backyard of our ancestral home in Athangudi.' },
+      { src: '/images/india/calf.jpg', caption: 'A calf waiting for its mother in my grandmother\'s farm in Arasampatti.' },
+      { src: '/images/india/tamarind-tree.jpg', caption: 'A tamarind tree by our home in Ararasampatti, bearing fruit.' },
+      { src: '/images/india/outdoor-restaurant.jpg', caption: 'Outdoor hut-like seating at the Karaikudi Garden Biriyani restaurant in Karaikudi.' },
+      { src: '/images/india/vimana.jpg', caption: 'The vimana of the Karpaka Vinayakar temple, rising gracefully into the monsoon sky.' },
     ],
   },
   {
@@ -604,9 +612,13 @@ export const journeyStops = [
     lon: -119.42,
     route: "/home",
     photos: [
-      { src: '/src/assets/california/civic-center.jpg', caption: 'The Civic Center in San Francisco.' },
-      { src: '/src/assets/california/golden-gate-bridge.jpg', caption: 'The Golden Gate Bridge, a symbol of San Francisco.' },
-      { src: '/src/assets/california/half-moon-bay.jpg', caption: 'Cliffside serenity in the coastal fog at Half Moon Bay.' },
+      { src: '/images/california/civic-center.jpg', caption: 'The Civic Center in San Francisco.' },
+      { src: '/images/california/mural.jpg', caption: 'A mural of a man running on a high school building in San Francisco.' },
+      { src: '/images/california/fine-arts-museum.jpg', caption: 'View at the top of the Fine Arts Museum building in San Francisco.' },
+      { src: '/images/california/golden-gate-bridge.jpg', caption: 'The Golden Gate Bridge, a symbol of San Francisco.' },
+      { src: '/images/california/half-moon-bay.jpg', caption: 'Cliffside serenity in the coastal fog at Half Moon Bay.' },
+      { src: '/images/california/lake-tahoe.jpg', caption: 'A serene view of Lake Tahoe, surrounded by mountains.' },
+      { src: '/images/california/pastries.jpg', caption: 'Delicious pastries from Arsicault, a famous French bakery in San Francisco.' },
     ],
   },
   {
@@ -619,9 +631,14 @@ export const journeyStops = [
     lon: -89.0,
     route: "/education",
     photos: [
-      { src: '/src/assets/illinois/busey-hall.jpg', caption: 'My freshman year dorm.' },
-      { src: '/src/assets/illinois/bardeen-quad.jpg', caption: 'A view of the Bardeen Quad from the top floor of the CIF building.' },
-      { src: '/src/assets/illinois/graduation-pose.jpg', caption: 'Sporting my graduation gown by the steps of the Foellinger Auditorium.' },
+      { src: '/images/illinois/busey-hall.jpg', caption: 'My freshman year dorm.' },
+      { src: '/images/illinois/bardeen-quad.jpg', caption: 'A view of the Bardeen Quad from the top floor of the CIF building.' },
+      { src: '/images/illinois/swe-photo-wall.jpg', caption: 'Photo wall composed of SWE shirt designs at a SWE Diversity event.' },
+      { src: '/images/illinois/dads-4-daughters.jpg', caption: 'Dads 4 Daughters event organized by SWE at UIUC.' },
+      { src: '/images/illinois/snow-on-campus.jpg', caption: 'Snow on campus by the bridge area near the engineering quad.' },
+      { src: '/images/illinois/snow-heart.jpg', caption: 'A heart made with my friend’s and my boots during a particularly snowy walk to class.' },
+      { src: '/images/illinois/graduation-pose.jpg', caption: 'Sporting my graduation gown by the steps of the Foellinger Auditorium.' },
+      { src: '/images/illinois/commencement-ceremony.jpg', caption: 'An exhilerating, memorable Commencement ceremony at the Memorial Stadium.' },
     ],
   },
   {
@@ -634,9 +651,14 @@ export const journeyStops = [
     lon: -74.01,
     route: "/experience",
     photos: [
-      { src: '/src/assets/new york/brooklyn-bridge.jpg', caption: 'Stunning view of the Brooklyn Bridge at nighttime.' },
-      { src: '/src/assets/new york/central-park.jpg', caption: 'A peaceful walk down a path in Central Park' },
-      { src: '/src/assets/new york/met.jpg', caption: 'Crowds climbing the steps of the Met, heading into history.' },
+      { src: '/images/new york/brooklyn-bridge.jpg', caption: 'Stunning view of the Brooklyn Bridge at nighttime.' },
+      { src: '/images/new york/aladdin-broadway.jpg', caption: 'Inside a beautiful Broadway theater, moments before Aladdin begins.' },
+      { src: '/images/new york/central-park.jpg', caption: 'A peaceful walk down a path in Central Park' },
+      { src: '/images/new york/chinatown.jpg', caption: 'Rows of lanterns guide the way through Chinatown.' },
+      { src: '/images/new york/met.jpg', caption: 'Crowds climbing the steps of the Met, heading into history.' },
+      { src: '/images/new york/met-interior.jpg', caption: 'The Met’s American Wing, glowing with afternoon light.' },
+      { src: '/images/new york/new-york-street.jpg', caption: 'Walking past towers and time in lower Manhattan.' },
+      { src: '/images/new york/south-street-seaport.jpg', caption: 'Cobblestone streets and city views down by the South Street Seaport in FiDi.' }
     ],
   },
   {
@@ -649,9 +671,14 @@ export const journeyStops = [
     lon: -86.8515,
     route: "/projects&research",
     photos: [
-      { src: '/src/assets/cancun/cancun-sunrise.jpg', caption: 'Sunrise over the coastline of the Fiesta Americana Resort in Cancun.' },
-      { src: '/src/assets/cancun/chichen-itza-pyramid.jpg', caption: 'Chichén Itzá pyramid – a testament to Mayan architecture.' },
-      { src: '/src/assets/cancun/isla-mujeres-beach.jpg', caption: 'Relaxing beach vibes on Isla Mujeres.' },
+      { src: '/images/cancun/cancun-sunrise.jpg', caption: 'Sunrise over the coastline of the Fiesta Americana Resort in Cancun.' },
+      { src: '/images/cancun/hut-ceiling.jpg', caption: 'Palm-thatched ceiling view from our stay at the Fiesta Americana Resort in Cancun.' },
+      { src: '/images/cancun/valladolid-centro-church.jpg', caption: 'Quick snap of a beautiful church in Valladolid Centro while crossing the street.' },
+      { src: '/images/cancun/cancun-paragliding.jpg', caption: 'Morning paragliding over Benito Juárez — blue skies above, cool waters below.' },
+      { src: '/images/cancun/chichen-itza-pyramid.jpg', caption: 'Chichén Itzá pyramid – a testament to Mayan architecture.' },
+      { src: '/images/cancun/chichen-itza-wall-mural.jpg', caption: 'A powerful, intense mural at Chichén Itzá, depicting an ancient ritual beheading for the gods.' },
+      { src: '/images/cancun/isla-mujeres-sharks.jpg', caption: 'Sharks swimming in the reserves of Isla Mujeres.' },
+      { src: '/images/cancun/isla-mujeres-beach.jpg', caption: 'Relaxing beach vibes on Isla Mujeres.' },
     ],
   },
   {
@@ -664,8 +691,16 @@ export const journeyStops = [
     lon: -81.52,
     route: "/leadership&involvement",
     photos: [
-      { src: '/src/assets/singapore/nature-view.jpg', caption: 'Singapore nature view' },
-      { src: '/src/assets/singapore/garden-rhapsody.jpg', caption: 'Garden Rhapsody light show' },
+      { src: '/images/singapore/jewel-rain-vortex.jpg', caption: 'The Jewel Rain Vortex at Changi Airport.' },
+      { src: '/images/singapore/garden-rhapsody.jpg', caption: 'The mesmerizing Garden Rhapsody light show in Gardens by the Bay.' },
+      { src: '/images/singapore/greenhouse-indoor.jpg', caption: 'A mini safari beneath Singapore’s giant greenhouse canopy.' },
+      { src: '/images/singapore/greenhouse-sunset.jpg', caption: 'Golden hour from within the glass conservatory.' },
+      { src: '/images/singapore/bugis-junction.jpg', caption: 'Entrance of Bugis Junction mall in Singapore.' },
+      { src: '/images/singapore/singapore-apartment-sunset-view.jpg', caption: 'A sunset illuminates Singapore\'s city skyline.' },
+      { src: '/images/singapore/helix-bridge.jpg', caption: 'The Helix Bridge at night, a stunning architectural marvel.' },
+      { src: '/images/singapore/singapore-city-skyline.jpg', caption: 'The Singapore city skyline at night, a breathtaking view.' },
+      { src: '/images/singapore/nature-view.jpg', caption: 'Tropical trail, water on the horizon.' },
+      { src: '/images/singapore/singapore-apartment-night-view.jpg', caption: 'The tall buildings of Singapore glow at night.' },
     ],
   },
 ] as const;
@@ -1096,19 +1131,19 @@ const WorldMap: React.FC<WorldMapProps> = ({
                   
                   {/* Scrollable content area */}
                   <CardContent className="px-4 pb-3 flex-1 overflow-y-auto space-y-3 min-h-0">
-                    <div className="flex-shrink-0">
+                    {/* <div className="flex-shrink-0">
                       <h3 className="font-semibold text-sm mb-1 text-foreground">{selectedStop.title}</h3>
                       <p className="text-xs text-muted-foreground leading-relaxed">
                         {selectedStop.description}
                       </p>
-                    </div>
+                    </div> */}
                     
                     {/* Photo Gallery */}
                     {photos.length > 0 && (
                       <div className="space-y-2 flex-shrink-0">
                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                          <Images className="h-3 w-3" />
-                          <span className="font-medium">Photos ({galleryIndex + 1}/{photos.length})</span>
+                          {/* <Images className="h-3 w-3" /> */}
+                          {/* <span className="font-medium">Photos ({galleryIndex + 1}/{photos.length})</span> */}
                         </div>
                         <div className="relative aspect-video bg-muted/30 rounded-lg overflow-hidden border border-primary/10 shadow-sm">
                           {currentPhoto && (
