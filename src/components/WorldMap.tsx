@@ -425,6 +425,17 @@ const WorldMap: React.FC<WorldMapProps> = ({
   const visitedPages = getVisitedPages();
   // const visitedStops = journeyStops.filter(stop => visitedPages.includes(stop.route));
 
+  const getContinueLabel = (nextStopName?: string, isLast?: boolean) => {
+    if (isLast) return 'Return to Start';
+    if (!nextStopName) return 'Continue';
+
+    // Shorten this specific long title
+    if (nextStopName.trim() === 'Leadership & Involvement') {
+      return 'Continue to Leadership';
+    }
+    return `Continue to ${nextStopName.trim()}`;
+};
+
   return (
     <div
       className={`relative w-full h-full transition-all duration-1000 ${
@@ -690,13 +701,22 @@ const WorldMap: React.FC<WorldMapProps> = ({
                       >
                         Enter
                       </Button>
-                      <Button
+                      {/* <Button
                         onClick={handleContinueJourney}
                         variant="outline"
                         size="sm"
                         className="flex-1 border-primary/30 hover:bg-primary/5 text-xs h-9 transition-all duration-200 hover:scale-105 font-medium"
                       >
                         {isLastStop ? 'Return to Start' : `Continue${nextStop ? ` to ${nextStop.name}` : ''}`}
+                      </Button> */}
+                      <Button
+                        onClick={handleContinueJourney}
+                        variant="outline"
+                        size="sm"
+                        className="flex-1 border-primary/30 hover:bg-primary/5 text-xs h-9 transition-all duration-200 hover:scale-105 font-medium"                      >
+                        {/* <span className="text-xs block w-full text-center whitespace-nowrap overflow-hidden text-ellipsis"> */}
+                          {getContinueLabel(nextStop?.name, isLastStop)}
+                        {/* </span> */}
                       </Button>
                     </div>
                   </div>
