@@ -261,8 +261,8 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onNavigate }) => {
                   const isCurrent = activePath === normalizePath(stop.route);
 
                   // Use the same label here as your nav shows (Projects & Research)
-                  const label =
-                    stop.name === 'Projects & Research' ? 'Projects & Research' : stop.name;
+                  // const label =
+                  //   stop.name === 'Projects' ? 'Projects & Research' : stop.name;
 
                   return (
                     <div key={stop.id} className="flex items-center gap-2 text-sm">
@@ -284,7 +284,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onNavigate }) => {
                             : 'text-muted-foreground'
                         }
                       >
-                        {label}
+                        {stop.name}
                       </span>
                       {isCurrent && <span className="text-xs text-primary">(current)</span>}
                     </div>
