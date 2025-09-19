@@ -101,7 +101,7 @@
 
 //   return (
 //     <div className="min-h-screen bg-gradient-hero">
-//       <Navigation currentPage="/leadership" />
+//       <Navigation currentPage="/leadership&involvement" />
 
 //       <div className="container mx-auto px-6 py-20 max-w-5xl">
 //         {/* Header */}
@@ -446,7 +446,7 @@ const Leadership: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-hero">
-      <Navigation currentPage="/leadership" />
+      <Navigation currentPage="/leadership&involvement" />
 
       <div className="container mx-auto px-6 py-20 max-w-5xl">
         {/* Header */}
