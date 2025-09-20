@@ -156,6 +156,7 @@ import { Button } from '@/components/ui/button';
 import { journeyStops } from './WorldMap';
 import { getVisitedPages } from '@/lib/journey';
 import { Link, useLocation } from 'react-router-dom';
+import TopRightButtons from './TopRightButtons';
 
 interface NavigationProps {
   /** Optional: you can stop passing this once you switch to useLocation everywhere */
@@ -204,6 +205,9 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onNavigate }) => {
 
   return (
     <>
+      {/* Top Right Buttons */}
+      <TopRightButtons />
+      
       {/* Mobile Menu Button */}
       <Button
         variant="outline"

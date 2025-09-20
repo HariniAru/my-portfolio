@@ -89,13 +89,7 @@ const Home = () => {
             <MapPin className="h-5 w-5" />
             <span>Bay Area, California</span>
           </div>
-          <div className="ml-auto">
-            <Button asChild variant="secondary" className="gap-2">
-              <a href={RESUME_PDF} target="_blank" rel="noreferrer">
-                <FileDown className="h-5 w-5" /> Download Resume
-              </a>
-            </Button>
-          </div>
+
         </div>
 
         {/* Content */}
