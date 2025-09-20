@@ -67,8 +67,9 @@ const Start = () => {
           <div className="space-y-4 text-center md:text-left">
             <h1 className="text-5xl md:text-6xl font-bold text-foreground tracking-tight">Hi, I'm Harini Arumugam!</h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              My journey began in Tamil Nadu, India, where I was born. India shaped my identity,
-              curiosity, and the way I build: grounded in community, resourcefulness, and respect for complexity.
+              {/* My journey began in Tamil Nadu, India, where I was born. India shaped my identity,
+              curiosity, and the way I build: grounded in community, resourcefulness, and respect for complexity. */}
+              My roots in Tamil Nadu, India shaped my identity, curiosity, and approach: grounded in community, resourcefulness, and complexity.
             </p>
           </div>
 

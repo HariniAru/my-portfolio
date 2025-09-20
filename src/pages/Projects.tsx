@@ -276,7 +276,7 @@ const Projects: React.FC = () => {
         <div className="text-center space-y-4 animate-fade-in">
           <h1 className="text-5xl md:text-6xl font-bold text-foreground">Projects & Research</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            A curated look at the things I’ve designed, built, and studied — with a sunny Cancún vibe for this stop on the journey.
+            A focused look at the projects and research milestones that have expanded the horizons of my computer science journey.
           </p>
         </div>
 

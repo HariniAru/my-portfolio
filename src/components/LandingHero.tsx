@@ -15,7 +15,7 @@ const LandingHero: React.FC<LandingHeroProps> = ({ onBeginJourney, isVisible }) 
       <div className="text-center space-y-8 max-w-lg px-6">
         {/* Main Title */}
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-          Join Me on my{' '}
+          Join Me on My{' '}
           <span className="bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
             CS Journey
           </span>
@@ -34,7 +34,7 @@ const LandingHero: React.FC<LandingHeroProps> = ({ onBeginJourney, isVisible }) 
         {/* Call to Action */}
         <div className="space-y-4">
           <p className="text-lg md:text-xl text-muted-foreground max-w-md mx-auto">
-            Explore my professional journey through an interactive world map
+            Explore my professional journey through an interactive world map.
           </p>
           
           <Button 

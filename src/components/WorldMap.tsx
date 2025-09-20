@@ -159,7 +159,7 @@ export const journeyStops = [
   },
   {
     id: 5,
-    name: "Projects",
+    name: "Projects & Research",
     title: "Featured Projects",
     description: "Showcasing my technical skills and creativity",
     location: "Cancún, Mexico",
@@ -430,6 +430,9 @@ const WorldMap: React.FC<WorldMapProps> = ({
     if (!nextStopName) return 'Continue';
 
     // Shorten this specific long title
+    if (nextStopName.trim() === 'Projects & Research') {
+      return 'Continue to Projects';
+    }
     if (nextStopName.trim() === 'Leadership & Involvement') {
       return 'Continue to Leadership';
     }
