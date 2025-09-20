@@ -12,7 +12,7 @@ const TopRightButtons: React.FC<TopRightButtonsProps> = ({ className = '' }) => 
       <Button
         asChild
         variant="outline"
-        size="sm"
+        size="icon"
         className="bg-background/80 backdrop-blur-sm border-primary/20 hover:bg-primary/10 transition-all duration-200 hover:scale-105"
       >
         <a
@@ -27,7 +27,7 @@ const TopRightButtons: React.FC<TopRightButtonsProps> = ({ className = '' }) => 
       <Button
         asChild
         variant="outline"
-        size="sm"
+        size="icon"
         className="bg-background/80 backdrop-blur-sm border-primary/20 hover:bg-primary/10 transition-all duration-200 hover:scale-105"
       >
         <a

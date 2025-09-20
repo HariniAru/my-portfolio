@@ -29,7 +29,7 @@ const CARD_MAX_H = Math.min(CARD_H, MAP_H * 0.7); // 70% of viewport height max
 const CARD_MARGIN = 20; // padding from edges
 const PIN_GAP = 16;     // gap from pin
 
-// Compute a safe card top-left (x,y) given the pin’s pixel (px,py)
+// Compute a safe card top-left (x,y) given the pin's pixel (px,py)
 function placeCard(px: number, py: number, stopId?: number) {
   // Default: try above first
   let x = px - CARD_W / 2;
@@ -132,7 +132,7 @@ export const journeyStops = [
       { src: '/images/illinois/swe-photo-wall.jpg', caption: 'Photo wall composed of SWE shirt designs at a SWE Diversity event.' },
       { src: '/images/illinois/dads-4-daughters.jpg', caption: 'Dads 4 Daughters event organized by SWE at UIUC.' },
       { src: '/images/illinois/snow-on-campus.jpg', caption: 'Snow on campus by the bridge area near the engineering quad.' },
-      { src: '/images/illinois/snow-heart.jpg', caption: 'A heart made with my friend’s and my boots during a particularly snowy walk to class.' },
+      { src: '/images/illinois/snow-heart.jpg', caption: 'A heart made with my friend\'s and my boots during a particularly snowy walk to class.' },
       { src: '/images/illinois/graduation-pose.jpg', caption: 'Sporting my graduation gown by the steps of the Foellinger Auditorium.' },
       { src: '/images/illinois/commencement-ceremony.jpg', caption: 'An exhilerating, memorable Commencement ceremony at the Memorial Stadium.' },
     ],
@@ -152,7 +152,7 @@ export const journeyStops = [
       { src: '/images/new york/central-park.jpg', caption: 'A peaceful walk down a path in Central Park' },
       { src: '/images/new york/chinatown.jpg', caption: 'Rows of lanterns guide the way through Chinatown.' },
       { src: '/images/new york/met.jpg', caption: 'Crowds climbing the steps of the Met, heading into history.' },
-      { src: '/images/new york/met-interior.jpg', caption: 'The Met’s American Wing, glowing with afternoon light.' },
+      { src: '/images/new york/met-interior.jpg', caption: 'The Met\'s American Wing, glowing with afternoon light.' },
       { src: '/images/new york/new-york-street.jpg', caption: 'Walking past towers and time in lower Manhattan.' },
       { src: '/images/new york/south-street-seaport.jpg', caption: 'Cobblestone streets and city views down by the South Street Seaport in FiDi.' }
     ],
@@ -191,7 +191,7 @@ export const journeyStops = [
     photos: [
       { src: '/images/singapore/jewel-rain-vortex.jpg', caption: 'The Jewel Rain Vortex at Changi Airport.' },
       { src: '/images/singapore/garden-rhapsody.jpg', caption: 'The mesmerizing Garden Rhapsody light show in Gardens by the Bay.' },
-      { src: '/images/singapore/greenhouse-indoor.jpg', caption: 'A mini safari beneath Singapore’s giant greenhouse canopy.' },
+      { src: '/images/singapore/greenhouse-indoor.jpg', caption: 'A mini safari beneath Singapore\'s giant greenhouse canopy.' },
       { src: '/images/singapore/greenhouse-sunset.jpg', caption: 'Golden hour from within the glass conservatory.' },
       { src: '/images/singapore/bugis-junction.jpg', caption: 'Entrance of Bugis Junction mall in Singapore.' },
       { src: '/images/singapore/singapore-apartment-sunset-view.jpg', caption: 'A sunset illuminates Singapore\'s city skyline.' },
@@ -203,7 +203,73 @@ export const journeyStops = [
   },
 ] as const;
 
+/** --------------------------
+ *  Bonus stops (photo galleries only)
+ *  -------------------------- */
+export const bonusStops = [
+  {
+    id: 'bonus-florida',
+    name: "Florida",
+    title: "Bonus Gallery",
+    description: "Explore Florida through photos",
+    location: "Tampa",
+    // lat: 27.6648,
+    // lon: -81.5158,
+    lat: 25.4,
+    lon: -81.0,
+    photos: [
+      { src: '/images/placeholder-florida-1.jpg', caption: 'Beautiful Florida beaches and coastline.' },
+      { src: '/images/placeholder-florida-2.jpg', caption: 'Sunset over the Everglades.' },
+      { src: '/images/placeholder-florida-3.jpg', caption: 'Art Deco architecture in Miami Beach.' },
+    ],
+  },
+  {
+    id: 'bonus-seattle',
+    name: "Washington",
+    title: "Bonus Gallery",
+    description: "Explore Seattle through photos",
+    location: "Seattle",
+    lat: 43.6062,
+    lon: -120.3321,
+    photos: [
+      { src: '/images/placeholder-seattle-1.jpg', caption: 'The iconic Space Needle against the city skyline.' },
+      { src: '/images/placeholder-seattle-2.jpg', caption: 'Pike Place Market in full swing.' },
+      { src: '/images/placeholder-seattle-3.jpg', caption: 'Coffee culture in the Pacific Northwest.' },
+    ],
+  },
+  {
+    id: 'bonus-hawaii',
+    name: "Hawaii",
+    title: "Bonus Gallery",
+    description: "Explore Hawaii through photos",
+    location: "Oahu, Maui, Kauai, Big Island",
+    lat: 19.3069,
+    lon: -155.8583,
+    photos: [
+      { src: '/images/placeholder-hawaii-1.jpg', caption: 'Pristine beaches with crystal clear waters.' },
+      { src: '/images/placeholder-hawaii-2.jpg', caption: 'Volcanic landscapes and lush greenery.' },
+      { src: '/images/placeholder-hawaii-3.jpg', caption: 'Traditional Hawaiian culture and luau.' },
+    ],
+  },
+  {
+    id: 'bonus-indonesia',
+    name: "Indonesia",
+    title: "Bonus Gallery",
+    description: "Explore Indonesia through photos",
+    location: "Bintan Island",
+    lat: -5.3405,
+    lon: 105.0920,
+    photos: [
+      { src: '/images/placeholder-indonesia-1.jpg', caption: 'Ancient temples and spiritual architecture.' },
+      { src: '/images/placeholder-indonesia-2.jpg', caption: 'Rice terraces and tropical landscapes.' },
+      { src: '/images/placeholder-indonesia-3.jpg', caption: 'Traditional Indonesian culture and arts.' },
+    ],
+  },
+] as const;
+
 type Stop = (typeof journeyStops)[number];
+type BonusStop = (typeof bonusStops)[number];
+type AnyStop = Stop | BonusStop;
 
 interface WorldMapProps {
   isActive: boolean;
@@ -216,13 +282,13 @@ interface WorldMapProps {
 
 interface TooltipState {
   show: boolean;
-  stop: Stop | null;
+  stop: AnyStop | null;
   x: number;
   y: number;
 }
 
 interface LocationCardProps {
-  stop: Stop;
+  stop: AnyStop;
   onEnter: () => void;
   onContinue: () => void;
   onClose: () => void;
@@ -244,7 +310,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
   animateToStop
 }) => {
   console.log('WorldMap component loaded with animateToStop:', animateToStop);
-  const [selectedStop, setSelectedStop] = useState<Stop | null>(null);
+  const [selectedStop, setSelectedStop] = useState<AnyStop | null>(null);
   const [isPlaneFlying, setIsPlaneFlying] = useState(false);
   const [headingDeg, setHeadingDeg] = useState(0);
   const [tooltip, setTooltip] = useState<TooltipState>({ show: false, stop: null, x: 0, y: 0 });
@@ -289,7 +355,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
   };
 
   // Handle pin hover for tooltips
-  const handlePinMouseEnter = (stop: Stop, e: React.MouseEvent) => {
+  const handlePinMouseEnter = (stop: AnyStop, e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
     setTooltip({
       show: true,
@@ -303,10 +369,14 @@ const WorldMap: React.FC<WorldMapProps> = ({
     setTooltip({ show: false, stop: null, x: 0, y: 0 });
   };
 
-  const goToStop = (stop: Stop) => {
+  const goToStop = (stop: AnyStop) => {
     if (isPlaneFlying) return;
     setIsPlaneFlying(true);
-    onStopSelect(stop);
+    
+    // Only call onStopSelect for journey stops, not bonus stops
+    if ('route' in stop) {
+      onStopSelect(stop as Stop);
+    }
 
     // animate in pixel space for more stable heading
     const start = project(planePosition.lon, planePosition.lat);
@@ -390,40 +460,39 @@ const WorldMap: React.FC<WorldMapProps> = ({
     }
   }, [animateToStop, isActive]);
 
-  const handlePinClick = (stop: Stop, e: React.MouseEvent) => {
+  const handlePinClick = (stop: AnyStop, e: React.MouseEvent) => {
     e.stopPropagation();
     goToStop(stop);
   };
 
   const handleContinueJourney = () => {
-    const nextId = selectedStop ? selectedStop.id + 1 : (currentStop ?? 0) + 1;
-    const next = journeyStops.find((s) => s.id === nextId);
-    if (next) {
-      setSelectedStop(null);
-      // Start plane at current position and fly to next stop
-      if (selectedStop) {
-        // Ensure plane is at the current stop before flying
+    // Only continue journey for actual journey stops, not bonus stops
+    if (selectedStop && 'route' in selectedStop) {
+      const nextId = selectedStop.id + 1;
+      const next = journeyStops.find((s) => s.id === nextId);
+      if (next) {
+        setSelectedStop(null);
+        // Start plane at current position and fly to next stop
         onPlaneMove(selectedStop.lon, selectedStop.lat);
         setTimeout(() => {
           goToStop(next);
         }, 100);
-      } else {
-        goToStop(next);
+      } else if (selectedStop.id === journeyStops.length) {
+        // Last stop - return to start
+        setSelectedStop(null);
+        goToStop(journeyStops[0]);
       }
-    } else if (selectedStop?.id === journeyStops.length) {
-      // Last stop - return to start
-      setSelectedStop(null);
-      goToStop(journeyStops[0]);
     }
   };
 
   const handleEnter = () => {
-    if (selectedStop) window.location.href = selectedStop.route;
+    if (selectedStop && 'route' in selectedStop) {
+      window.location.href = selectedStop.route;
+    }
   };
 
   const selectedXY = selectedStop ? project(selectedStop.lon, selectedStop.lat) : null;
   const visitedPages = getVisitedPages();
-  // const visitedStops = journeyStops.filter(stop => visitedPages.includes(stop.route));
 
   const getContinueLabel = (nextStopName?: string, isLast?: boolean) => {
     if (isLast) return 'Return to Start';
@@ -527,7 +596,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
           </g>
         )} */}
 
-        {/* Pins */}
+        {/* Journey Stops Pins */}
         {isActive &&
           journeyStops.map((stop) => {
             const isVisited = visitedPages.includes(stop.route);
@@ -580,6 +649,47 @@ const WorldMap: React.FC<WorldMapProps> = ({
             );
           })}
 
+        {/* Bonus Stops Pins */}
+        {isActive &&
+          bonusStops.map((stop) => {
+            return (
+              <Marker
+                key={stop.id}
+                coordinates={[stop.lon, stop.lat]}
+                onClick={(e) => handlePinClick(stop, e as any)}
+                role="button"
+                aria-label={`Open ${stop.name} gallery`}
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") handlePinClick(stop, e as any);
+                }}
+              >
+                <circle 
+                  r={18} 
+                  fill="transparent" 
+                  className="cursor-pointer" 
+                  onMouseEnter={(e) => handlePinMouseEnter(stop, e as any)}
+                  onMouseLeave={handlePinMouseLeave}
+                />
+                <g 
+                  transform="translate(-12,-30)" 
+                  className="cursor-pointer"
+                  onMouseEnter={(e) => handlePinMouseEnter(stop, e as any)}
+                  onMouseLeave={handlePinMouseLeave}
+                >
+                  <MapPin
+                    className="w-8 h-8 text-amber-500 hover:scale-110 transition-transform"
+                    fill="currentColor"
+                  />
+                  {/* <Images
+                    className="w-4 h-4 text-white absolute"
+                    style={{ transform: 'translate(8px, 6px)' }}
+                  /> */}
+                </g>
+              </Marker>
+            );
+          })}
+
         {/* Plane */}
         {isActive && (
           <Marker coordinates={[planePosition.lon, planePosition.lat]}>
@@ -610,12 +720,17 @@ const WorldMap: React.FC<WorldMapProps> = ({
 
         {/* Enhanced popup card with photo gallery and overflow protection */}
         {selectedStop && selectedXY && (() => {
-          const { x, y, placement } = placeCard(selectedXY.x, selectedXY.y, selectedStop.id);
+          const isJourneyStop = 'route' in selectedStop;
+          const { x, y, placement } = placeCard(
+            selectedXY.x, 
+            selectedXY.y, 
+            isJourneyStop ? (selectedStop as Stop).id : undefined
+          );
           const photos = selectedStop.photos || [];
           const currentPhoto = photos[galleryIndex];
-          const nextStopId = selectedStop.id + 1;
-          const nextStop = journeyStops.find(s => s.id === nextStopId);
-          const isLastStop = selectedStop.id === journeyStops.length;
+          const nextStopId = isJourneyStop ? (selectedStop as Stop).id + 1 : null;
+          const nextStop = nextStopId ? journeyStops.find(s => s.id === nextStopId) : null;
+          const isLastStop = isJourneyStop ? (selectedStop as Stop).id === journeyStops.length : false;
 
           return (
             <foreignObject
@@ -643,20 +758,9 @@ const WorldMap: React.FC<WorldMapProps> = ({
                   
                   {/* Scrollable content area */}
                   <CardContent className="px-4 pb-3 flex-1 overflow-y-auto space-y-3 min-h-0">
-                    {/* <div className="flex-shrink-0">
-                      <h3 className="font-semibold text-sm mb-1 text-foreground">{selectedStop.title}</h3>
-                      <p className="text-xs text-muted-foreground leading-relaxed">
-                        {selectedStop.description}
-                      </p>
-                    </div> */}
-                    
                     {/* Photo Gallery */}
                     {photos.length > 0 && (
                       <div className="space-y-2 flex-shrink-0">
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                          {/* <Images className="h-3 w-3" /> */}
-                          {/* <span className="font-medium">Photos ({galleryIndex + 1}/{photos.length})</span> */}
-                        </div>
                         <div className="relative aspect-video bg-muted/30 rounded-lg overflow-hidden border border-primary/10 shadow-sm">
                           {currentPhoto && (
                             <>
@@ -694,35 +798,28 @@ const WorldMap: React.FC<WorldMapProps> = ({
                     )}
                   </CardContent>
                   
-                  {/* Fixed action buttons at bottom */}
-                  <div className="px-4 pb-3 flex-shrink-0 border-t border-primary/10 pt-3">
-                    <div className="flex gap-2">
-                      <Button 
-                        onClick={handleEnter} 
-                        size="sm" 
-                        className="flex-1 bg-primary hover:bg-primary/90 text-xs h-9 transition-all duration-200 hover:scale-105 font-medium"
-                      >
-                        Enter
-                      </Button>
-                      {/* <Button
-                        onClick={handleContinueJourney}
-                        variant="outline"
-                        size="sm"
-                        className="flex-1 border-primary/30 hover:bg-primary/5 text-xs h-9 transition-all duration-200 hover:scale-105 font-medium"
-                      >
-                        {isLastStop ? 'Return to Start' : `Continue${nextStop ? ` to ${nextStop.name}` : ''}`}
-                      </Button> */}
-                      <Button
-                        onClick={handleContinueJourney}
-                        variant="outline"
-                        size="sm"
-                        className="flex-1 border-primary/30 hover:bg-primary/5 text-xs h-9 transition-all duration-200 hover:scale-105 font-medium"                      >
-                        {/* <span className="text-xs block w-full text-center whitespace-nowrap overflow-hidden text-ellipsis"> */}
+                  {/* Action buttons only for journey stops */}
+                  {isJourneyStop && (
+                    <div className="px-4 pb-3 flex-shrink-0 border-t border-primary/10 pt-3">
+                      <div className="flex gap-2">
+                        <Button 
+                          onClick={handleEnter} 
+                          size="sm" 
+                          className="flex-1 bg-primary hover:bg-primary/90 text-xs h-9 transition-all duration-200 hover:scale-105 font-medium"
+                        >
+                          Enter
+                        </Button>
+                        <Button
+                          onClick={handleContinueJourney}
+                          variant="outline"
+                          size="sm"
+                          className="flex-1 border-primary/30 hover:bg-primary/5 text-xs h-9 transition-all duration-200 hover:scale-105 font-medium"
+                        >
                           {getContinueLabel(nextStop?.name, isLastStop)}
-                        {/* </span> */}
-                      </Button>
+                        </Button>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </Card>
               </div>
             </foreignObject>
