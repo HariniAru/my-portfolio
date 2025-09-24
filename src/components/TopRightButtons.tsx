@@ -16,7 +16,7 @@ const TopRightButtons: React.FC<TopRightButtonsProps> = ({ className = '' }) => 
         className="bg-background/80 backdrop-blur-sm border-primary/20 hover:bg-primary/10 transition-all duration-200 hover:scale-105"
       >
         <a
-          href="https://drive.google.com/file/d/1jOxKXMELNMyJXem_6vGwdsoDzhYBKi44/view?usp=sharing"
+          href="https://drive.google.com/file/d/1zPD9C9yi8xFIfkPEEq0d_Dqr1QmEhrgu/view?usp=sharing"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Download Resume"
