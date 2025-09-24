@@ -1,6 +1,6 @@
 # My Interactive Portfolio
 
-My computer science journey showcased through an interactive world map blending my background, education, experience, projects, leadership experience, and travels.
+Welcome to my portfolio! Explore my computer science journey on a world map that brings together my background, education, experience, projects, leadership, and travels.
 
 Click through the map, explore different stops, and see how my path has unfolded.
 
