@@ -14,6 +14,7 @@ import {
   Graticule,
 } from "react-simple-maps";
 import { geoEqualEarth } from "d3-geo";
+import { getImagesByLocation, type ImageInfo } from '@/lib/imageRegistry';
 
 const GEO_URL =
   "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
@@ -84,19 +85,7 @@ export const journeyStops = [
     lat: 10.38,
     lon: 78.82,
     route: "/start",
-    photos: [
-      { src: '/images/india/city-scene.jpg', caption: 'A vibrant, bustling street scene just outside the city of Karaikudi in Tamil Nadu.' },
-      { src: '/images/india/karaikudi-home.jpg', caption: 'My grandmother on a walk by our home in Karaikudi.' },
-      { src: '/images/india/theppakulam.jpg', caption: 'A theppakulam (pond of holy water) in front of the Karpaka Vinayakar temple.' },
-      { src: '/images/india/filter-coffee.jpg', caption: 'Savoring freshly made filter coffee with my family.' },
-      { src: '/images/india/deer.jpg', caption: 'A deer quietly greets us, peeking out from the trees and bushes on our morning forest walk.' },
-      { src: '/images/india/cows-grazing.jpg', caption: 'A herd of cows grazing peacefully in the fields outside a temple.', },
-      { src: '/images/india/jackfruit.jpg', caption: 'A ripe jackfruit hanging from a tree in the backyard of our ancestral home in Athangudi.' },
-      { src: '/images/india/calf.jpg', caption: 'A calf waiting for its mother in my grandmother\'s farm in Arasampatti.' },
-      { src: '/images/india/tamarind-tree.jpg', caption: 'A tamarind tree by our home in Ararasampatti, bearing fruit.' },
-      { src: '/images/india/outdoor-restaurant.jpg', caption: 'Outdoor hut-like seating at the Karaikudi Garden Biriyani restaurant in Karaikudi.' },
-      { src: '/images/india/vimana.jpg', caption: 'The vimana of the Karpaka Vinayakar temple, rising gracefully into the monsoon sky.' },
-    ],
+    photos: getImagesByLocation('india'),
   },
   {
     id: 2,
@@ -107,15 +96,7 @@ export const journeyStops = [
     lat: 36.78,
     lon: -119.42,
     route: "/home",
-    photos: [
-      { src: '/images/california/civic-center.jpg', caption: 'The Civic Center in San Francisco.' },
-      { src: '/images/california/mural.jpg', caption: 'A mural of a man running on a high school building in San Francisco.' },
-      { src: '/images/california/fine-arts-museum.jpg', caption: 'View at the top of the Fine Arts Museum building in San Francisco.' },
-      { src: '/images/california/golden-gate-bridge.jpg', caption: 'The Golden Gate Bridge, a symbol of San Francisco.' },
-      { src: '/images/california/half-moon-bay.jpg', caption: 'Cliffside serenity in the coastal fog at Half Moon Bay.' },
-      { src: '/images/california/lake-tahoe.jpg', caption: 'A serene view of Lake Tahoe, surrounded by mountains.' },
-      { src: '/images/california/pastries.jpg', caption: 'Delicious pastries from Arsicault, a famous French bakery in San Francisco.' },
-    ],
+    photos: getImagesByLocation('california'),
   },
   {
     id: 3,
@@ -126,16 +107,7 @@ export const journeyStops = [
     lat: 40.0,
     lon: -89.0,
     route: "/education",
-    photos: [
-      { src: '/images/illinois/busey-hall.jpg', caption: 'My freshman year dorm.' },
-      { src: '/images/illinois/bardeen-quad.jpg', caption: 'A view of the Bardeen Quad from the top floor of the CIF building.' },
-      { src: '/images/illinois/swe-photo-wall.jpg', caption: 'Photo wall composed of SWE shirt designs at a SWE Diversity event.' },
-      { src: '/images/illinois/dads-4-daughters.jpg', caption: 'Dads 4 Daughters event organized by SWE at UIUC.' },
-      { src: '/images/illinois/snow-on-campus.jpg', caption: 'Snow on campus by the bridge area near the engineering quad.' },
-      { src: '/images/illinois/snow-heart.jpg', caption: 'A heart made with my friend\'s and my boots during a particularly snowy walk to class.' },
-      { src: '/images/illinois/graduation-pose.jpg', caption: 'Sporting my graduation gown by the steps of the Foellinger Auditorium.' },
-      { src: '/images/illinois/commencement-ceremony.jpg', caption: 'An exhilerating, memorable Commencement ceremony at the Memorial Stadium.' },
-    ],
+    photos: getImagesByLocation('illinois'),
   },
   {
     id: 4,
@@ -146,16 +118,7 @@ export const journeyStops = [
     lat: 40.71,
     lon: -74.01,
     route: "/experience",
-    photos: [
-      { src: '/images/new york/brooklyn-bridge.jpg', caption: 'Stunning view of the Brooklyn Bridge at nighttime.' },
-      { src: '/images/new york/aladdin-broadway.jpg', caption: 'Inside a beautiful Broadway theater, moments before Aladdin begins.' },
-      { src: '/images/new york/central-park.jpg', caption: 'A peaceful walk down a path in Central Park' },
-      { src: '/images/new york/chinatown.jpg', caption: 'Rows of lanterns guide the way through Chinatown.' },
-      { src: '/images/new york/met.jpg', caption: 'Crowds climbing the steps of the Met, heading into history.' },
-      { src: '/images/new york/met-interior.jpg', caption: 'The Met\'s American Wing, glowing with afternoon light.' },
-      { src: '/images/new york/new-york-street.jpg', caption: 'Walking past towers and time in lower Manhattan.' },
-      { src: '/images/new york/south-street-seaport.jpg', caption: 'Cobblestone streets and city views down by the South Street Seaport in FiDi.' }
-    ],
+    photos: getImagesByLocation('new-york'),
   },
   {
     id: 5,
@@ -166,16 +129,7 @@ export const journeyStops = [
     lat: 19.1619,
     lon: -86.8515,
     route: "/projects&research",
-    photos: [
-      { src: '/images/cancun/cancun-sunrise.jpg', caption: 'Sunrise over the coastline of the Fiesta Americana Resort in Cancun.' },
-      { src: '/images/cancun/hut-ceiling.jpg', caption: 'Palm-thatched ceiling view from our stay at the Fiesta Americana Resort in Cancun.' },
-      { src: '/images/cancun/valladolid-centro-church.jpg', caption: 'Quick snap of a beautiful church in Valladolid Centro while crossing the street.' },
-      { src: '/images/cancun/cancun-paragliding.jpg', caption: 'Morning paragliding over Benito Juárez — blue skies above, cool waters below.' },
-      { src: '/images/cancun/chichen-itza-pyramid.jpg', caption: 'Chichén Itzá pyramid – a testament to Mayan architecture.' },
-      { src: '/images/cancun/chichen-itza-wall-mural.jpg', caption: 'A powerful, intense mural at Chichén Itzá, depicting an ancient ritual beheading for the gods.' },
-      { src: '/images/cancun/isla-mujeres-sharks.jpg', caption: 'Sharks swimming in the reserves of Isla Mujeres.' },
-      { src: '/images/cancun/isla-mujeres-beach.jpg', caption: 'Relaxing beach vibes on Isla Mujeres.' },
-    ],
+    photos: getImagesByLocation('cancun'),
   },
   {
     id: 6,
@@ -188,18 +142,7 @@ export const journeyStops = [
     lat: 1.3521,
     lon: 102.8,
     route: "/leadership&involvement",
-    photos: [
-      { src: '/images/singapore/jewel-rain-vortex.jpg', caption: 'The Jewel Rain Vortex at Changi Airport.' },
-      { src: '/images/singapore/garden-rhapsody.jpg', caption: 'The mesmerizing Garden Rhapsody light show in Gardens by the Bay.' },
-      { src: '/images/singapore/greenhouse-indoor.jpg', caption: 'A mini safari beneath Singapore\'s giant greenhouse canopy.' },
-      { src: '/images/singapore/greenhouse-sunset.jpg', caption: 'Golden hour from within the glass conservatory.' },
-      { src: '/images/singapore/bugis-junction.jpg', caption: 'Entrance of Bugis Junction mall in Singapore.' },
-      { src: '/images/singapore/singapore-apartment-sunset-view.jpg', caption: 'A sunset illuminates Singapore\'s city skyline.' },
-      { src: '/images/singapore/helix-bridge.jpg', caption: 'The Helix Bridge at night, a stunning architectural marvel.' },
-      { src: '/images/singapore/singapore-city-skyline.jpg', caption: 'The Singapore city skyline at night, a breathtaking view.' },
-      { src: '/images/singapore/nature-view.jpg', caption: 'Tropical trail, water on the horizon.' },
-      { src: '/images/singapore/singapore-apartment-night-view.jpg', caption: 'The tall buildings of Singapore glow at night.' },
-    ],
+    photos: getImagesByLocation('singapore'),
   },
 ] as const;
 
@@ -260,19 +203,7 @@ export const bonusStops = [
     location: "Oahu, Maui, Kauai, Big Island",
     lat: 19.3069,
     lon: -155.8583,
-    photos: [
-      { src: '/images/hawaii/hawaii-flower.jpg', caption: 'A vibrant hibiscus in full bloom.' },
-      { src: '/images/hawaii/hawaii-waterfall.jpg', caption: 'Twin falls cascading through emerald cliffs.' },
-      { src: '/images/hawaii/honolulu-city.jpg', caption: 'City lights and palm trees along Honolulu at night.' },
-      { src: '/images/hawaii/kauai-chickens.jpg', caption: 'Chickens wandering freely under swaying palms on Kauai island.' },
-      { src: '/images/hawaii/kauai-resort.jpg', caption: 'Lush gardens and quiet luxury by the shore at our resort in Kauai.' },
-      { src: '/images/hawaii/malasadas.jpg', caption: 'Fresh Hawaiian malasadas filled with sweet custard, pineapple, and ube cream.' },
-      { src: '/images/hawaii/ocean-walk.jpg', caption: 'Walking the pier into endless blue.' },
-      { src: '/images/hawaii/pearl-harbor.jpg', caption: 'Looking out across the waters of Pearl Harbor.' },
-      { src: '/images/hawaii/polynesian-cultural-center.jpg', caption: 'A peaceful canoe ride through lush tropical scenery at the Polynesian Cultural Center in Honolulu.' },
-      { src: '/images/hawaii/shrimp-fried-rice.jpg', caption: 'Local comfort food at a Japanese brunch place, packed with shrimp and flavor.' },
-      { src: '/images/hawaii/waikiki-beach.jpg', caption: 'Sun and surf at the iconic Waikiki Beach.' },
-    ],
+    photos: getImagesByLocation('hawaii'),
   },
   {
     id: 'bonus-indonesia',
@@ -282,19 +213,7 @@ export const bonusStops = [
     location: "Bintan Island",
     lat: -5.3405,
     lon: 105.0920,
-    photos: [
-      { src: '/images/indonesia/bintan-beach.jpg', caption: 'Palm trees, ocean breeze, and sand marked by our ATV rides.' },
-      { src: '/images/indonesia/bintan-golf-field.jpg', caption: 'Learning golf under clear skies on the resort in Bintan' },
-      { src: '/images/indonesia/bintan-pool.jpg', caption: 'Infinity pool blending into the horizon at our resort in Bintan.' },
-      { src: '/images/indonesia/bintan-resort-view.jpg', caption: 'Pathway through palms opening up to the sea.' },
-      { src: '/images/indonesia/bintan-stairs.jpg', caption: 'Group photo on the steps of a grand pavilion in Bintan.' },
-      { src: '/images/indonesia/bintan-stone-design.jpg', caption: 'A quiet garden corner with a stone bench and a path leading to the sand at our resort in Bintan.' },
-      { src: '/images/indonesia/bintan-waters.jpg', caption: 'Calm waters along the mangrove-lined coast.' },
-      { src: '/images/indonesia/coconut-water.jpg', caption: 'Fresh coconut drink — the island way to cool off.' },
-      { src: '/images/indonesia/milkshakes.jpg', caption: 'Tropical smoothies in every color of the island.' },
-      { src: '/images/indonesia/noodle-meal.jpg', caption: 'Classic Indonesian mie goreng with satay and egg.' },
-      { src: '/images/indonesia/seafood-noodles.jpg', caption: 'Stir-fried flat seafood noodles full of spice and flavor from the sea.' },
-    ],
+    photos: getImagesByLocation('indonesia'),
   },
 ] as const;
 

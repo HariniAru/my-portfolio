@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import Navigation from '@/components/Navigation';
 import { addVisitedPage } from '@/lib/journey';
 import { journeyStops } from '@/components/WorldMap';
+import { getImagesByLocation } from '@/lib/imageRegistry';
 
 // === CONTENT ================================================================
 const RESUME_PDF = '/assets/Harini_Arumugam_Resume.pdf';
@@ -43,15 +44,7 @@ const SKILLS = [
   },
 ];
 
-const HOME_PHOTOS = [
-  { src: '/images/california/civic-center.jpg', caption: 'The Civic Center in San Francisco.' },
-  { src: '/images/california/mural.jpg', caption: 'A mural of a man running on a high school building in San Francisco.' },
-  { src: '/images/california/fine-arts-museum.jpg', caption: 'View at the top of the Fine Arts Museum building in San Francisco.' },
-  { src: '/images/california/golden-gate-bridge.jpg', caption: 'The Golden Gate Bridge, a symbol of San Francisco.' },
-  { src: '/images/california/half-moon-bay.jpg', caption: 'Cliffside serenity in the coastal fog at Half Moon Bay.' },
-  { src: '/images/california/lake-tahoe.jpg', caption: 'A serene view of Lake Tahoe, surrounded by mountains.' },
-  { src: '/images/california/pastries.jpg', caption: 'Delicious pastries from Arsicault, a famous French bakery in San Francisco.' },
-];
+const HOME_PHOTOS = getImagesByLocation('california');
 
 const Home = () => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);

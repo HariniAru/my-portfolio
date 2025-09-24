@@ -25,6 +25,7 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import Navigation from '@/components/Navigation';
 import { addVisitedPage } from '@/lib/journey';
 import { journeyStops } from '@/components/WorldMap';
+import { getImagesByLocation } from '@/lib/imageRegistry';
 
 const chipBase =
   'inline-flex items-center justify-center rounded-full px-3 py-1 text-xs md:text-sm font-medium bg-primary/10 border border-primary/20 text-primary';
@@ -151,17 +152,8 @@ const Education: React.FC = () => {
     },
   ];
 
-  // Replace with your actual assets
-  const photos = [
-    { src: '/images/illinois/busey-hall.jpg', caption: 'My freshman year dorm.' },
-    { src: '/images/illinois/bardeen-quad.jpg', caption: 'A view of the Bardeen Quad from the top floor of the CIF building.' },
-    { src: '/images/illinois/swe-photo-wall.jpg', caption: 'Photo wall composed of SWE shirt designs at a SWE Diversity event.' },
-    { src: '/images/illinois/dads-4-daughters.jpg', caption: 'Dads 4 Daughters event organized by SWE at UIUC.' },
-    { src: '/images/illinois/snow-on-campus.jpg', caption: 'Snow on campus by the bridge area near the engineering quad.' },
-    { src: '/images/illinois/snow-heart.jpg', caption: 'A moment of heart on the way to class.' },
-    { src: '/images/illinois/graduation-pose.jpg', caption: 'Sporting my graduation gown by the steps of the Foellinger Auditorium.' },
-    { src: '/images/illinois/commencement-ceremony.jpg', caption: 'An exhilerating, memorable Commencement ceremony at the Memorial Stadium.' },
-  ];
+  // Use centralized image registry
+  const photos = getImagesByLocation('illinois');
 
   return (
     <div className="min-h-screen bg-gradient-hero">

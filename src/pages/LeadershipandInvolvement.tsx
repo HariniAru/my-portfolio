@@ -24,6 +24,7 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import Navigation from '@/components/Navigation';
 import { addVisitedPage } from '@/lib/journey';
 import { journeyStops } from '@/components/WorldMap';
+import { getImagesByLocation } from '@/lib/imageRegistry';
 
 // shared chips / stats
 const chip =
