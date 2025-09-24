@@ -4,6 +4,9 @@ Welcome to my portfolio! Explore my computer science journey on a world map that
 
 Click through the map, explore different stops, and see how my path has unfolded.
 
+[You can visit my portfolio here.
+](https://hariniarumugam.pages.dev/)
+
 ## Project Overview
 
 This portfolio presents my education, experience, projects, and travels in an engaging, interactive format. Navigate through different locations on a world map to explore my journey in computer science.
@@ -18,37 +21,14 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## Getting Started
-
-To run this project locally:
-
-```sh
-# Clone the repository
-git clone <YOUR_GIT_URL>
-
-# Navigate to the project directory
-cd <YOUR_PROJECT_NAME>
-
-# Install dependencies
-npm i
-
-# Start the development server
-npm run dev
-```
-
 ## Features
 
-- Interactive world map navigation
-- Educational journey showcase
-- Professional experience timeline
-- Project portfolio
+- Interactive world map navigation with animated plane + pins
+- Personal journey stops
 - Travel photography gallery
 - Responsive design
+- Built with modern, clean, and accessible UI
 
 ## Development
 
 The project uses modern web development practices with TypeScript for type safety, React for component-based architecture, and Tailwind CSS for styling.
-
-## Deployment
-
-This project can be deployed to any static hosting service that supports single-page applications.
