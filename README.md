@@ -1,11 +1,8 @@
 # My Interactive Portfolio
 
-Welcome to my portfolio! Explore my computer science journey on a world map that brings together my background, education, experience, projects, leadership, and travels.
+[Welcome to my portfolio!](https://hariniarumugam.pages.dev/) Explore my computer science journey on a world map that brings together my background, education, experience, projects, leadership, and travels.
 
 Click through the map, explore different stops, and see how my path has unfolded.
-
-[You can visit my site here.
-](https://hariniarumugam.pages.dev/)
 
 ## Project Overview
 
