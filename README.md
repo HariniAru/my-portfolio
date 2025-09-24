@@ -4,7 +4,7 @@ Welcome to my portfolio! Explore my computer science journey on a world map that
 
 Click through the map, explore different stops, and see how my path has unfolded.
 
-[You can visit my portfolio here.
+[You can visit my site here.
 ](https://hariniarumugam.pages.dev/)
 
 ## Project Overview
