@@ -1,6 +1,8 @@
-# CS Journey - Interactive Portfolio
+# My Interactive Portfolio
 
-An interactive web portfolio showcasing my Computer Science journey through a world map interface.
+My computer science journey showcased through an interactive world map blending my background, education, experience, projects, leadership experience, and travels.
+
+Click through the map, explore different stops, and see how my path has unfolded.
 
 ## Project Overview
 
