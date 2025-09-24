@@ -158,7 +158,7 @@ const Education: React.FC = () => {
     { src: '/images/illinois/swe-photo-wall.jpg', caption: 'Photo wall composed of SWE shirt designs at a SWE Diversity event.' },
     { src: '/images/illinois/dads-4-daughters.jpg', caption: 'Dads 4 Daughters event organized by SWE at UIUC.' },
     { src: '/images/illinois/snow-on-campus.jpg', caption: 'Snow on campus by the bridge area near the engineering quad.' },
-    { src: '/images/illinois/snow-heart.jpg', caption: 'A heart made with my friend’s and my boots during a particularly snowy walk to class.' },
+    { src: '/images/illinois/snow-heart.jpg', caption: 'A moment of heart on the way to class.' },
     { src: '/images/illinois/graduation-pose.jpg', caption: 'Sporting my graduation gown by the steps of the Foellinger Auditorium.' },
     { src: '/images/illinois/commencement-ceremony.jpg', caption: 'An exhilerating, memorable Commencement ceremony at the Memorial Stadium.' },
   ];
