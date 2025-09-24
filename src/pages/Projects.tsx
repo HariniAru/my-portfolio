@@ -179,6 +179,26 @@ const Projects: React.FC = () => {
       },
     },
     {
+      title: 'Escape Room – Puzzles, Enemy AI & Inventory',
+      description:
+        '3D escape-room game built in Unreal Engine: explore an abandoned house, solve multi-step environmental puzzles, avoid a patrolling enemy, and manage items to unlock the final exit.',
+      location: 'Urbana-Champaign, IL',
+      technologies: ['Unreal Engine', 'C++/Blueprints'],
+      features: [
+        'Multi-step environmental puzzles (keypad, posters, clock door)',
+        'Flashlight + hidden number mechanic',
+        'Patroller enemy with chase and respawn behavior',
+        'Item pickup and inventory system',
+        'Main, pause, game over, and clear menus'
+      ],
+      impact:
+        'Implemented core gameplay loop (puzzle logic/state, enemy AI, and inventory UI) showcasing systems design and interactive problem-solving in Unreal Engine.',
+      links: { 
+        file: 'https://docs.google.com/document/d/1k44hCVxbmUMZ0KB60U_HvYUA0KFcInmyEU5AABzLmX0/edit?usp=sharing',
+        github: 'https://github.com/HariniAru/415GameDevFinalProject.git' 
+      },
+    },
+    {
       title: 'Code Future – Subjects Navigation Page',
       description:
         'Contributed frontend components and lesson materials for nonprofit coding education.',
