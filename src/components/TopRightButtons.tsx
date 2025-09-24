@@ -34,7 +34,7 @@ const TopRightButtons: React.FC<TopRightButtonsProps> = ({ className = '' }) => 
           href="https://github.com/HariniAru"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="View GitHub Profile"
+          aria-label="View My GitHub Profile"
         >
           <Github className="h-4 w-4" />
         </a>
@@ -49,7 +49,7 @@ const TopRightButtons: React.FC<TopRightButtonsProps> = ({ className = '' }) => 
           href="https://www.linkedin.com/in/harini-arumugam-22172921b"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="View LinkedIn Profile"
+          aria-label="View My LinkedIn Profile"
         >
           <Linkedin className="h-4 w-4" />
         </a>
