@@ -30,9 +30,6 @@ import { getImagesByLocation } from '@/lib/imageRegistry';
 const chipBase =
   'inline-flex items-center justify-center rounded-full px-3 py-1 text-xs md:text-sm font-medium bg-primary/10 border border-primary/20 text-primary';
 
-const statItem =
-  'rounded-lg border border-primary/15 bg-accent/40 px-3 py-2 text-sm text-foreground';
-
 const Education: React.FC = () => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
@@ -92,33 +89,16 @@ const Education: React.FC = () => {
     },
   ];
 
-  const gradCourses = [
-    'Text Information Systems',
-    'Software Engineering',
-    'Cloud Networking',
-    'Computational Photography',
-    'Theory & Practice of Data Cleaning',
-    'Foundations of Data Curation',
-  ];
-
-  const undergradCourses = [
+  const relevantCourses = [
+    'Natural Language Processing',
     'Artificial Intelligence',
     'Applied Machine Learning',
     'Reinforcement Learning',
-    'Deep Learning for Computer Vision',
-    'Programming Languages & Compilers',
-    'System Programming',
-    'Algorithms & Models of Computation',
-    'Natural Language Processing',
-    'Databases',
-    'Game Development',
-    'Data Structures',
-    'Computer Architecture',
-    'Software Design Lab',
-    'Discrete Structures',
-    'Numerical Methods',
-    'Probability & Statistics',
-    'Ethical & Professional Conduct',
+    'Computer Vision',
+    'Data Cleaning',
+    'Data Curation',
+    'Deep Learning for Healthcare',
+    'Advanced Bayesian Modeling',
   ];
 
   // Creative award cards content
@@ -216,33 +196,9 @@ const Education: React.FC = () => {
                     Master of Computer Science
                   </h2>
                   <p className="text-sm text-muted-foreground">
-                    May 2024 – Present (Expected May 2026)
+                    May 2024 – May 2026
                   </p>
 
-                  {/* Stats row */}
-                  <div className="mt-4 flex flex-wrap gap-3">
-                    <div className={statItem}>
-                      <span className="font-medium">GPA</span> · 4.0 / 4.0
-                    </div>
-                    {/* <div className={statItem}>
-                      <span className="font-medium">Campus</span> · Urbana-Champaign
-                    </div> */}
-                  </div>
-
-                  {/* Graduate Coursework */}
-                  <div className="mt-6">
-                    <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                      <Book className="h-5 w-5 text-primary" />
-                      Graduate Coursework
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {gradCourses.map((c) => (
-                        <span key={c} className={chipBase}>
-                          {c}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
                 </section>
 
                 {/* BS (bottom node) */}
@@ -258,24 +214,14 @@ const Education: React.FC = () => {
                     August 2021 – May 2024
                   </p>
 
-                  {/* Stats row */}
-                  <div className="mt-4 flex flex-wrap gap-3">
-                    <div className={statItem}>
-                      <span className="font-medium">GPA</span> · 3.7 / 4.0
-                    </div>
-                    {/* <div className={statItem}>
-                      <span className="font-medium">Campus</span> · Urbana-Champaign
-                    </div> */}
-                  </div>
-
-                  {/* Undergraduate Coursework */}
+                  {/* Relevant Coursework */}
                   <div className="mt-6">
                     <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                       <Book className="h-5 w-5 text-primary" />
-                      Undergraduate Coursework
+                      Relevant Coursework
                     </h4>
                     <div className="flex flex-wrap gap-2">
-                      {undergradCourses.map((c) => (
+                      {relevantCourses.map((c) => (
                         <span key={c} className={chipBase}>
                           {c}
                         </span>

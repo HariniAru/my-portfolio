@@ -24,10 +24,12 @@ const SKILLS = [
     category: 'Technical',
     icon: Wrench,
     items: [
-      'Python', 'JavaScript', 'TypeScript', 'C++', 'Swift',
-      'Django', 'Flask', 'React', 'Laravel', 'Angular',
-      'SQL', 'AWS', 'AI/ML', 'Computer Vision',
-      'Web Development', 'API Integration', 'Automated Testing', 'CI/CD', 'Version Control'
+      'Python', 'React', 'Angular', 'TypeScript', 'JavaScript', 'Laravel', 'PHP', 'REST APIs',
+      'Generative AI', 'LLMs', 'PyTorch', 'scikit-learn', 'Hugging Face', 'TensorFlow',
+      'MediaPipe', 'OpenCV', 'Keras', 'Prompt Engineering', 'RAG', 'Agentic Workflows',
+      'LangGraph', 'Model Evaluation', 'Optimization', 'AWS', 'CloudWatch', 'Docker', 'Data Engineering',
+      'CI/CD', 'Testing', 'Resiliency', 'Security', 'Production Monitoring', 'Cursor', 'GitHub Copilot',
+      'Codex', 'Kiro'
     ],
   },
   {
@@ -105,7 +107,7 @@ const Home = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground leading-relaxed">
-                  As a software engineer with strong full-stack and testing experience, I am passionate about integrating AI and machine learning to build secure, scalable web applications. I am motivated to deliver efficient solutions while contributing to collaborative engineering teams.
+                  Software engineer building secure full-stack and generative AI applications with Python, React, Angular, and AWS. Experienced in LLM and agentic workflows and improving AI application quality through testing, CI/CD, security, and production monitoring.
                 </p>
                 {/* <blockquote className="border-l-4 border-primary/40 pl-4 italic text-foreground/90">
                   {COVER_LETTER_QUOTE}

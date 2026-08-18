@@ -37,6 +37,19 @@ const Projects: React.FC = () => {
   // --- Real projects pulled from Harini's portfolio + resume ---
   const projects = [
     {
+      title: 'GenAI-Assisted Case Review and Redaction Platform',
+      description:
+        'A configurable, multi-tenant platform for reviewing customer-call cases, redacting sensitive activity text, and preparing approved data for internal teams and clients.',
+      technologies: ['Python', 'React', 'AWS', 'LangGraph', 'Docker'],
+      features: [
+        'LangGraph workflow that proposes PII spans, redaction types, and evidence-linked summaries',
+        'Human review of AI-generated recommendations',
+        'Input validation, access controls, audit logging, automated testing, and CloudWatch monitoring',
+      ],
+      impact: 'Combines a Python service and React review interface to make sensitive case review more efficient, traceable, and secure.',
+      links: {},
+    },
+    {
       title: 'Bharatanatyam Mudras Hand Gesture Recognizer',
       description:
         'Real‑time hand‑gesture classification using MediaPipe landmarks + scikit‑learn from webcam input for Bharatanatyam mudras.',
@@ -51,6 +64,21 @@ const Projects: React.FC = () => {
         video: 'https://drive.google.com/file/d/1x13j0s3KFnbkX-vKbxNR3zUE-gk6vo-2/view?usp=share_link',
         file: 'https://docs.google.com/document/d/1sTDlDQG-pkDBUVVw8cXcZmhpct04P3zRY4-Glf5PNG4/edit?usp=sharing',
         github: 'https://github.com/HariniAru/Bharatanatyam-Mudras-Hand-Gesture-Recognizer',
+      },
+    },
+    {
+      title: 'Clinical T5 Project',
+      description:
+        'T5-based biomedical NLP workflows contributed to PyHealth, including a dataset loader, preprocessing pipeline, multilabel classification task, and reproducible model-training example.',
+      technologies: ['Python', 'PyTorch', 'Hugging Face Transformers', 'T5', 'PyHealth'],
+      features: [
+        'Biomedical dataset loading and preprocessing',
+        'Multilabel classification workflow',
+        'Reproducible model-training example',
+      ],
+      impact: 'Expanded PyHealth with reusable tooling and an end-to-end example for clinical T5 model development.',
+      links: {
+        github: 'https://github.com/sunlabuiuc/PyHealth/pull/1090',
       },
     },
     {
