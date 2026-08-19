@@ -1,6 +1,6 @@
 // WorldMap.tsx
 import React, { useMemo, useEffect, useState } from "react";
-import { Plane, MapPin, ChevronLeft, ChevronRight, Images } from "lucide-react";
+import { Plane, MapPin, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
@@ -15,6 +15,7 @@ import {
 } from "react-simple-maps";
 import { geoEqualEarth } from "d3-geo";
 import { getImagesByLocation, type ImageInfo } from '@/lib/imageRegistry';
+import { useNavigate } from 'react-router-dom';
 
 const GEO_URL =
   "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
@@ -25,8 +26,8 @@ const MAP_H = 520;
 
 // Card metrics - optimized for better UX
 const CARD_W = 320;
-const CARD_H = 280; // Increased to accommodate photo gallery
-const CARD_MAX_H = Math.min(CARD_H, MAP_H * 0.7); // 70% of viewport height max
+const CARD_H = 340;
+const CARD_MAX_H = Math.min(CARD_H, MAP_H * 0.75);
 const CARD_MARGIN = 20; // padding from edges
 const PIN_GAP = 16;     // gap from pin
 
@@ -227,7 +228,7 @@ interface WorldMapProps {
   currentStop: number | null;
   planePosition: { lon: number; lat: number };
   onPlaneMove: (lon: number, lat: number) => void;
-  animateToStop?: number | null; // Add this prop to trigger animation
+  animateToStop?: number | null;
 }
 
 interface TooltipState {
@@ -235,20 +236,6 @@ interface TooltipState {
   stop: AnyStop | null;
   x: number;
   y: number;
-}
-
-interface LocationCardProps {
-  stop: AnyStop;
-  onEnter: () => void;
-  onContinue: () => void;
-  onClose: () => void;
-}
-
-// Function to get URL parameter
-function getNextStopId(): number | null {
-  const urlParams = new URLSearchParams(window.location.search);
-  const nextParam = urlParams.get('next');
-  return nextParam ? parseInt(nextParam, 10) : null;
 }
 
 const WorldMap: React.FC<WorldMapProps> = ({
@@ -259,7 +246,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
   onPlaneMove,
   animateToStop
 }) => {
-  console.log('WorldMap component loaded with animateToStop:', animateToStop);
+  const navigate = useNavigate();
   const [selectedStop, setSelectedStop] = useState<AnyStop | null>(null);
   const [isPlaneFlying, setIsPlaneFlying] = useState(false);
   const [headingDeg, setHeadingDeg] = useState(0);
@@ -269,7 +256,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
   const projection = useMemo(
-    () => geoEqualEarth().fitSize([MAP_W, MAP_H], { type: "Sphere" } as any),
+    () => geoEqualEarth().fitSize([MAP_W, MAP_H], { type: "Sphere" }),
     []
   );
 
@@ -305,7 +292,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
   };
 
   // Handle pin hover for tooltips
-  const handlePinMouseEnter = (stop: AnyStop, e: React.MouseEvent) => {
+  const handlePinMouseEnter = (stop: AnyStop, e: React.MouseEvent<SVGElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     setTooltip({
       show: true,
@@ -333,7 +320,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
     const end = project(stop.lon, stop.lat);
 
     // Faster animation and smoother easing
-    const DURATION = 1200; // Reduced from 2000ms
+    const DURATION = 1200;
     const t0 = performance.now();
     let prev = start;
 
@@ -344,7 +331,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
 
     const tick = (now: number) => {
       const rawT = Math.min(1, (now - t0) / DURATION);
-      const t = easeInOut(rawT); // Apply easing
+      const t = easeInOut(rawT);
       
       const x = start.x + (end.x - start.x) * t;
       const y = start.y + (end.y - start.y) * t;
@@ -359,7 +346,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
       prev = { x, y };
 
       // convert back to lon/lat for the Marker
-      const inv = (projection as any).invert?.([x, y]);
+      const inv = projection.invert?.([x, y]);
       if (inv) {
         const [lon, lat] = inv;
         onPlaneMove(lon, lat);
@@ -400,20 +387,13 @@ const WorldMap: React.FC<WorldMapProps> = ({
 
   // Handle external animation requests
   useEffect(() => {
-    console.log('WorldMap useEffect - animateToStop:', animateToStop, 'isActive:', isActive);
     if (animateToStop && isActive) {
       const targetStop = journeyStops.find(s => s.id === animateToStop);
-      console.log('Found targetStop:', targetStop);
       if (targetStop) {
         goToStop(targetStop);
       }
     }
   }, [animateToStop, isActive]);
-
-  const handlePinClick = (stop: AnyStop, e: React.MouseEvent) => {
-    e.stopPropagation();
-    goToStop(stop);
-  };
 
   const handleContinueJourney = () => {
     // Only continue journey for actual journey stops, not bonus stops
@@ -437,7 +417,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
 
   const handleEnter = () => {
     if (selectedStop && 'route' in selectedStop) {
-      window.location.href = selectedStop.route;
+      navigate(selectedStop.route);
     }
   };
 
@@ -507,45 +487,6 @@ const WorldMap: React.FC<WorldMapProps> = ({
           }
         </Geographies>
 
-        {/* Journey Path Lines */}
-        {/* {isActive && visitedStops.length > 1 && (
-          <g>
-            {visitedStops.slice(0, -1).map((stop, index) => {
-              const nextStop = visitedStops[index + 1];
-              const start = project(stop.lon, stop.lat);
-              const end = project(nextStop.lon, nextStop.lat);
-              
-              return (
-                <g key={`path-${stop.id}-${nextStop.id}`}>
-                  <line
-                    x1={start.x}
-                    y1={start.y}
-                    x2={end.x}
-                    y2={end.y}
-                    stroke="#6366f1"
-                    strokeWidth={4}
-                    opacity={0.2}
-                  />
-                  <line
-                    x1={start.x}
-                    y1={start.y}
-                    x2={end.x}
-                    y2={end.y}
-                    stroke="#6366f1"
-                    strokeWidth={2.5}
-                    strokeDasharray="8,4"
-                    opacity={0.8}
-                    className="animate-pulse"
-                    style={{
-                      filter: 'drop-shadow(0 2px 4px rgba(99, 102, 241, 0.3))'
-                    }}
-                  />
-                </g>
-              );
-            })}
-          </g>
-        )} */}
-
         {/* Journey Stops Pins */}
         {isActive &&
           journeyStops.map((stop) => {
@@ -554,25 +495,28 @@ const WorldMap: React.FC<WorldMapProps> = ({
               <Marker
                 key={stop.id}
                 coordinates={[stop.lon, stop.lat]}
-                onClick={(e) => handlePinClick(stop, e as any)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goToStop(stop);
+                }}
                 role="button"
                 aria-label={`Open ${stop.name}`}
                 tabIndex={0}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") handlePinClick(stop, e as any);
+                  if (e.key === "Enter" || e.key === " ") goToStop(stop);
                 }}
               >
                 <circle 
                   r={18} 
                   fill="transparent" 
                   className="cursor-pointer" 
-                  onMouseEnter={(e) => handlePinMouseEnter(stop, e as any)}
+                  onMouseEnter={(e) => handlePinMouseEnter(stop, e)}
                   onMouseLeave={handlePinMouseLeave}
                 />
                 <g 
                   transform="translate(-12,-30)" 
                   className="cursor-pointer"
-                  onMouseEnter={(e) => handlePinMouseEnter(stop, e as any)}
+                  onMouseEnter={(e) => handlePinMouseEnter(stop, e)}
                   onMouseLeave={handlePinMouseLeave}
                 >
                   <MapPin
@@ -606,35 +550,34 @@ const WorldMap: React.FC<WorldMapProps> = ({
               <Marker
                 key={stop.id}
                 coordinates={[stop.lon, stop.lat]}
-                onClick={(e) => handlePinClick(stop, e as any)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goToStop(stop);
+                }}
                 role="button"
                 aria-label={`Open ${stop.name} gallery`}
                 tabIndex={0}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") handlePinClick(stop, e as any);
+                  if (e.key === "Enter" || e.key === " ") goToStop(stop);
                 }}
               >
                 <circle 
                   r={18} 
                   fill="transparent" 
                   className="cursor-pointer" 
-                  onMouseEnter={(e) => handlePinMouseEnter(stop, e as any)}
+                  onMouseEnter={(e) => handlePinMouseEnter(stop, e)}
                   onMouseLeave={handlePinMouseLeave}
                 />
                 <g 
                   transform="translate(-12,-30)" 
                   className="cursor-pointer"
-                  onMouseEnter={(e) => handlePinMouseEnter(stop, e as any)}
+                  onMouseEnter={(e) => handlePinMouseEnter(stop, e)}
                   onMouseLeave={handlePinMouseLeave}
                 >
                   <MapPin
                     className="w-8 h-8 text-amber-500 hover:scale-110 transition-transform"
                     fill="currentColor"
                   />
-                  {/* <Images
-                    className="w-4 h-4 text-white absolute"
-                    style={{ transform: 'translate(8px, 6px)' }}
-                  /> */}
                 </g>
               </Marker>
             );
@@ -671,7 +614,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
         {/* Enhanced popup card with photo gallery and overflow protection */}
         {selectedStop && selectedXY && (() => {
           const isJourneyStop = 'route' in selectedStop;
-          const { x, y, placement } = placeCard(
+          const { x, y } = placeCard(
             selectedXY.x, 
             selectedXY.y, 
             isJourneyStop ? (selectedStop as Stop).id : undefined
@@ -690,8 +633,8 @@ const WorldMap: React.FC<WorldMapProps> = ({
               height={CARD_MAX_H}
               className="pointer-events-auto"
             >
-              <div className="transform transition-all duration-300 ease-out animate-card-pop h-full">
-                <Card className="w-full h-full bg-card/95 backdrop-blur-md border-2 border-primary/30 shadow-xl transition-shadow duration-300 flex flex-col">
+              <div className="transform transition-all duration-300 ease-out animate-card-pop">
+                <Card className="w-full bg-card/95 backdrop-blur-md border-2 border-primary/30 shadow-xl transition-shadow duration-300 flex flex-col">
                   <CardHeader className="pb-2 px-4 pt-3 flex-shrink-0">
                     <CardTitle className="flex items-center justify-between text-base">
                       <span className="font-semibold text-foreground">{selectedStop.name}</span>
@@ -706,8 +649,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
                     <p className="text-xs text-muted-foreground font-medium">{selectedStop.location}</p>
                   </CardHeader>
                   
-                  {/* Scrollable content area */}
-                  <CardContent className="px-4 pb-3 flex-1 overflow-y-auto space-y-3 min-h-0">
+                  <CardContent className="px-4 pb-2 space-y-3">
                     {/* Photo Gallery */}
                     {photos.length > 0 && (
                       <div className="space-y-2 flex-shrink-0">
@@ -750,7 +692,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
                   
                   {/* Action buttons only for journey stops */}
                   {isJourneyStop && (
-                    <div className="px-4 pb-3 flex-shrink-0 border-t border-primary/10 pt-3">
+                    <div className="px-4 pb-3 border-t border-primary/10 pt-3">
                       <div className="flex gap-2">
                         <Button 
                           onClick={handleEnter} 

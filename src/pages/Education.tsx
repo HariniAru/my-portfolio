@@ -26,18 +26,20 @@ import Navigation from '@/components/Navigation';
 import { addVisitedPage } from '@/lib/journey';
 import { journeyStops } from '@/components/WorldMap';
 import { getImagesByLocation } from '@/lib/imageRegistry';
+import { useNavigate } from 'react-router-dom';
 
 const chipBase =
   'inline-flex items-center justify-center rounded-full px-3 py-1 text-xs md:text-sm font-medium bg-primary/10 border border-primary/20 text-primary';
 
 const Education: React.FC = () => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     addVisitedPage('/education');
   }, []);
 
-  const handleBackToMap = () => (window.location.href = '/');
+  const handleBackToMap = () => navigate('/');
   
   const handleContinueJourney = () => {
     // Find next stop in journey
@@ -47,9 +49,9 @@ const Education: React.FC = () => {
     if (nextStop) {
       // Add visited page tracking and ensure journey progression
       addVisitedPage('/education');
-      window.location.href = `/?next=${nextStop.id}&from=${currentStop?.id}`;
+      navigate(`/?next=${nextStop.id}&from=${currentStop?.id}`);
     } else {
-      window.location.href = '/';
+      navigate('/');
     }
   };
 
