@@ -25,6 +25,7 @@ import Navigation from '@/components/Navigation';
 import { addVisitedPage } from '@/lib/journey';
 import { journeyStops } from '@/components/WorldMap';
 import { getImagesByLocation } from '@/lib/imageRegistry';
+import { useNavigate } from 'react-router-dom';
 
 // shared chips / stats
 const chip =
@@ -33,12 +34,13 @@ const stat = 'rounded-lg border border-primary/15 bg-accent/40 px-3 py-2 text-sm
 
 const Leadership: React.FC = () => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     addVisitedPage('/leadership&involvement');
   }, []);
 
-  const handleBackToMap = () => (window.location.href = '/');
+  const handleBackToMap = () => navigate('/');
   
   const handleContinueJourney = () => {
     // Find current stop and loop back to start (stop 1)
@@ -48,11 +50,11 @@ const Leadership: React.FC = () => {
     if (currentStop && startStop) {
       // Loop back to Start with proper plane animation
       addVisitedPage('/leadership&involvement');
-      window.location.href = `/?from=${currentStop.id}&next=${startStop.id}`;
+      navigate(`/?from=${currentStop.id}&next=${startStop.id}`);
     } else {
       // Fallback: return to map
       addVisitedPage('/leadership&involvement');
-      window.location.href = '/';
+      navigate('/');
     }
   };
 
@@ -126,7 +128,7 @@ const Leadership: React.FC = () => {
     icon: Handshake,
     bullets: [
       'Connect with interns from day one: cohort kickoffs, 1:1 check-ins, and an open channel for questions.',
-      'Introduce my team\'s ways of working at FTI Consulting and how they align with FTI\’s culture and policies.',
+      "Introduce my team's ways of working at FTI Consulting and how they align with FTI’s culture and policies.",
       'Provide ongoing guidance so interns ramp fast and contribute confidently.',
     ],
     tags: ['Onboarding', 'Mentorship', 'Engagement'],

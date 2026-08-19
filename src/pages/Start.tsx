@@ -7,6 +7,7 @@ import Navigation from '@/components/Navigation';
 import { addVisitedPage } from '@/lib/journey';
 import { journeyStops } from '@/components/WorldMap';
 import { getImage, getImagesByLocation } from '@/lib/imageRegistry';
+import { useNavigate } from 'react-router-dom';
 
 // Use centralized image registry
 const portraitSrc = getImage('self-portrait').src;
@@ -14,12 +15,13 @@ const indiaPhotos = getImagesByLocation('india');
 
 const Start = () => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     addVisitedPage('/start');
   }, []);
 
-  const handleBackToMap = () => (window.location.href = '/');
+  const handleBackToMap = () => navigate('/');
   
   const handleContinueJourney = () => {
     const currentStop = journeyStops.find(stop => stop.route === '/start');
@@ -27,9 +29,9 @@ const Start = () => {
     
     if (nextStop) {
       addVisitedPage('/start');
-      window.location.href = `/?next=${nextStop.id}&from=${currentStop?.id}`;
+      navigate(`/?next=${nextStop.id}&from=${currentStop?.id}`);
     } else {
-      window.location.href = '/';
+      navigate('/');
     }
   };
 

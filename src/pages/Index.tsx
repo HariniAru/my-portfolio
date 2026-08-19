@@ -10,19 +10,15 @@ const Index = () => {
   const [currentStop, setCurrentStop] = useState<number | null>(null);
   const [animateToStop, setAnimateToStop] = useState<number | null>(null);
 
-  // Initialize plane position from session storage or default
   const [planePosition, setPlanePositionState] = useState({ lon: 78.82, lat: 10.38 });
 
   useEffect(() => {
-    // Check if this is first visit
     const firstTime = isFirstVisit();
     
     if (!firstTime) {
-      // Not first visit - skip hero and go straight to map
       setShowHero(false);
       setMapActive(true);
-      
-      // Restore last plane position and stop
+
       const savedPosition = getPlanePosition();
       const lastStop = getLastStop();
       
@@ -35,7 +31,6 @@ const Index = () => {
       }
     }
     
-    // Check for auto-navigation to next stop (from "Continue Journey" buttons)
     const urlParams = new URLSearchParams(window.location.search);
     const nextStopId = urlParams.get('next');
     const currentStopId = urlParams.get('from');
@@ -47,52 +42,45 @@ const Index = () => {
         journeyStops.find(stop => stop.id === parseInt(nextStopId, 10) - 1);
       
       if (nextStop && currentStop) {
-        // Place plane at current stop first
         setPlanePositionState({ lon: currentStop.lon, lat: currentStop.lat });
         setCurrentStop(currentStop.id);
-        
-        // Then trigger animation to next stop after a short delay
+
         setTimeout(() => {
           setAnimateToStop(nextStop.id);
           setCurrentStop(nextStop.id);
-          setLastStop(nextStop.id); // Save to session storage
-        }, 800);
+          setLastStop(nextStop.id);
+        }, 150);
       }
-      
-      // Clean up URL
+
       window.history.replaceState({}, '', '/');
     }
   }, []);
 
-  // Reset animation trigger after it's been processed
   useEffect(() => {
     if (animateToStop) {
       const timer = setTimeout(() => {
         setAnimateToStop(null);
-      }, 2000); // Clear after animation completes
+      }, 1400);
       return () => clearTimeout(timer);
     }
   }, [animateToStop]);
 
   const handleBeginJourney = () => {
-    markVisited(); // Mark that user has visited
+    markVisited();
     setShowHero(false);
-    setMapActive(true); // WorldMap will auto-fly to #1 when this turns true
+    setMapActive(true);
   };
 
   const handleStopSelect = (stop: typeof journeyStops[number]) => {
     setCurrentStop(stop.id);
-    setLastStop(stop.id); // Save to session storage
+    setLastStop(stop.id);
   };
 
-  // signature now (lon, lat)
   const handlePlaneMove = (lon: number, lat: number) => {
     const newPosition = { lon, lat };
     setPlanePositionState(newPosition);
-    setPlanePosition(newPosition); // Save to session storage
+    setPlanePosition(newPosition);
   };
-
-  console.log('Index component render - animateToStop:', animateToStop, 'mapActive:', mapActive);
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
@@ -103,9 +91,9 @@ const Index = () => {
           isActive={mapActive}
           onStopSelect={handleStopSelect}
           currentStop={currentStop}
-          planePosition={planePosition}        // { lon, lat }
-          onPlaneMove={handlePlaneMove}        // (lon, lat) => void
-          animateToStop={animateToStop}        // trigger animation
+          planePosition={planePosition}
+          onPlaneMove={handlePlaneMove}
+          animateToStop={animateToStop}
         />
       </div>
 

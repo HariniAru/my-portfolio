@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, MapPin, User, Heart, Code, Image as ImageIcon, X, FileDown, Globe, Wrench, Users, Target, Lightbulb, LightbulbIcon, Globe2, LucideGlobe, Brain, Group, Building, HelpingHandIcon, HelpingHand } from 'lucide-react';
+import { ArrowLeft, MapPin, Heart, Code, Image as ImageIcon, X, Globe, Wrench, Target, Lightbulb, Brain, HelpingHand, Bot, CloudCog } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
@@ -7,42 +7,32 @@ import Navigation from '@/components/Navigation';
 import { addVisitedPage } from '@/lib/journey';
 import { journeyStops } from '@/components/WorldMap';
 import { getImagesByLocation } from '@/lib/imageRegistry';
+import { useNavigate } from 'react-router-dom';
 
-// === CONTENT ================================================================
-const RESUME_PDF = '/assets/Harini_Arumugam_Resume.pdf';
-const COVER_LETTER_QUOTE =
-  'I build bridges between complex technology and real-world impact — creating tools that are useful, humane, and a little bit delightful.';
-
-// Skills grouped like resume (Languages, Technical, Soft Skills) with icons
 const SKILLS = [
   {
-    category: 'Languages',
+    category: 'Languages / Frameworks',
     icon: Globe,
-    items: ['English', 'Tamil', 'Spanish'],
+    items: ['Python', 'React', 'Angular', 'TypeScript', 'JavaScript', 'Laravel', 'PHP', 'REST APIs'],
   },
   {
-    category: 'Technical',
-    icon: Wrench,
+    category: 'AI / ML',
+    icon: Bot,
     items: [
-      'Python', 'React', 'Angular', 'TypeScript', 'JavaScript', 'Laravel', 'PHP', 'REST APIs',
       'Generative AI', 'LLMs', 'PyTorch', 'scikit-learn', 'Hugging Face', 'TensorFlow',
       'MediaPipe', 'OpenCV', 'Keras', 'Prompt Engineering', 'RAG', 'Agentic Workflows',
-      'LangGraph', 'Model Evaluation', 'Optimization', 'AWS', 'CloudWatch', 'Docker', 'Data Engineering',
-      'CI/CD', 'Testing', 'Resiliency', 'Security', 'Production Monitoring', 'Cursor', 'GitHub Copilot',
-      'Codex', 'Kiro'
+      'LangGraph', 'Model Evaluation', 'Optimization'
     ],
   },
   {
-    category: 'Soft Skills',
-    icon: Users,
-    items: [
-      'Effective communicator',
-      'Collaborative team player',
-      'Adaptable problem solver',
-      'Growth mindset',
-      'Strong attention to detail',
-      'Motivated for continuous learning'
-    ],
+    category: 'AI Dev Tools',
+    icon: Wrench,
+    items: ['Cursor', 'GitHub Copilot', 'Codex', 'Kiro'],
+  },
+  {
+    category: 'Engineering',
+    icon: CloudCog,
+    items: ['AWS', 'CloudWatch', 'Docker', 'Data Engineering', 'CI/CD', 'Testing', 'Resiliency', 'Security', 'Production Monitoring'],
   },
 ];
 
@@ -50,13 +40,13 @@ const HOME_PHOTOS = getImagesByLocation('california');
 
 const Home = () => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Track that user visited this page
     addVisitedPage('/home');
   }, []);
 
-  const handleBackToMap = () => (window.location.href = '/');
+  const handleBackToMap = () => navigate('/');
   
   const handleContinueJourney = () => {
     const currentStop = journeyStops.find(stop => stop.route === '/home');
@@ -64,9 +54,9 @@ const Home = () => {
     
     if (nextStop) {
       addVisitedPage('/home');
-      window.location.href = `/?next=${nextStop.id}&from=${currentStop?.id}`;
+      navigate(`/?next=${nextStop.id}&from=${currentStop?.id}`);
     } else {
-      window.location.href = '/';
+      navigate('/');
     }
   };
 
@@ -109,9 +99,6 @@ const Home = () => {
                 <p className="text-muted-foreground leading-relaxed">
                   Software engineer building secure full-stack and generative AI applications with Python, React, Angular, and AWS. Experienced in LLM and agentic workflows and improving AI application quality through testing, CI/CD, security, and production monitoring.
                 </p>
-                {/* <blockquote className="border-l-4 border-primary/40 pl-4 italic text-foreground/90">
-                  {COVER_LETTER_QUOTE}
-                </blockquote> */}
               </CardContent>
             </Card>
 

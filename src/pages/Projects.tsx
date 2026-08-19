@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import { ArrowLeft, MapPin, FolderOpen, Github, Globe, Newspaper, Images } from 'lucide-react';
 import { ArrowLeft, MapPin, FolderOpen, Github, Globe, File, Newspaper, Images, Image as ImageIcon, X, Video, Link, Folder, Hand, Code } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,17 +7,19 @@ import Navigation from '@/components/Navigation';
 import { addVisitedPage } from '@/lib/journey';
 import { journeyStops } from '@/components/WorldMap';
 import { getImagesByLocation } from '@/lib/imageRegistry';
+import { useNavigate } from 'react-router-dom';
 
 // Use centralized image registry
 const CANCUN_PHOTOS = getImagesByLocation('cancun');
 
 const Projects: React.FC = () => {
+  const navigate = useNavigate();
   useEffect(() => {
     addVisitedPage('/projects&research');
   }, []);
 
   const handleBackToMap = () => {
-    window.location.href = '/';
+    navigate('/');
   };
 
   const handleContinueJourney = () => {
@@ -27,14 +28,13 @@ const Projects: React.FC = () => {
     
     if (nextStop) {
       addVisitedPage('/projects&research');
-      window.location.href = `/?next=${nextStop.id}&from=${currentStop?.id}`;
+      navigate(`/?next=${nextStop.id}&from=${currentStop?.id}`);
     } else {
-      window.location.href = '/';
+      navigate('/');
     }
   };
 
 
-  // --- Real projects pulled from Harini's portfolio + resume ---
   const projects = [
     {
       title: 'GenAI-Assisted Case Review and Redaction Platform',
@@ -265,30 +265,6 @@ const Projects: React.FC = () => {
       ],
     },
   ];
-
-
-  // const research = [
-  //   {
-  //     title: 'Adversarial Bargaining',
-  //     description:
-  //       'Studied potential price discrimination across online services (e.g., travel). Collected browsing/ad data (Google Ad Settings) and site audience stats (Quantcast); used Bayesian analysis to evaluate effects.',
-  //     location: 'UIUC',
-  //     technologies: ['Bayesian Analysis', 'Data Collection', 'Python/R'],
-  //     outputs: [
-  //       { label: 'Paper (Google Drive)', href: 'https://drive.google.com/file/d/1gUxGwXIr338k3Q23RvLXdVAGHvc5k-zI/view?usp=sharing' },
-  //       { label: 'Qualitative Notes', href: 'https://docs.google.com/document/d/1UZm2THkvlmeMvQL7EtndLECoSaoEVNk1L_Op5a0QpMk/edit?usp=sharing' },
-  //     ],
-  //   },
-  //   {
-  //     title: 'Charitable Giving',
-  //     description:
-  //       'Observed how visual design and animation (comics) on charity sites influence user engagement and donation behavior compared to real‑time photos; focused on COVID‑19 charities in the U.S. and India.',
-  //     location: 'UIUC',
-  //     technologies: ['Experimental Design', 'UX Research', 'Data Analysis'],
-  //     outputs: [],
-  //   },
-  // ];
-
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   return (
@@ -338,10 +314,6 @@ const Projects: React.FC = () => {
                       <FolderOpen className="h-6 w-6 text-primary" />
                       {project.title}
                     </CardTitle>
-                    {/* <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <MapPin className="h-4 w-4" />
-                      <span>Built in {project.location}</span>
-                    </div> */}
                   </div>
 
                   <div className="flex gap-2">
@@ -402,21 +374,6 @@ const Projects: React.FC = () => {
               <CardContent className="space-y-6">
                 <p className="text-muted-foreground leading-relaxed">{project.description}</p>
 
-                {/* Video Demo */}
-                {/* {project.links.video && (
-                  <div className="mt-4">
-                    <h4 className="font-semibold text-foreground mb-3">Project Demo</h4>
-                    <div className="rounded-lg overflow-hidden border border-primary/20 shadow">
-                      <iframe
-                        src={project.links.video.replace('/view?usp=share_link', '/preview')}
-                        title={`${project.title} Demo`}
-                        allow="autoplay; fullscreen"
-                        className="w-full h-[300px]"
-                      ></iframe>
-                    </div>
-                  </div>
-                )} */}
-
                 {/* Technologies */}
                 <div>
                   <h4 className="font-semibold text-foreground mb-3">Technologies</h4>
@@ -475,10 +432,6 @@ const Projects: React.FC = () => {
               >
                 <CardHeader className="pb-3">
                   <CardTitle className="text-xl">{r.title}</CardTitle>
-                  {/* <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <MapPin className="h-4 w-4" />
-                    <span>{r.location}</span>
-                  </div> */}
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-muted-foreground leading-relaxed">{r.description}</p>
@@ -515,73 +468,7 @@ const Projects: React.FC = () => {
           </div>
         </div>
 
-        {/* Skills Summary (kept concise) */}
-        {/* <Card className="mt-12 bg-card/80 backdrop-blur-sm border-2 border-primary/20 shadow-card-travel">
-          <CardHeader>
-            <CardTitle className="text-xl">Technical Highlights Used Across Projects</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid md:grid-cols-4 gap-6 text-sm text-muted-foreground">
-              <div>
-                <h4 className="font-semibold text-foreground mb-2">Frontend</h4>
-                <div>React, Vue, Angular, SwiftUI</div>
-                <div>TypeScript, Responsive UI</div>
-              </div>
-              <div>
-                <h4 className="font-semibold text-foreground mb-2">Backend</h4>
-                <div>Flask, Django, Node</div>
-                <div>REST APIs, GraphQL</div>
-              </div>
-              <div>
-                <h4 className="font-semibold text-foreground mb-2">Data/ML</h4>
-                <div>OpenCV, MediaPipe, scikit‑learn</div>
-                <div>SQL/SQLite, Data parsing</div>
-              </div>
-              <div>
-                <h4 className="font-semibold text-foreground mb-2">Infra</h4>
-                <div>Docker (course labs), CI/CD (Cypress/Playwright)</div>
-                <div>AWS (intro), Firebase (proto)</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card> */}
-
-        {/* Cancún Photo Strip + Lightbox
-        <div className="mt-14">
-          <h3 className="text-2xl font-semibold mb-3">Cancún Photo Reel</h3>
-          <p className="text-muted-foreground mb-4">
-            A few snapshots that inspired this page. Click any photo to view full‑size.
-          </p>
-          <div className="relative overflow-x-auto no-scrollbar">
-            <div className="flex gap-3 py-2">
-              {CANCUN_PHOTOS.map((p, i) => (
-                <Dialog key={p.src} open={lightboxIndex === i} onOpenChange={(o) => setLightboxIndex(o ? i : null)}>
-                  <DialogTrigger asChild>
-                    <button
-                      className="group relative shrink-0 h-40 sm:h-44 md:h-48 rounded-xl overflow-hidden border border-primary/10 bg-muted/30 transition-transform hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-                      aria-label={p.caption}
-                    >
-                      <img
-                        src={p.src}
-                        alt={p.caption}
-                        loading="lazy"
-                        className="h-full w-auto object-cover opacity-90 group-hover:opacity-100 group-hover:contrast-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/30 to-transparent pointer-events-none" />
-                    </button>
-                  </DialogTrigger>
-                  <DialogContent className="p-0 bg-transparent border-none max-w-4xl">
-                    <img src={p.src} alt={p.caption} className="w-full h-auto rounded-xl" />
-                    <div className="mt-2 text-center text-sm text-muted-foreground">{p.caption}</div>
-                  </DialogContent>
-                </Dialog>
-              ))}
-            </div>
-          </div>
-        </div> */}
-
-
-        {/* --- Cancún Photo Strip + Lightbox (styled like Experience page) --- */}
+        {/* Cancún Photo Strip */}
         <div className="mt-14 space-y-4">
           <div className="flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
             <Images className="h-4 w-4" /> Snaps from Cancún

@@ -21,6 +21,7 @@ import Navigation from '@/components/Navigation';
 import { addVisitedPage } from '@/lib/journey';
 import { journeyStops } from '@/components/WorldMap';
 import { getImagesByLocation } from '@/lib/imageRegistry';
+import { useNavigate } from 'react-router-dom';
 
 type ExperienceItem = {
   title: string;
@@ -35,9 +36,10 @@ type ExperienceItem = {
 
 const Experience: React.FC = () => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   const handleBackToMap = () => {
-    window.location.href = '/';
+    navigate('/');
   };
 
   useEffect(() => {
@@ -51,9 +53,9 @@ const Experience: React.FC = () => {
     
     if (nextStop) {
       // Ensure proper journey progression
-      window.location.href = `/?next=${nextStop.id}&from=${currentStop?.id}`;
+      navigate(`/?next=${nextStop.id}&from=${currentStop?.id}`);
     } else {
-      window.location.href = '/';
+      navigate('/');
     }
   };
 
