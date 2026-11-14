@@ -54,13 +54,8 @@ const Start = () => {
         {/* Hero: Title + Portrait */}
         <div className="grid md:grid-cols-2 gap-10 items-center mb-10 animate-fade-in">
           {/* Text block */}
-          <div className="space-y-4 text-center md:text-left">
-            <h1 className="text-5xl md:text-6xl font-bold text-foreground tracking-tight">Hi, I'm Harini Arumugam!</h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              {/* My journey began in Tamil Nadu, India, where I was born. India shaped my identity,
-              curiosity, and the way I build: grounded in community, resourcefulness, and respect for complexity. */}
-              My roots in Tamil Nadu, India shaped my identity, curiosity, and approach: grounded in community, resourcefulness, and complexity.
-            </p>
+          <div className="text-center md:text-left">
+            <h1 className="text-5xl md:text-6xl font-bold text-foreground tracking-tight leading-tight">Hi, I'm Harini Arumugam!</h1>
           </div>
 
           {/* Portrait */}
@@ -103,9 +98,12 @@ const Start = () => {
                   <li className="flex items-center gap-2"><span className="w-3 h-2 bg-primary rounded-full" /> Colorful, vibrant environment → Creative perspective </li>
                 </ul>
               </div>
-              <div className="md:col-span-2 text-muted-foreground leading-relaxed">
-                India is where my curiosity and resilience began. Those values guide how I design, test, and ship:
-                clear interfaces, thoughtful edge‑cases, and solutions that scale for real users.
+              <div className="md:col-span-2 flex items-center text-muted-foreground leading-relaxed">
+                <p>
+                  My roots in Tamil Nadu, India are where my curiosity and resilience began. They shaped my identity and an
+                  approach grounded in community, resourcefulness, and complexity. Those values guide how I design, test, and ship:
+                  clear interfaces, thoughtful edge‑cases, and solutions that scale for real users.
+                </p>
               </div>
             </div>
           </CardContent>
