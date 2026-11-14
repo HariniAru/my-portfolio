@@ -13,26 +13,26 @@ const SKILLS = [
   {
     category: 'Languages / Frameworks',
     icon: Globe,
-    items: ['Python', 'React', 'Angular', 'TypeScript', 'JavaScript', 'Laravel', 'PHP', 'REST APIs'],
+    items: ['Python', 'TypeScript', 'JavaScript', 'PHP', 'React', 'Angular', 'FastAPI', 'Laravel', 'SQLAlchemy', 'REST APIs'],
   },
   {
     category: 'AI / ML',
     icon: Bot,
     items: [
-      'Generative AI', 'LLMs', 'PyTorch', 'scikit-learn', 'Hugging Face', 'TensorFlow',
-      'MediaPipe', 'OpenCV', 'Keras', 'Prompt Engineering', 'RAG', 'Agentic Workflows',
-      'LangGraph', 'Model Evaluation', 'Optimization'
+      'Generative AI', 'LLMs', 'RAG', 'LangGraph', 'Ollama', 'Agentic Workflows',
+      'Human-in-the-Loop Review', 'Model Evaluation', 'Prompt Engineering', 'Hugging Face',
+      'PyTorch', 'TensorFlow', 'scikit-learn', 'Keras', 'MediaPipe', 'OpenCV'
     ],
   },
   {
     category: 'AI Dev Tools',
     icon: Wrench,
-    items: ['Cursor', 'GitHub Copilot', 'Codex', 'Kiro'],
+    items: ['Claude Code', 'Cursor', 'GitHub Copilot', 'Codex', 'Kiro'],
   },
   {
     category: 'Engineering',
     icon: CloudCog,
-    items: ['AWS', 'CloudWatch', 'Docker', 'Data Engineering', 'CI/CD', 'Testing', 'Resiliency', 'Security', 'Production Monitoring'],
+    items: ['AWS', 'CloudWatch', 'Docker', 'GitLab CI/CD', 'Sentry', 'LaunchDarkly', 'Laravel Pulse', 'SQLite', 'pytest', 'Pest', 'Playwright', 'Cypress'],
   },
 ];
 
@@ -97,7 +97,7 @@ const Home = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground leading-relaxed">
-                  Software engineer building secure full-stack and generative AI applications with Python, React, Angular, and AWS. Experienced in LLM and agentic workflows and improving AI application quality through testing, CI/CD, security, and production monitoring.
+                  Software engineer building generative AI and full-stack applications for sensitive-data workflows. Experience with RAG, LangGraph, and local LLMs, with a focus on evaluation, guardrails, testing, and human-in-the-loop workflows.
                 </p>
               </CardContent>
             </Card>
@@ -111,17 +111,17 @@ const Home = () => {
               <CardContent>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-3">
+                    <Brain className="h-5 w-5 text-primary mt-0.5" />
+                    <div>
+                      <div className="font-medium text-foreground">Generative AI</div>
+                      <div className="text-sm text-muted-foreground">AI that drafts and suggests while people stay in control</div>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
                     <Code className="h-5 w-5 text-primary mt-0.5" />
                     <div>
                       <div className="font-medium text-foreground">Full-Stack Development</div>
                       <div className="text-sm text-muted-foreground">End-to-end systems with accessible UX</div>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Brain className="h-5 w-5 text-primary mt-0.5" />
-                    <div>
-                      <div className="font-medium text-foreground">AI & Machine Learning</div>
-                      <div className="text-sm text-muted-foreground">Building adaptive, intelligent systems</div>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">

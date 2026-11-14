@@ -92,7 +92,7 @@ const Start = () => {
           <CardContent className="space-y-6">
             <p className="text-foreground text-lg leading-relaxed">
               I believe that the best solutions come from understanding both the human element and the technical possibilities, creating bridges between complex technology and real-world applications.
-              My goal is to create solutions that not only work efficiently but also make a meaningful difference in people's lives.
+              Today that means building generative AI that does the heavy lifting while people stay in control: tools that are tested, guarded, and genuinely useful in everyday life.
             </p>
             <div className="grid md:grid-cols-3 gap-4 pt-2 border-t border-primary/10">
               <div className="bg-accent/50 p-4 rounded-lg border border-primary/10">

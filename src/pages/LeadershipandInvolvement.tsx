@@ -122,7 +122,7 @@ const Leadership: React.FC = () => {
 
   // Current industry leadership — surfaced to top
   const ambassador = {
-    role: 'Intern Ambassador ',
+    role: 'Intern Ambassador',
     title: 'D&A Software Solutions, FTI Consulting, Inc.',
     time: 'Current',
     icon: Handshake,

@@ -31,7 +31,7 @@ const TopRightButtons: React.FC<TopRightButtonsProps> = ({ className = '' }) => 
         className="bg-background/80 backdrop-blur-sm border-primary/20 hover:bg-primary/10 transition-all duration-200 hover:scale-105"
       >
         <a
-          href="https://www.linkedin.com/in/harini-arumugam-22172921b"
+          href="https://www.linkedin.com/in/hariniarumugam/"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="View My LinkedIn Profile"

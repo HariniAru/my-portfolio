@@ -42,21 +42,38 @@ const Projects: React.FC = () => {
         'A configurable, multi-tenant platform for reviewing customer-call cases, redacting sensitive activity text, and preparing approved data for internal teams and clients.',
       technologies: ['Python', 'React', 'AWS', 'LangGraph', 'Docker'],
       features: [
-        'LangGraph workflow that proposes PII spans, redaction types, and evidence-linked summaries',
-        'Human review of AI-generated recommendations',
+        'LangGraph workflow that analyzes redactable activity fields, proposes PII spans and redaction types, and generates summaries grounded in source text',
+        'AI-generated recommendations routed to reviewers for approval',
         'Input validation, access controls, audit logging, automated testing, and CloudWatch monitoring',
       ],
-      impact: 'Combines a Python service and React review interface to make sensitive case review more efficient, traceable, and secure.',
+      impact: 'Combines a Python service and React review interface, hosted on AWS with Docker, to make sensitive case review more efficient, traceable, and secure.',
       links: {},
+    },
+    {
+      title: 'Ghost Texter – Private AI Reply Assistant',
+      description:
+        'A local macOS app that gathers unread iMessages from the people you choose, summarizes each chat, and drafts replies in your own voice with an on-device LLM. Nothing is sent until you approve the exact text.',
+      technologies: ['Python', 'FastAPI', 'LangGraph', 'Ollama (Qwen3)', 'React', 'TypeScript', 'SQLite'],
+      features: [
+        'LangGraph drafting workflow that redrafts when a reply repeats a rejected one, then pauses for human review',
+        'Per-person voice settings with example replies, so drafts sound like you',
+        'Each approval is tied to one exact text and recipient; the model has no tools or send access',
+        'Runs entirely on your Mac; message text is never logged or sent to a server',
+      ],
+      impact: 'Turns an overwhelming inbox into a short list of replies to write while keeping a person in control of every message. Send-safety rules are enforced in code and covered by 100+ pytest tests.',
+      links: {
+        github: 'https://github.com/HariniAru/ghost-texter',
+      },
     },
     {
       title: 'Bharatanatyam Mudras Hand Gesture Recognizer',
       description:
-        'Real‑time hand‑gesture classification using MediaPipe landmarks + scikit‑learn from webcam input for Bharatanatyam mudras.',
+        'Real‑time hand‑gesture classification using MediaPipe landmarks + scikit‑learn from webcam input for 14 Bharatanatyam mudras.',
       technologies: ['Python', 'OpenCV', 'MediaPipe', 'scikit‑learn'],
       features: [
-        'Live pose/landmark extraction',
-        'Classical mudra classification pipeline',
+        'Live 3D hand-landmark extraction from webcam input',
+        'Joint-angle features from 21 hand landmarks',
+        'Random Forest trained on a self-recorded mudra dataset',
         'Lightweight model for real‑time inference',
       ],
       impact: 'Achieved 89% accuracy (F1: 0.88) in real-time mudra recognition, offering learners a practical tool to practice and preserve Bharatanatyam.',
@@ -292,7 +309,7 @@ const Projects: React.FC = () => {
         <div className="text-center space-y-4 animate-fade-in">
           <h1 className="text-5xl md:text-6xl font-bold text-foreground">Projects & Research</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            A focused look at the projects and research milestones that have expanded the horizons of my computer science journey.
+            A focused look at the projects and research that have shaped my computer science journey, from human-in-the-loop generative AI to computer vision and games.
           </p>
         </div>
 
