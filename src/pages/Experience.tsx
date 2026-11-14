@@ -67,24 +67,30 @@ const Experience: React.FC = () => {
       location: 'San Francisco, CA',
       duration: 'Aug 2024 – Present',
       description:
-        'Building secure full-stack and generative AI applications, including an AI-assisted workflow for reviewing customer-call cases and protecting sensitive data.',
+        'Building generative AI and full-stack applications for sensitive-data workflows, including an AI-assisted workflow that helps reviewers find and redact PII in customer-call records.',
       technologies: [
         'Python',
+        'LangGraph',
+        'RAG',
         'React',
         'Angular',
         'TypeScript',
         'Laravel',
-        'SQL',
-        'AWS CloudWatch',
-        'LangGraph',
+        'AWS',
+        'Docker',
+        'CloudWatch',
+        'Sentry',
+        'LaunchDarkly',
         'GitLab CI/CD',
       ],
       achievements: [
-        'Building a generative AI-assisted case-review workflow that identifies potential PII, proposes redactions, and generates evidence-linked summaries for human approval.',
-        'Implementing a RAG workflow with prompt engineering, structured LLM outputs, schema validation, fallback handling, and reviewed examples for quality evaluation.',
-        'Built secure, multi-tenant applications, including a text-redaction system with overlapping annotations, bulk actions, CRUD operations, and context-menu controls.',
-        'Improved traceability and stability with CloudWatch audit logs, case-level activity, N+1 query fixes, and Laravel Pulse monitoring for slow jobs and endpoints.',
-        'Used AI development tools for navigation, test generation, refactoring, and modernization, with changes reviewed through Pest, Larastan/PHPStan, and GitLab CI/CD.',
+        'Building a generative AI workflow that reviews customer-call records for major automotive companies, flags potential PII, suggests redactions, and drafts case summaries for reviewers to verify.',
+        'Implementing RAG that retrieves client-specific redaction rules and de-identified approved cases to ground PII detection and summarization, with structured-output validation before results reach reviewers.',
+        'Developed a text-redaction system for a multi-tenant case-review platform with overlapping annotations, bulk actions, CRUD operations, and context-menu controls using Angular and Laravel.',
+        'Maintained and enhanced a sales-incentive platform used by a major global hospitality company, resolving user and data issues across goal-setting, approval, payout, and reporting workflows using React and Laravel.',
+        'Monitored errors and performance with Sentry, and used LaunchDarkly feature flags to toggle features in production.',
+        'Improved application reliability and code quality by resolving N+1 queries, monitoring slow jobs and endpoints with Laravel Pulse, and adding Pest tests and Larastan/PHPStan checks to GitLab CI/CD.',
+        'Used Cursor, GitHub Copilot, Codex, and Kiro to navigate the codebase, generate tests, and modernize legacy code.',
       ],
       highlights: [
         { icon: ShieldCheck, label: 'PII Review + Redaction' },
@@ -109,8 +115,8 @@ const Experience: React.FC = () => {
         'SQL',
       ],
       achievements: [
-        'Improved accessibility and built inline editing and validation for administrative user-management interfaces.',
-        'Resolved data-consistency and encryption issues and developed Playwright and Cypress tests for account and permission workflows.',
+        "Built inline editing, validation, and accessibility fixes for a major financial institution's user-management app.",
+        'Resolved data-consistency and encryption issues and wrote Playwright and Cypress tests for account and permission flows.',
       ],
       highlights: [
         { icon: Award, label: 'ADA Improvements' },
@@ -161,7 +167,7 @@ const Experience: React.FC = () => {
               Experience
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              My work centers on building products people can trust — secure, accessible, and designed with real-world users in mind.
+              My work centers on building AI and software people can trust — secure, accessible, and designed so a person stays in the loop.
             </p>
           </div>
 
@@ -283,7 +289,8 @@ const Experience: React.FC = () => {
                   <div className="space-y-2 text-sm text-muted-foreground">
                     <div>Cypress & Playwright (E2E)</div>
                     <div>GitLab CI/CD, Automated Deploys</div>
-                    <div>Sentry, Monitoring & Alerts</div>
+                    <div>Sentry, CloudWatch & Laravel Pulse Monitoring</div>
+                    <div>LaunchDarkly Feature Flags</div>
                     <div>Secure Uploads, Data Privacy</div>
                   </div>
                 </div>
