@@ -40,7 +40,7 @@ const Projects: React.FC = () => {
       title: 'GenAI-Assisted Case Review and Redaction Platform',
       description:
         'A configurable, multi-tenant platform for reviewing customer-call cases, redacting sensitive activity text, and preparing approved data for internal teams and clients.',
-      technologies: ['Python', 'React', 'AWS', 'LangGraph', 'Docker'],
+      technologies: ['Python', 'React', 'AWS', 'LangGraph', 'RAG', 'Docker'],
       features: [
         'LangGraph workflow that analyzes redactable activity fields, proposes PII spans and redaction types, and generates summaries grounded in source text',
         'AI-generated recommendations routed to reviewers for approval',
