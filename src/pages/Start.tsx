@@ -52,14 +52,14 @@ const Start = () => {
         </div>
 
         {/* Hero: Title + Portrait */}
-        <div className="grid md:grid-cols-2 gap-10 items-center mb-10 animate-fade-in">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-14 mb-10 animate-fade-in">
           {/* Text block */}
           <div className="text-center md:text-left">
             <h1 className="text-5xl md:text-6xl font-bold text-foreground tracking-tight leading-tight">Hi, I'm Harini Arumugam!</h1>
           </div>
 
           {/* Portrait */}
-          <div className="flex justify-center md:justify-end">
+          <div className="flex justify-center shrink-0">
             <div
               className="relative w-56 h-56 md:w-64 md:h-64 rounded-full ring-4 ring-primary/20 shadow-card-travel
                          overflow-hidden motion-safe:animate-plane-float"
